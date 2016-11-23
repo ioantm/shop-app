@@ -1,3 +1,5 @@
+// @flow
+
 import express from 'express'
 import api from './api'
 import mongoose from 'mongoose'
@@ -7,6 +9,7 @@ import flash from 'express-flash'
 import passport from 'passport'
 import session from 'express-session'
 import passportConfig from './config/passport'
+const _ = require('lodash');
 
 const port = process.env.PORT || 8000;
 const sessionSecret = process.env.SESSION_SECRET || '1234567890QWERTY';
@@ -25,6 +28,7 @@ app.use(session({
 //     autoReconnect: true
 //   })
 }));
+
 app.use(passport.initialize());
 app.use(flash());
 app.use('/api', api());

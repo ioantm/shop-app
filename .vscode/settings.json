@@ -1,0 +1,7 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "typescript.disableAutomaticTypeAcquisition": true,
+    "typescript.validate.enable": false,
+     "typescript.format.enable": false,
+      "javascript.validate.enable": false,
+}
