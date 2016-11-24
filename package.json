@@ -53,7 +53,9 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.2",
+    "connect-mongo": "^1.3.2",
     "errorhandler": "^1.5.0",
     "express-flash": "0.0.2",
     "express-session": "^1.14.2",
@@ -71,7 +73,7 @@
     "react-router": "^3.0.0"
   },
   "scripts": {
-    "dev-server": "nodemon -w server/src --exec \"NODE_ENV=development babel-node server/src/app.js --presets es2015,stage-0\"",
+    "dev-server": "nodemon -w server/src --exec \"NODE_ENV=development babel-node server/src/app.js --plugins transform-flow-strip-types --presets es2015,stage-0\"",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"

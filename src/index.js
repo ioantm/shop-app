@@ -11,15 +11,16 @@ import ShoppingList from './list/ShoppingList';
 import Lists from './list/Lists';
 import Home from './home/Home';
 
-ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
-      <Route path="/register" component={Register}/>
-      <Route path="/signin" component={SignIn}/>
-      <Route path="/list/:listId" component={ShoppingList}/>
-      <Route path="/lists" component={Lists}/>
-    </Route>
-  </Router>,
-  document.getElementById('root')
+const root = (
+ <Router history={hashHistory}>
+  <Route path="/" component={App}>
+    <IndexRoute component={Home}/>
+    <Route path="/register" component={Register}/>
+    <Route path="/signin" component={SignIn}/>
+    <Route path="/list/:listId" component={ShoppingList}/>
+    <Route path="/lists" component={Lists}/>
+  </Route>
+</Router> 
 );
+
+ReactDOM.render(root, document.getElementById('root'));

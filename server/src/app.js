@@ -11,6 +11,10 @@ import session from 'express-session'
 import passportConfig from './config/passport'
 import errorHandler from 'errorhandler'
 import { add } from 'ramda';
+import mongoStore from 'connect-mongo';
+
+
+const MongoStore = mongoStore(session);
 
 const port = process.env.PORT || 8000;
 const sessionSecret = process.env.SESSION_SECRET || '1234567890QWERTY';
@@ -24,13 +28,14 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: sessionSecret,
-//   store: new MongoStore({
-//     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-//     autoReconnect: true
-//   })
+  store: new MongoStore({
+    url: mongodbUri,
+    autoReconnect: true
+  })
 }));
 
 app.use(passport.initialize());
+app.use(passport.session());
 app.use('/api', api());
 app.use(errorHandler());
 //app.use(express.static('public'));

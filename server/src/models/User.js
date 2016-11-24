@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt-nodejs';
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -15,8 +16,29 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+userSchema.pre('save', function(next) {
+    const user = this;
+    console.log('user', user);
+    if (!user.isModified('password')) {
+        return next();
+    }
+
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, null, (err, hash) => {
+            if (err) {
+                next(err);
+            }
+
+            user.password = hash;
+            next();
+        })
+    })
+})
+
 userSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
-    cb(null, candidatePassword === this.password)
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+        cb(err, isMatch);
+    })
 }
 
 const User = mongoose.model('User', userSchema);
