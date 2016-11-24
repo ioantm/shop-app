@@ -9,7 +9,8 @@ import flash from 'express-flash'
 import passport from 'passport'
 import session from 'express-session'
 import passportConfig from './config/passport'
-const _ = require('lodash');
+import errorHandler from 'errorhandler'
+import { add } from 'ramda';
 
 const port = process.env.PORT || 8000;
 const sessionSecret = process.env.SESSION_SECRET || '1234567890QWERTY';
@@ -30,8 +31,8 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
-app.use(flash());
 app.use('/api', api());
+app.use(errorHandler());
 //app.use(express.static('public'));
 
 mongoose.Promise = global.Promise;

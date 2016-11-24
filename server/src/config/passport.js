@@ -5,7 +5,6 @@ import User from '../models/User';
 passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
     console.log('local strategy');
     User.findOne({ email: email.toLowerCase() }, (err, user) => {
-
         if (err) { 
             return done(err); 
         }
