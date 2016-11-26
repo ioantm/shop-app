@@ -219,6 +219,7 @@ function runDevServer(host, port, protocol) {
     watchOptions: {
       ignored: /node_modules/
     },
+    presets: ["stage-1"],
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === "https",
     host: host
