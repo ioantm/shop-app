@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import Button from 'grommet/components/Button';
-import TextInput from 'grommet/components/TextInput';
+// import { Button, Input } from 'antd';
 
 export default function SignIn() {
     return (
         <div>
-            <Button>Send</Button>
-            <TextInput/>
+           
         </div>
     )
 }

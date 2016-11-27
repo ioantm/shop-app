@@ -1,19 +1,63 @@
 //@flow
-import React from 'react';
-import { Route, IndexRoute } from 'react-router'
 import App from './app/App';
-import Lists from './list/Lists';
-import SignIn from './session/SignIn';
-import Register from './session/Register';
-import ShoppingList from './list/ShoppingList';
-import Home from './home/Home';
 
-export default (
- <Route path="/" component={App}>
-    <IndexRoute component={Home}/>
-    <Route path="/register" component={Register}/>
-    <Route path="/signin" component={SignIn}/>
-    <Route path="/list/:listId" component={ShoppingList}/>
-    <Route path="/lists" component={Lists}/>
-  </Route>
-)
+//  <Route path="/" component={App}>
+//     <IndexRoute component={Home}/>
+//     <Route path="/register" component={Register}/>
+//     <Route path="/signin" component={SignIn}/>
+//     <Route path="/list/:listId" component={ShoppingList}/>
+//     <Route path="/lists" component={Lists}/>
+//   </Route>
+function errorLoading(err) {
+  console.error('Dynamic page loading failed', err);
+}
+
+function loadRoute(cb) {
+  return (module) => cb(null, module.default);
+}
+
+export default {
+  component: App,
+  childRoutes: [
+    {
+      path: '/',
+      getComponent(location, cb) {
+        System.import('./home/Home')
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }
+    },
+    {
+      path: 'register',
+      getComponent(location, cb) {
+        System.import('./session/Register')
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }
+    },
+    {
+      path: 'signin',
+      getComponent(location, cb) {
+        System.import('./session/Signin')
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }
+    },
+    {
+      path: 'list/:listId',
+      getComponent(location, cb) {
+        System.import('./list/ShoppingList')
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }
+    },
+    {
+      path: 'lists',
+      getComponent(location, cb) {
+        System.import('./list/Lists')
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }
+    }
+  ]
+}
