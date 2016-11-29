@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api', api());
 app.use(errorHandler());
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongodbUri);

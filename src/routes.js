@@ -1,13 +1,6 @@
 //@flow
 import App from './app/App';
 
-//  <Route path="/" component={App}>
-//     <IndexRoute component={Home}/>
-//     <Route path="/register" component={Register}/>
-//     <Route path="/signin" component={SignIn}/>
-//     <Route path="/list/:listId" component={ShoppingList}/>
-//     <Route path="/lists" component={Lists}/>
-//   </Route>
 function errorLoading(err) {
   console.error('Dynamic page loading failed', err);
 }
@@ -38,7 +31,7 @@ export default {
     {
       path: 'signin',
       getComponent(location, cb) {
-        System.import('./session/Signin')
+        System.import('./session/SigninContainer')
           .then(loadRoute(cb))
           .catch(errorLoading);
       }

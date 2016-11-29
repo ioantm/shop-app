@@ -1,12 +1,12 @@
 // @flow
-
 import React, { Component } from 'react';
 import { Router, browserHistory } from 'react-router';
 import routes from '../routes';
 import { Provider, connect } from 'react-redux';
 import { getSessionUserId } from '../reducers';
+import Root from './Root';
 
-class Root extends Component {
+class RootContainer extends Component {
     constructor(props) {
         super(props);
 
@@ -20,14 +20,16 @@ class Root extends Component {
 
         console.log('isAuthenticated', isAuthenticated);
         return (
-            <Provider store={store}>
-                <Router history={history} routes={routes}/>
-            </Provider>
+            <Root>
+                <Provider store={store}>
+                    <Router history={history} routes={routes}/>
+                </Provider>
+            </Root>
         );
     }
 }
 
-Root.propTypes = {
+RootContainer.propTypes = {
     store: React.PropTypes.object.isRequired,
     history: React.PropTypes.object.isRequired,
     isAuthenticated: React.PropTypes.string
@@ -37,4 +39,4 @@ export default connect((state) => {
     return {
         isAuthenticated: getSessionUserId(state)
     }
-})(Root);
+})(RootContainer);

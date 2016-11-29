@@ -1,0 +1,7 @@
+.SignIn {
+    display: flex;
+}
+
+.SignIn .topSpace {
+    height: 50px;
+}
