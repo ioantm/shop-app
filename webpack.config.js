@@ -57,7 +57,8 @@ module.exports = env => {
                     exclude: /node_modules/,
                     loaders: ['babel-loader', 'eslint-loader']
                 },
-                
+                { test: /\.css$/, include: resolve(__dirname + '/node_modules/'), loader: env.prod ? cssLoader : 'style-loader!css-loader' },
+                { test: /\.css$/, exclude: resolve(__dirname + '/node_modules/'), loader: env.prod ? cssModuleLoader : 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]' },
                 {
                     test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
                     loader: 'file-loader',

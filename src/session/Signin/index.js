@@ -1,17 +1,11 @@
-import React from 'react';
-import { button, primary, input } from 'glamor/ous';
+import React, { Component } from 'react';
+import { style } from 'glamor';
+import { button, primary } from 'glamor/ous';
 
 export default function SignIn() {
-    console.log('button', button);
-    var a = new Object();
-    a.name = 'test';
-
     return (
         <div>
-            <button {...button} button {...primary}>
-                SignIn
-            </button>
-            <input { ...input }/>
+            <button {...button}>SignIn</button>
         </div>
     )
 }

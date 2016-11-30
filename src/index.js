@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
+import './index.css';
 import RootContainer from './root/RootContainer';
 import configureStore from './store/configureStore';
 
