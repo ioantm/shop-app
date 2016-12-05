@@ -1,13 +1,13 @@
-// @flow
+//@flow
 
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
 
 const configureStore = (preloadedState: object) => createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(thunk),
+    applyMiddleware(thunk)
 );
 
 export default configureStore;

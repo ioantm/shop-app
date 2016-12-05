@@ -1,14 +1,11 @@
-// @flow
+//@flow
 import React from 'react';
-import { root } from './RootStyles';
+import styles from './Root.css'
 
-const Root = (props) => 
-(
-  <div {...root}>{props.children}</div>
-);
-
-Root.propTypes = {
-  children: React.PropTypes.any,
-};
+const Root = (props) => {
+    return (
+        <div className={styles.Root}>{props.children}</div>
+    );
+}
 
 export default Root;

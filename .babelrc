@@ -1,4 +1,3 @@
 {
-  "plugins": ["transform-class-properties"],
-  "presets": ["babel-preset-latest", "babel-preset-react"]
+  "presets": [["es2015", { "modules": false }], "react", "stage-2"]
 }

@@ -1,12 +1,10 @@
-/*eslint-disable*/
-
 const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const TransformClassProperties = require('babel-plugin-transform-class-properties'); 
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); 
 const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
+
 
 module.exports = env => {
     const addPlugin = (add, plugin) => add ? plugin : undefined;
@@ -54,11 +52,11 @@ module.exports = env => {
                     },
                     exclude: ['/node_modules/', '/server/']
                 },
-                /*{
+                {
                     test: /\.js$/,
-                    exclude: [/node_modules/, /server/],
+                    exclude: /node_modules/,
                     loaders: ['babel-loader', 'eslint-loader']
-                },*/
+                },
                 { test: /\.css$/, include: resolve(__dirname + '/node_modules/'), loader: env.prod ? cssLoader : 'style-loader!css-loader' },
                 { test: /\.css$/, exclude: resolve(__dirname + '/node_modules/'), loader: env.prod ? cssModuleLoader : 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]' },
                 {
