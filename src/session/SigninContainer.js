@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Signin from './Signin';
+import * as actions from '../actions';
 
-const SigninContainer = () => {
-    return (
-        <Signin></Signin>
-    )
-};
 
-export default connect(null)(SigninContainer);
+export default connect(null, actions)(Signin);

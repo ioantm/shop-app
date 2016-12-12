@@ -1,4 +1,4 @@
-//@flow
+// @flow
 import App from './app/App';
 
 function errorLoading(err) {

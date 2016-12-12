@@ -1,5 +1,5 @@
 {
-  parser: "babel-eslint",
+  "parser": "babel-eslint",
   "extends": ["airbnb", "plugin:flowtype/recommended"],
   "plugins": [
     "flowtype"
@@ -9,6 +9,7 @@
     "document": true
   },
   "rules": {
-      "max-len": [1, 80, 2, {ignoreComments: true}]
+      "max-len": [1, 80, 2, {"ignoreComments": true}],
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

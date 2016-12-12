@@ -2,10 +2,25 @@ import React, { Component } from 'react';
 import { style } from 'glamor';
 import { button, primary } from 'glamor/ous';
 
-export default function SignIn() {
+export default class SignIn extends Component
+  changeHandler = name => (e) => {
+    this.setState({
+      [name]: e.target.value
+    })
+  }
+
+  render() {
     return (
-        <div>
-            <button {...button}>SignIn</button>
-        </div>
+      <div>
+        <input 
+          onChange={changeHandler('email')}>
+        </input>
+        <input
+          type="password"
+          onChange={changeHandler('password')}>
+        </input>
+        <button>SignIn</button>
+      </div>
     )
+  }
 }
