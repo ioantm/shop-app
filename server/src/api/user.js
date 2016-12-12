@@ -9,7 +9,7 @@ import User from '../models/User';
 
 export default () => {
     const router = Router();
-    
+
     router.get('/login', (req, res, next) => {
         console.log('get');
     });
@@ -35,7 +35,11 @@ export default () => {
           return res.send({ errors: [info] }, 400);
         }
 
-        res.json(user);
+        req.logIn(user, (err) => {
+          if (err) { return next(err); }
+          console.log('hmm', req.user, req.isAuthenticated());
+           res.json(user);
+        });
       })(req, res, next);
     });
 

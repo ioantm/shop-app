@@ -21,5 +21,5 @@ export const SessionContainer = ({ children }) => (
 );
 
 SessionContainer.propTypes = {
-  children: React.PropTypes.object,
+  children: React.PropTypes.any,
 };

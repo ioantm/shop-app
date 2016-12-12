@@ -14,11 +14,10 @@ import passportConfig from './config/passport';
 /* eslint-disable no-unused-vars */
 import api from './api';
 
-
 const MongoStore = mongoStore(session);
 
 const port = process.env.PORT || 8000;
-const sessionSecret = process.env.SESSION_SECRET || '1234567890QWERTY';
+const sessionSecret = process.env.SESSION_SECRET || 's3cret';
 const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shoppingList';
 const app = express();
 
@@ -31,12 +30,16 @@ mongoose.connection.on('error', () => {
 });
 
 // middleware configuration
-app.use(cors());
 app.use(bodyParser.json());
 app.use(expressValidator());
+passportConfig();
 app.use(session({
   resave: false,
   saveUninitialized: true,
+  cookie: { 
+    maxAge : (4 * 60 * 60 * 1000),
+    domain: ".app.localhost", 
+  },
   secret: sessionSecret,
   store: new MongoStore({
     url: mongodbUri,
@@ -44,14 +47,17 @@ app.use(session({
   }),
 }));
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  console.log('zzz', req.user);
-  res.locals.user = req.user;
+// Enable cors
+app.use(cors());
+
+app.use((req, res, next) =>{
+  console.log('hmm', req.isAuthenticated());
   next();
-});
+})
 
 app.use('/api', api());
 app.use(errorHandler());
