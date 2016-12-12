@@ -1,20 +1,11 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import Signin from './Signin';
-import { login } from '../actions';
-import { browserHistory } from 'react-router';
 
-const mapDispatchToProps = (dispatch, { pendingPage }) => ({
-  login: (credentials) => {
-    dispatch(login(credentials))
-      .then(() => {
-        if (!pendingPage) {
-          browserHistory.push('/lists');
-        } else {
-          browserHistory.push(pendingPage);
-        }
-      })
-  },
-});
+const SigninContainer = () => {
+    return (
+        <Signin></Signin>
+    )
+};
 
-
-export default connect(null, mapDispatchToProps)(Signin);
+export default connect(null)(SigninContainer);

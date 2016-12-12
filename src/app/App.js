@@ -19,9 +19,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className={styles.App} {...center}>
+      <div className={styles.App}>
         <h2>Shopping List App</h2>
-        <button onClick={this.props.logout}>Logout</button>
         { 
           this.props.children
         }

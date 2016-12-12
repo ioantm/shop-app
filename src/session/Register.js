@@ -1,38 +1,11 @@
-import React from 'react';
-import { primary } from 'glamor/ous';
-import { SessionContainer } from './styles';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 
-class Register extends React.Component {
-  inputHandler = prop => e => this.setState({ [prop]: e.target.value });
-  registerHandler = () => this.props.register({
-    email: this.state.email,
-    password: this.state.password,
-    confirmPassword: this.state.confirmPassword,
-  });
-
-  render() {
+export default function Register() {
     return (
-      <SessionContainer>
-        <input
-          placeholder="Enter email..." type="text"
-          onChange={this.inputHandler('email')}
-        />
-        <input
-          placeholder="Password" type="password"
-          onChange={this.inputHandler('password')}
-        />
-        <input
-          placeholder="Password confirm" type="password"
-          onChange={this.inputHandler('confirmPassword')}
-        />
-        <button {...primary} onClick={this.registerHandler}>Register</button>
-      </SessionContainer>
-    );
-  }
+        <div>
+            <h2>Register</h2>
+            <Link to='/'>Home</Link>
+        </div>
+    )
 }
-
-Register.propTypes = {
-  register: React.PropTypes.func,
-};
-
-export default Register;
