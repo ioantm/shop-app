@@ -18,7 +18,6 @@ export default () => {
 
   passport.use(
     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-      console.log('local strategy');
       User.findOne({ email: email.toLowerCase() }, (err, user) => {
         if (err) {
           return done(err);
@@ -35,7 +34,7 @@ export default () => {
           }
 
           if (isMatch) {
-            console.log('is match');
+            console.log('is match', user);
             return done(null, user);
           }
 
@@ -49,8 +48,8 @@ export default () => {
  * Login Required middleware.
  */
 exports.isAuthenticated = (req, res, next) => {
-  console.log('isAuthenticated', req.isAuthenticated(), req.session);
-  if (req.isAuthenticated()) {
+  console.log('isAuthenticated', req.isAuthenticated(), req.method, req.url, req.path);
+  if (req.method === 'OPTIONS' || req.isAuthenticated()) {
     return next();
   }
   return res.status(401).send({ errors: [{ msg: 'Not authenticated' }] });

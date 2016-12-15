@@ -1,6 +1,6 @@
+// @flow
+
 import React from 'react';
-import { css } from 'glamor';
-import { base } from 'glamor/ous';
 import { vertical, stretch, flex } from '../styles/layout';
 
 export const signin = css({
@@ -14,8 +14,7 @@ export const topSpace = css({
 });
 
 export const SessionContainer = ({ children }) => (
-  <div {...css(base, vertical, signin, stretch, flex)}>
-    <div {...topSpace} />
+  <div>
     { children }
   </div>
 );

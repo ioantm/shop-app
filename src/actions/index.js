@@ -1,3 +1,7 @@
+// @flow
+import { browserHistory } from 'react-router';
+import * as api from '../api';
+
 export const LOGIN_REQUEST_START = 'LOGIN_REQUEST_START';
 export const LOGIN_REQUEST_SUCCESS = 'LOGIN_REQUEST_SUCCESS';
 export const LOGIN_REQUEST_FAILED = 'LOGIN_REQUEST_FAILED';
@@ -6,16 +10,17 @@ const loginRequest = () => ({
   type: LOGIN_REQUEST_START,
 });
 
+const loginSuccess = user => ({
+  type: LOGIN_REQUEST_SUCCESS,
+  user,
+});
+
 export const login = credentials => (dispatch) => {
   dispatch(loginRequest());
-  return fetch('http://localhost:8000/api/user/login', {
-    method: 'POST',
-    mode: 'cors', 
-    body: JSON.stringify(credentials),
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
-  });
+
+  return api.login(credentials)
+    .then(res => res.json())
+    .then(user => dispatch(loginSuccess(user)));
 };
 
 export const REGISTER_REQUEST_START = 'REGISTER_REQUEST_START';
@@ -28,14 +33,7 @@ const registerRequest = () => ({
 
 export const register = userData => (dispatch) => {
   dispatch(registerRequest());
-  return fetch('http://localhost:8000/api/user/signup', {
-    method: 'POST',
-    mode: 'cors',
-    body: JSON.stringify(userData),
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
-  });
+  return apo.register(userData);
 };
 
 export const GET_LISTS_REQUEST_START = 'GET_LISTS_REQUEST_START';
@@ -52,25 +50,22 @@ const getListsRequestSuccess = lists => ({
 });
 
 const getListsRequestFailed = () => ({
-  type: GET_LISTS_REQUEST_FAILED
+  type: GET_LISTS_REQUEST_FAILED,
 });
 
-export const getLists = () => dispatch => {
+export const getLists = () => (dispatch) => {
   dispatch(getListsRequest());
 
-  return fetch('http://localhost:8000/api/lists', {
-    method: 'GET',
-    mode: 'cors',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
-  }).then(r => {
-    if (r.status !== 401) {
-      getListsRequestSuccess(r);
-    } else {
-      throw (r);
-    }
-  });
+  api.getLists().then(
+    (response) => {
+      if (response.status !== 401) {
+        getListsRequestSuccess(response);
+        browserHistory.push('/lists');
+      } else {
+        browserHistory.push('/signin');
+      }
+    },
+    (err) => getListsRequestFailed(err));
 };
 
 export const LOGOUT_REQUEST_START = 'LOGOUT_REQUEST_START';
@@ -79,13 +74,12 @@ export const LOGOUT_REQUEST_FAILED = 'LOGOUT_REQUEST_FAILED';
 
 const logoutStart = () => ({
   type: LOGOUT_REQUEST_START,
-})
+});
 
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
   dispatch(logoutStart());
 
-  return fetch('http://localhost:8000/api/user/logout', {
-    method: 'GET',
-  });
+  return logout()
+    .then(() => browserHistory.push('/signin'));
 };
 

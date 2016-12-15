@@ -5,21 +5,15 @@ import { logout, getLists } from '../actions';
 
 class App extends Component {
   componentDidMount() {
-    console.log('component did mount', this.props);
-
-    this.props.getLists()
-      .then(() => browserHistory.push('/lists'))
-      .catch((err) => {
-        if (err.status === 401) {
-          browserHistory.push('/signin');
-        }
-      });
+    this.props.getLists();
   }
 
   render() {
     return (
       <div>
         <h2>Shopping List App</h2>
+        <button
+          onClick={this.props.logout}>Logout</button>
         { 
           this.props.children
         }

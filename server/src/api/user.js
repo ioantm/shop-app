@@ -7,7 +7,7 @@ import User from '../models/User';
 
 
 
-export default () => {
+export default (app, sessStore) => {
     const router = Router();
     
     router.get('/login', (req, res, next) => {
@@ -34,8 +34,15 @@ export default () => {
         if (!user) {  
           return res.send({ errors: [info] }, 400);
         }
-
-        res.json(user);
+        
+        req.login(user, (err) => {
+          console.log('login success');
+            if (err) {
+              return next(err);
+            } else {
+              res.json(user);
+            }
+        });
       })(req, res, next);
     });
 
@@ -75,10 +82,19 @@ export default () => {
     });
   });
 
-  router.get('/logout', (req, res) => {
-    console.log('logout');
-    req.logout();
-    res.redirect('/');
+  router.get('/logout', (req, res, next) => {
+    const sid = req.sessionID;
+    console.log('session id ', sid);
+    req.logOut();
+    
+    console.log('req.session', sid);
+    req.session.destroy((err) => {
+      if (err) {
+        next(err);
+      }
+      sessStore.destroy(sid, (err) => console.log('sessStore.destory', req.sessionID));
+      res.send({ message: 'success' });
+    })
   });
 
   return router;

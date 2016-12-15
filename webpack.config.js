@@ -36,6 +36,13 @@ module.exports = env => {
       contentBase: "./public",
       historyApiFallback: true,
       inline: true,
+      proxy: {
+        '/api/**': {
+          target: 'http://localhost:8000/',
+          secure: false,
+          changeOrigin: true,
+        },
+      },
     },
     context: resolve(__dirname, 'src'),
     devtool: env.prod ? 'source-map' : 'eval',

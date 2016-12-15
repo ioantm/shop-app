@@ -13,11 +13,12 @@ import errorHandler from 'errorhandler'
 import { add } from 'ramda';
 import cors from 'cors';
 import mongoStore from 'connect-mongo';
+import request from 'request';
 
 const MongoStore = mongoStore(session);
 
 const port = process.env.PORT || 8000;
-const sessionSecret = process.env.SESSION_SECRET || 's3cret';
+const sessionSecret = process.env.SESSION_SECRET || 's3cretttt';
 const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shoppingList';
 const app = express();
 
@@ -33,33 +34,26 @@ mongoose.connection.on('error', () => {
 app.use(bodyParser.json());
 app.use(expressValidator());
 passportConfig();
+const sesStore = new MongoStore({
+  url: mongodbUri,
+  autoReconnect: true,
+});
+
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  cookie: { 
-    maxAge : (4 * 60 * 60 * 1000),
-    domain: ".app.localhost", 
+  cookie: {
+    secure: false,
   },
   secret: sessionSecret,
-  store: new MongoStore({
-    url: mongodbUri,
-    autoReconnect: true
-  })
+  store: sesStore,
 }));
 
 
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session());  
 
-// Enable cors
-app.use(cors());
-
-app.use((req, res, next) =>{
-  console.log('hmm', req.isAuthenticated());
-  next();
-})
-
-app.use('/api', api());
+app.use('/api', api(app, sesStore));
 app.use(errorHandler());
 app.use(express.static('public'));
 
