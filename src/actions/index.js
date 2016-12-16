@@ -79,7 +79,7 @@ const logoutStart = () => ({
 export const logout = () => (dispatch) => {
   dispatch(logoutStart());
 
-  return logout()
+  return api.logout()
     .then(() => browserHistory.push('/signin'));
 };
 

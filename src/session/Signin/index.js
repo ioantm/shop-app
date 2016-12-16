@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { styled } from 'styletron-react';
+import { Button } from '../../ui';
 
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    console.log('props', this.props);
   }
 
   changeHandler = name => (e) => {
@@ -25,14 +28,14 @@ export default class SignIn extends Component {
           type="password"
           onChange={this.changeHandler('password')}
         />
-        <button
+        <Button
           onClick={() => login({ email, password }).then(() => {
 
             this.props.getLists();
           })}
         >
           SignIn
-        </button>
+        </Button>
       </div>
     )
   }
