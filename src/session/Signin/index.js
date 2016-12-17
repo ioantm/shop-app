@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import { styled } from 'styletron-react';
-import { Button } from '../../ui';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import { Button, Input, Link } from '../../ui';
+import { SiginContainer, loginBtn, inputStyles, RegisterText } from './SigninStyles';
+import Register from '../Register';
 
-export default class SignIn extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    console.log('props', this.props);
   }
 
   changeHandler = name => (e) => {
@@ -20,29 +22,39 @@ export default class SignIn extends Component {
     const { login } = this.props;
 
     return (
-      <div>
-        <input
+      <SiginContainer className="root">
+        <Input
+          placeholder="Enter email"
+          styles={inputStyles}
           onChange={this.changeHandler('email')}
         />
-        <input
+        <Input
+          styles={inputStyles}
+          placeholder="Enter password"
           type="password"
           onChange={this.changeHandler('password')}
         />
         <Button
+          primary
+          styles={loginBtn}
           onClick={() => login({ email, password }).then(() => {
-
             this.props.getLists();
           })}
         >
-          SignIn
+          Login
         </Button>
-      </div>
-    )
+
+        <RegisterText>Not a member? <Link to={'/register'}>Register</Link></RegisterText>
+      </SiginContainer>
+    );
   }
 }
 
 SignIn.propTypes = {
   login: PropTypes.func.isRequired,
 };
+
+
+export default connect(null, actions)(SignIn);
 
 

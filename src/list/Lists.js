@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { listsSelector } from '../reducers';
 
-export default function Lists() {
-    return (
-        <ul>
-            <li>
-                <Link to="list/1">List one</Link>
-            </li>
-            <li>
-                <Link to="list/2">List two</Link>
-            </li>
-            <li>
-                <Link to="list/3">List three</Link>
-            </li>
-            <li>
-                <Link to="list/4">List four</Link>
-            </li> 
-        </ul>
-    );
+function Lists({ lists }) {
+  return (
+    <ul>
+      {
+        lists.map(list => (
+          <li key={list.id}>{list.name}</li>
+        ))
+      }
+    </ul>
+  );
 }
+
+Lists.propTypes = {
+  lists: PropTypes.arrayOf(React.PropTypes.object)
+}
+
+const mapStateToProps = state => ({
+  lists: listsSelector(state),
+});
+
+export default connect(mapStateToProps, null)(Lists);

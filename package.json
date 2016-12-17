@@ -78,6 +78,7 @@
     "method-override": "^2.3.7",
     "mongoose": "^4.6.8",
     "nodemon": "^1.11.0",
+    "normalizr": "^2.3.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "ramda": "^0.22.1",
@@ -91,7 +92,8 @@
     "semantic-ui-css": "^2.2.4",
     "semantic-ui-react": "^0.61.6",
     "styletron-client": "^2.2.0",
-    "styletron-react": "^2.2.1"
+    "styletron-react": "^2.2.1",
+    "styletron-utils": "^2.2.1"
   },
   "scripts": {
     "clean-public": "rimraf public",

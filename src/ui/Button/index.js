@@ -18,12 +18,15 @@ class Button extends Component {
   mouseLeaveHandler = this.toggleMouseHovered(false)
 
   render() {
-    const { children } = this.props;
+    const { children, styles, primary, ...restProps } = this.props;
     const { hovered } = this.state;
 
     return (
       <ButtonStyle
+        {...restProps}
         {...theme}
+        primary={primary}
+        styles={styles}
         hovered={hovered}
         onMouseEnter={this.mouseEnterHandler}
         onMouseLeave={this.mouseLeaveHandler}
@@ -36,6 +39,8 @@ class Button extends Component {
 
 Button.propTypes = {
   children: PropTypes.node,
+  styles: PropTypes.object,
+  primary: PropTypes.bool,
 };
 
 export default Button;

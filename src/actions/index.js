@@ -1,6 +1,8 @@
 // @flow
 import { browserHistory } from 'react-router';
+import { normalize } from 'normalizr';
 import * as api from '../api';
+import * as schema from './schema';
 
 export const LOGIN_REQUEST_START = 'LOGIN_REQUEST_START';
 export const LOGIN_REQUEST_SUCCESS = 'LOGIN_REQUEST_SUCCESS';
@@ -10,9 +12,14 @@ const loginRequest = () => ({
   type: LOGIN_REQUEST_START,
 });
 
-const loginSuccess = user => ({
+const loginSuccess = response => ({
   type: LOGIN_REQUEST_SUCCESS,
-  user,
+  response,
+});
+
+const loginRequestFailed = (error) => ({
+  type: LOGIN_REQUEST_FAILED,
+  error,
 });
 
 export const login = credentials => (dispatch) => {
@@ -20,7 +27,10 @@ export const login = credentials => (dispatch) => {
 
   return api.login(credentials)
     .then(res => res.json())
-    .then(user => dispatch(loginSuccess(user)));
+    .then(
+      response => dispatch(loginSuccess(normalize(response, schema.user))),
+      error => dispatch(loginRequestFailed(error)),
+    );
 };
 
 export const REGISTER_REQUEST_START = 'REGISTER_REQUEST_START';
@@ -44,9 +54,9 @@ const getListsRequest = () => ({
   type: GET_LISTS_REQUEST_START,
 });
 
-const getListsRequestSuccess = lists => ({
+const getListsRequestSuccess = response => ({
   type: GET_LISTS_REQUEST_SUCCESS,
-  lists,
+  response,
 });
 
 const getListsRequestFailed = () => ({
@@ -57,15 +67,18 @@ export const getLists = () => (dispatch) => {
   dispatch(getListsRequest());
 
   api.getLists().then(
-    (response) => {
-      if (response.status !== 401) {
-        getListsRequestSuccess(response);
-        browserHistory.push('/lists');
-      } else {
-        browserHistory.push('/signin');
-      }
-    },
-    (err) => getListsRequestFailed(err));
+    response => response.json(),
+    err => getListsRequestFailed(err),
+  ).then((response) => {
+    if (response.status !== 401) {
+      const normalizedResponse = normalize(response, schema.arrayOfShoppingList);
+      dispatch(getListsRequestSuccess(normalizedResponse));
+      browserHistory.push('/lists');
+    } else {
+      dispatch(getListsRequestFailed());
+      browserHistory.push('/signin');
+    }
+  });
 };
 
 export const LOGOUT_REQUEST_START = 'LOGOUT_REQUEST_START';

@@ -18,7 +18,7 @@ export default {
         System.import('./home/Home')
           .then(loadRoute(cb))
           .catch(errorLoading);
-      }
+      },
     },
     {
       path: 'register',
@@ -26,15 +26,15 @@ export default {
         System.import('./session/Register')
           .then(loadRoute(cb))
           .catch(errorLoading);
-      }
+      },
     },
     {
       path: 'signin',
       getComponent(location, cb) {
-        System.import('./session/SigninContainer')
+        System.import('./session/Signin')
           .then(loadRoute(cb))
           .catch(errorLoading);
-      }
+      },
     },
     {
       path: 'list/:listId',
@@ -42,7 +42,7 @@ export default {
         System.import('./list/ShoppingList')
           .then(loadRoute(cb))
           .catch(errorLoading);
-      }
+      },
     },
     {
       path: 'lists',
@@ -50,7 +50,7 @@ export default {
         System.import('./list/Lists')
           .then(loadRoute(cb))
           .catch(errorLoading);
-      }
+      },
     }
   ]
 }

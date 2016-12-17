@@ -11,7 +11,7 @@ import configureStore from './store/configureStore';
 const styleSheet = document.createElement('style');
 document.head.appendChild(styleSheet);
 const styletron = new StyletronClient([styleSheet]);
-
+window.styletron = styletron;
 const store = configureStore();
 
 ReactDOM.render(
