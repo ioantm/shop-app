@@ -5,7 +5,7 @@ import { LayoutVertical } from '../../ui/layout';
 import { selectedList } from '../../reducers';
 import { ListContainer, ListTitle } from './ShoppingListStyles';
 import * as actions from '../../actions';
-import AddItem from './AddItem';
+import CreateContainer from '../CreateContainer';
 
 const renderItems = items =>
   items.map(item => (
@@ -25,7 +25,11 @@ const ShoppingList =
         <ListTitle>{title}</ListTitle>
         {renderItems(items)}
       </ListContainer>
-      <AddItem addHandler={addItem} />
+      <CreateContainer createHandler={addItem}>
+        {
+          ['+', 'Add']
+        }
+      </CreateContainer>
     </LayoutVertical>
   );
 

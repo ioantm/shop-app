@@ -28,8 +28,17 @@ export default () => {
   });
 
   router.post('/addShoppingItem', (req, res, next) => {
-    console.log('addShoppingItem', req.body);
-    res.send({});
+    List.findById(req.body.listId, (err, list) => {
+      if (err) {
+        next(err);
+      }
+
+      list.shoppingItems.push(req.body.item);
+      list.save((err, updatedList) => {
+        console.log('updated list', updatedList);
+        res.send(req.body.item);
+      });
+    });
   });
 
   router.post('/getListItems', (req, res, next) => {

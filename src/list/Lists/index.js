@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import { listsSelector } from '../../reducers';
 import { ListItem } from '../../ui';
 import { ListsContainer } from './ListsStyles';
-import CreateContainer from './CreateContainer';
+import CreateContainer from '../CreateContainer';
 import { LayoutVertical } from '../../ui/layout';
 import * as actions from '../../actions';
 
@@ -49,7 +49,11 @@ class Lists extends Component {
             ))
           }
         </ListsContainer>
-        <CreateContainer createHandler={createList} />
+        <CreateContainer createHandler={createList}>
+          {
+            ['Add new list', 'Add']
+          }
+        </CreateContainer>
       </LayoutVertical>
     );
   }

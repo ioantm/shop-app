@@ -201,7 +201,7 @@ export const addShoppingItem = (item: {}) =>
     const listId = reducers.selectedListId(getState());
     dispatch(addShoppingItemRequest(item, listId));
 
-    api.addShoppingItem(item)
+    api.addShoppingItem(item, listId)
       .then(response => checkAuth(response))
       .then(respone => respone.json())
       .then(

@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React, { Component } from 'react';
 import { styled } from 'styletron-react';
-import { Button, Input } from '../../ui';
-import { Flex1 } from '../../ui/layout';
+import { Button, Input } from '../ui';
+import { Flex1 } from '../ui/layout';
 
 const StyledContainer = styled('div', {
   display: 'flex',
@@ -16,12 +17,25 @@ const inputStyles = {
   flex: 1,
 };
 
+type Props = {
+  createHandler: () => void,
+  children: Array<string>,
+}
+
 class CreateContainer extends Component {
-  constructor(props) {
+  props: Props;
+
+  state: {
+    pendingCreate: boolean;
+    listName: string;
+  };
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       pendingCreate: false,
+      listName: '',
     };
   }
 
@@ -37,7 +51,7 @@ class CreateContainer extends Component {
           <Button
             onClick={this.createClickHandler}
           >
-            Create new list
+            {this.props.children[0]}
           </Button>
         </StyledContainer>
       )
@@ -48,15 +62,15 @@ class CreateContainer extends Component {
             onChange={this.inputChangeHandler}
             ref={component => component && component.focus()}
           />
-          <Button onClick={this.addListclickHandler}>Add</Button>
+          <Button onClick={this.addListclickHandler}>
+            {
+              this.props.children[1]
+            }
+          </Button>
         </StyledContainer>
       )
     );
   }
 }
-
-CreateContainer.propTypes = {
-  createHandler: PropTypes.func.isRequired,
-};
 
 export default CreateContainer;
