@@ -33,5 +33,25 @@ export const logout = () =>
     method: 'GET',
   });
 
+export const createList = list =>
+  fetch('/api/lists/createList', {
+    method: 'POST',
+    body: JSON.stringify(list),
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+  });
+
+export const addShoppingItem = (item, listId) =>
+  fetch('/api/lists/addShoppingItem', {
+    method: 'POST',
+    body: JSON.stringify({ item, listId }),
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': "application/json",
+    }),
+  });
+
 
 

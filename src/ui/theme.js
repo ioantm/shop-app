@@ -40,7 +40,7 @@ export const linkStyles = {
   lineHeight: '24px',
   fontWeight: '600',
   fontFamily: theme.fontFamily,
-  textDecoration: 'none',
+  textDecoration: 'none'
 };
 
 // input
@@ -67,5 +67,16 @@ export const inputTheme = {
 };
 
 export const inputFocusColor = '#00cceb';
+
+// list
+
+export const listItemTheme = {
+  borderBottom: '1px solid rgba(0,0,0,0.15)',
+  borderTop: '1px solid rgba(0,0,0,0.15)',
+  padding: '12px 24px',
+  display: 'flex',
+  listStyleType: 'none',
+  fontFamily: theme.fontFamily,
+};
 
 export default theme;

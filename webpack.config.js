@@ -30,10 +30,12 @@ module.exports = env => {
     output: {
       filename: 'bundle.[name].[chunkhash].js',
       path: resolve(__dirname, 'public'),
+      publicPath: '/',
       pathinfo: true,
     },
     devServer: {
       contentBase: "./public",
+      noInfo: true,
       historyApiFallback: true,
       inline: true,
       proxy: {

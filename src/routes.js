@@ -21,7 +21,7 @@ export default {
       },
     },
     {
-      path: 'register',
+      path: '/register',
       getComponent(location, cb) {
         System.import('./session/Register')
           .then(loadRoute(cb))
@@ -29,7 +29,7 @@ export default {
       },
     },
     {
-      path: 'signin',
+      path: '/signin',
       getComponent(location, cb) {
         System.import('./session/Signin')
           .then(loadRoute(cb))
@@ -37,7 +37,7 @@ export default {
       },
     },
     {
-      path: 'list/:listId',
+      path: '/lists/:listId',
       getComponent(location, cb) {
         System.import('./list/ShoppingList')
           .then(loadRoute(cb))
@@ -45,7 +45,7 @@ export default {
       },
     },
     {
-      path: 'lists',
+      path: '/lists',
       getComponent(location, cb) {
         System.import('./list/Lists')
           .then(loadRoute(cb))

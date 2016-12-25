@@ -10,6 +10,10 @@ class Input extends Component {
     };
   }
 
+  focus() {
+    this.input && this.input.focus();
+  }
+
   focusHandler = () => this.setState({ focused: true })
   blurHandler = () => this.setState({ focused: false })
   containerClickHandler = () => this.input.focus()
