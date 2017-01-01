@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const login = (credentials) =>
   fetch('/api/user/login', {
     method: 'POST',

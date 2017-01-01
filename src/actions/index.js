@@ -36,11 +36,11 @@ const getListsRequestFailed = () => ({
 export const getLists = () => (dispatch: Dispatch) => {
   dispatch(getListsRequest());
 
-  api.getLists().then(
+  return api.getLists().then(
     (response) => {
       if (response.status === 401) {
         dispatch(getListsRequestFailed());
-        browserHistory.push('/signin');
+        //browserHistory.push('/signin');
       }
       return response.json();
     },
@@ -53,7 +53,7 @@ export const getLists = () => (dispatch: Dispatch) => {
       );
       dispatch(getListsRequestSuccess(normalizedResponse));
       if (window.location.pathname.split('/')[1] !== 'lists') {
-        browserHistory.push('/lists');
+        //browserHistory.push('/lists');
       }
     } else {
       dispatch(getListsRequestFailed(response));
