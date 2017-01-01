@@ -2,13 +2,33 @@ import { combineReducers } from 'redux';
 import * as actions from '../actions';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-const listsById = (state = {}, action) => {
+const list = (state, action) => {
+  switch (action.type) {
+    case actions.ADD_SHOPPING_ITEM_SUCCESS:
+    console.log('list', state, action);
+      return Object.assign({}, state, {
+        shoppingItems: [...state.shoppingItems, action.response.result],
+      });
+    default:
+      return state;
+  }
+};
+
+const byId = (state = {}, action) => {
   switch (action.type) {
     case actions.LOGOUT_REQUEST_SUCCESS:
       return {};
     default:
-      if (action.response && action.response.entities) {
+      if (action.response && action.response.entities.lists) {
         return { ...state, ...action.response.entities.lists };
+      }
+
+      if (action.listId) {
+        return Object.assign(
+          {},
+          state,
+          { [action.listId]: list(state[action.listId], action) },
+        );
       }
       return state;
   }
@@ -27,6 +47,6 @@ const selectedListId = (state = null, action) => {
 };
 
 export default combineReducers({
-  listsById,
+  byId,
   selectedListId,
 });

@@ -9,7 +9,7 @@ import CreateContainer from '../CreateContainer';
 
 const renderItems = items =>
   items.map(item => (
-    <ListItem>{item.name}</ListItem>
+    <ListItem key={item._id}>{item.name}</ListItem>
   ));
 
 const ShoppingList =
@@ -35,7 +35,6 @@ const ShoppingList =
 
 const mapStateToProps = (state) => {
   const list = selectedList(state) || { name: '', shoppingItems: [] };
-
   return {
     title: list.name,
     items: list.shoppingItems,

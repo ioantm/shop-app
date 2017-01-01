@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
@@ -6,9 +8,30 @@ import { styled } from 'styletron-react';
 import { getSessionUserId } from '../reducers';
 import { Button } from '../ui';
 
+type Props = {
+  children: {},
+  logout: () => void,
+  getLists: () => void,
+  haveSession: boolean,
+  isLoading: boolean,
+};
+
 class App extends Component {
+  props: Props;
+
   componentDidMount() {
     this.props.getLists();
+  }
+
+  getContent() {
+    return (
+      <AppContainer>
+        <h2>Shopping List App</h2>
+        {
+          this.props.children
+        }
+      </AppContainer>
+    );
   }
 
   render() {
@@ -22,12 +45,7 @@ class App extends Component {
             Logout
           </Button>
         </AppHeader>
-        <AppContainer>
-          <h2>Shopping List App</h2>
-          {
-            this.props.children
-          }
-        </AppContainer>
+        { this.props.isLoading ? 'Loading... ' : this.getContent() }
       </div>
     );
   }
@@ -47,13 +65,6 @@ const AppHeader = styled('div', {
   flexDirection: 'row',
   paddingRight: '10px',
 });
-
-App.propTypes = {
-  children: React.PropTypes.object,
-  logout: React.PropTypes.func,
-  getLists: React.PropTypes.func.isRequired,
-  haveSession: React.PropTypes.bool,
-};
 
 const mapDispatchToProps = dispatch => ({
   getLists: () => dispatch(getLists()),

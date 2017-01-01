@@ -34,9 +34,13 @@ export default () => {
       }
 
       list.shoppingItems.push(req.body.item);
+      const addedItem = list.shoppingItems[list.shoppingItems.length - 1];
+      console.log('addedItem', addedItem);
       list.save((err, updatedList) => {
-        console.log('updated list', updatedList);
-        res.send(req.body.item);
+        if (err) {
+          next(err);
+        }
+        res.send(addedItem);
       });
     });
   });

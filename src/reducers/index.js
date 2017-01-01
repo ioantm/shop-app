@@ -1,26 +1,57 @@
 // @flow
 import { combineReducers } from 'redux';
-import sessionUserId from './sessionUserId';
-import items from './items';
-import lists from './lists';
 import { routerReducer } from 'react-router-redux';
+import sessionUserId from './sessionUserId';
+import * as fromShoppingItems from './shoppingItems';
+import lists from './lists';
+import { isLoading } from './loading';
 
 const rootReducer = combineReducers({
   sessionUserId,
   lists,
-  items,
+  shoppingItems: fromShoppingItems.default,
+  isLoading,
   routing: routerReducer,
 });
 
-export const getSessionUserId = (state: object) => state.sessionUserId;
+type State = {
+  sessionUserId: string,
+  lists: {
+    byId: {};
+    selectedListId: string,
+  },
+  shoppingItems: {
+    byId: {}
+  },
+  isLoading: boolean,
+  routing: {}
+}
+
+export const getSessionUserId = (state: State) => state.sessionUserId;
 
 export default rootReducer;
 
-export const listsSelector = state =>
-  Object.keys(state.lists.listsById).map(lid => state.lists.listsById[lid]);
+export const listsSelector = (state: State) =>
+  Object.keys(state.lists.byId).map(lid => state.lists.byId[lid]);
 
-export const selectedListId = state =>
+export const isLoadingSelector = (state: State) => state.isLoading;
+
+export const selectedListId = (state: State) =>
   state.lists.selectedListId;
 
-export const selectedList = state =>
-  state.lists.listsById[selectedListId(state)];
+export const selectedList = (state: State) => {
+  const listId = selectedListId(state);
+  const getShoppingItem = fromShoppingItems.getShoppingItem(state.shoppingItems);
+  const list = state.lists.byId[listId];
+  if (!list) {
+    return list;
+  }
+
+  return Object.assign(
+    {},
+    list,
+    {
+      shoppingItems: list.shoppingItems.map(itemId => getShoppingItem(itemId)),
+    },
+  );
+};

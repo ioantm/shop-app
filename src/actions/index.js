@@ -186,9 +186,10 @@ const addShoppingItemRequest = item => ({
   item,
 });
 
-const addShoppingItemSuccess = respone => ({
+const addShoppingItemSuccess = (response, listId) => ({
   type: ADD_SHOPPING_ITEM_SUCCESS,
-  respone,
+  response,
+  listId,
 });
 
 const addShoppingItemFailure = error => ({
@@ -206,7 +207,7 @@ export const addShoppingItem = (item: {}) =>
       .then(respone => respone.json())
       .then(
         response => dispatch(
-          addShoppingItemSuccess(normalize(response, schema.shoppingItem)),
+          addShoppingItemSuccess(normalize(response, schema.shoppingItem), listId),
         ),
         error => dispatch(addShoppingItemFailure(error)),
       );

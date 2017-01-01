@@ -1,10 +1,14 @@
 import mongoose from 'mongoose';
 
+const shoppingItem = new mongoose.Schema({
+  name: String
+});
+
 const listSchema = new mongoose.Schema({
   name: String,
   creator: String,
   assignedUsers: Array,
-  shoppingItems: Array,
+  shoppingItems: [shoppingItem],
 });
 
 const List = mongoose.model('List', listSchema);
