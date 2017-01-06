@@ -1,7 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { listsSelector } from '../../reducers';
 import { ListItem } from '../../ui';
 import { ListsContainer } from './ListsStyles';
@@ -65,6 +63,7 @@ Lists.propTypes = {
   lists: PropTypes.arrayOf(React.PropTypes.object),
   createList: PropTypes.func.isRequired,
   selectList: PropTypes.func.isRequired,
+  getLists: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -75,8 +74,8 @@ export const mapDispatchToProps = dispatch => ({
   createList: list => dispatch(actions.createList(list)),
   selectList: (list) => {
     dispatch(actions.selectList(list._id));
-    browserHistory.push(`/lists/${list._id}`);
   },
+  getLists: () => dispatch(actions.getLists()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lists);

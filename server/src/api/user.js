@@ -34,7 +34,7 @@ export default (app, sessStore) => {
         if (!user) {  
           return res.send({ errors: [info] }, 400);
         }
-        
+       
         req.login(user, (err) => {
           console.log('login success');
             if (err) {

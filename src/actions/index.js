@@ -1,5 +1,4 @@
 // @flow
-import { browserHistory } from 'react-router';
 import { normalize } from 'normalizr';
 import * as api from '../api';
 import * as schema from './schema';
@@ -9,8 +8,8 @@ type Dispatch = ({}) => ({});
 
 const checkAuth = (response) => {
   if (response.status == 401) {
-    browserHistory.push('/signin');
-    throw ({ message: 'not authenticated' });
+    //browserHistory.push('/signin');
+    throw ({ message: 'not authenticated', status: response.status });
   }
 
   return response;
@@ -29,36 +28,26 @@ const getListsRequestSuccess = response => ({
   response,
 });
 
-const getListsRequestFailed = () => ({
+const getListsRequestFailed = error => ({
   type: GET_LISTS_REQUEST_FAILED,
+  error,
 });
 
-export const getLists = () => (dispatch: Dispatch) => {
+export const getLists = () => (dispatch: Dispatch, getState) => {
   dispatch(getListsRequest());
 
-  return api.getLists().then(
-    (response) => {
-      if (response.status === 401) {
-        dispatch(getListsRequestFailed());
-        //browserHistory.push('/signin');
-      }
-      return response.json();
-    },
-    err => getListsRequestFailed(err),
-  ).then((response) => {
-    if (!response.errors) {
-      const normalizedResponse = normalize(
-        response,
-        schema.arrayOfShoppingList,
-      );
-      dispatch(getListsRequestSuccess(normalizedResponse));
-      if (window.location.pathname.split('/')[1] !== 'lists') {
-        //browserHistory.push('/lists');
-      }
-    } else {
-      dispatch(getListsRequestFailed(response));
-    }
-  });
+  return api.getLists()
+    .then(response => checkAuth(response))
+    .then(
+      (response) => {
+        const normalizedResponse = normalize(
+          response,
+          schema.arrayOfShoppingList,
+        );
+        dispatch(getListsRequestSuccess(normalizedResponse));
+      },
+     error => dispatch(getListsRequestFailed(error)),
+  );
 };
 
 export const CREATE_LIST_REQUEST_START = 'CREATE_LIST_REQUEST_START';
@@ -173,7 +162,7 @@ export const logout = () => (dispatch) => {
   return api.logout()
     .then(() => {
       dispatch(logoutSuccess());
-      browserHistory.push('/signin');
+      //browserHistory.push('/signin');
     });
 };
 
@@ -214,13 +203,30 @@ export const addShoppingItem = (item: {}) =>
   };
 
 // select list item
-
 export const SELECT_LIST = 'SELECT_LIST';
 
 export const selectList = (listId: string) => ({
   type: SELECT_LIST,
   listId,
 });
+
+// router
+
+export const NAVIGATE = 'NAVIGATE';
+
+export const navigate = (location: {}, action: string) => ({
+  type: NAVIGATE,
+  location,
+  action,
+});
+
+export const navigateToSignin = () =>
+  navigate({ pathname: '/signin' }, 'PUSH');
+
+export const navigateToLists = () =>
+  navigate({ pathname: '/lists' }, 'PUSH');
+
+
 
 
 

@@ -2,6 +2,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
+import { authMiddleware } from '../middlewares';
 
 const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
@@ -12,7 +13,7 @@ const composeEnhancers =
       }) : compose;
 
 const enhancer = composeEnhancers(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk, authMiddleware),
   );
 
 

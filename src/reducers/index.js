@@ -1,17 +1,17 @@
 // @flow
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import sessionUserId from './sessionUserId';
 import * as fromShoppingItems from './shoppingItems';
 import lists from './lists';
 import { isLoading } from './loading';
+import router from './router';
 
 const rootReducer = combineReducers({
   sessionUserId,
   lists,
   shoppingItems: fromShoppingItems.default,
   isLoading,
-  routing: routerReducer,
+  router,
 });
 
 type State = {

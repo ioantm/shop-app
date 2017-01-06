@@ -1,9 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { logout, getLists } from '../actions';
+import { logout, getLists, navigateToLists } from '../actions';
 import { styled } from 'styletron-react';
 import { getSessionUserId } from '../reducers';
 import { Button } from '../ui';
@@ -11,16 +10,18 @@ import { Button } from '../ui';
 type Props = {
   children: {},
   logout: () => void,
-  getLists: () => void,
+  getLists: () => Promise<[]>,
   haveSession: boolean,
   isLoading: boolean,
+  navigateToLists: () => Promise<*>
 };
 
 class App extends Component {
   props: Props;
 
   componentDidMount() {
-    this.props.getLists();
+    this.props.getLists()
+      .then(() => this.dispatch(this.props.navigateToLists()));
   }
 
   getContent() {
@@ -69,6 +70,7 @@ const AppHeader = styled('div', {
 const mapDispatchToProps = dispatch => ({
   getLists: () => dispatch(getLists()),
   logout: () => dispatch(logout()),
+  navigateToLists: (location, action) => dispatch(navigateToLists()),
 });
 
 const mapStateToProps = state => ({

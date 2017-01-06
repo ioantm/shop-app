@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+const root = 'http://localhost:8080';
+
 export const login = (credentials) =>
   fetch('/api/user/login', {
     method: 'POST',
@@ -21,7 +23,7 @@ export const register = (userData) =>
   });
 
 export const getLists = () =>
-  fetch('/api/lists', {
+  fetch(`${root}/api/lists`, {
     method: 'GET',
     credentials: 'include',
     headers: new Headers({
