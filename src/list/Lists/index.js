@@ -1,10 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { listsSelector } from '../../reducers';
-import { ListItem } from '../../ui';
+import { ListItem, Button } from '../../ui';
 import { ListsContainer } from './ListsStyles';
 import CreateContainer from '../CreateContainer';
-import { LayoutVertical } from '../../ui/layout';
+import { LayoutVertical, LayoutHorizontal, Flex1 } from '../../ui/layout';
 import * as actions from '../../actions';
 
 const ListItemView = ({ selectList, children, list, ...rest }) =>(
@@ -23,8 +23,16 @@ ListItemView.propTypes = {
 };
 
 class Lists extends Component {
-  listItemTapHandler = (list) => {
-    console.log('tap handler', list);
+  props: { // eslint-disable-line
+    lists: Array<{}>,
+    createList: () => any,
+    selectList: () => any,
+    getListsRequest: () => any,
+    deleteList: () => any,
+  }
+
+  componentDidMount() {
+    this.props.getListsRequest();
   }
 
   render() {
@@ -42,7 +50,15 @@ class Lists extends Component {
                 selectList={selectList}
                 key={list._id}
               >
-                {list.name}
+                <LayoutHorizontal flex={1}>
+                  {list.name}
+                  <Flex1 />
+                  <Button
+                    onClick={() => this.props.deleteList(list._id)}
+                  >
+                    Delete
+                  </Button>
+                </LayoutHorizontal>
               </ListItemView>
             ))
           }
@@ -57,25 +73,17 @@ class Lists extends Component {
   }
 }
 
-
-
-Lists.propTypes = {
-  lists: PropTypes.arrayOf(React.PropTypes.object),
-  createList: PropTypes.func.isRequired,
-  selectList: PropTypes.func.isRequired,
-  getLists: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = state => ({
   lists: listsSelector(state),
 });
 
 export const mapDispatchToProps = dispatch => ({
-  createList: list => dispatch(actions.createList(list)),
+  createList: list => dispatch(actions.createListRequest(list)),
   selectList: (list) => {
     dispatch(actions.selectList(list._id));
   },
-  getLists: () => dispatch(actions.getLists()),
+  getListsRequest: () => dispatch(actions.getListsRequest()),
+  deleteList: listId => dispatch(actions.deleteList(listId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lists);

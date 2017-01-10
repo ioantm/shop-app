@@ -55,3 +55,5 @@ export const selectedList = (state: State) => {
     },
   );
 };
+
+export const getCurrentPathname = state => state.router.location.pathname;

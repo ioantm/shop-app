@@ -49,9 +49,9 @@ export default () => {
  */
 exports.isAuthenticated = (req, res, next) => {
   console.log('isAuthenticated', req.isAuthenticated(), req.method, req.url, req.path);
-  // if (req.method === 'OPTIONS' || req.isAuthenticated()) {
-  //   return next();
-  // }
+  if (req.method === 'OPTIONS' || req.isAuthenticated()) {
+    return next();
+  }
   return res.status(401).send({ errors: [{ msg: 'Not authenticated' }] });
 };
 

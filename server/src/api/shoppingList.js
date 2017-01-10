@@ -27,6 +27,16 @@ export default () => {
     });
   });
 
+  router.delete('/:listId', (req, res, next) => {
+    List.findOneAndRemove({ _id: req.params.listId }, (err) => {
+      if (err) {
+        next(err);
+      }
+
+      res.send('message': 'success');
+    });
+  });
+
   router.post('/addShoppingItem', (req, res, next) => {
     List.findById(req.body.listId, (err, list) => {
       if (err) {

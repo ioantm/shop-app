@@ -19,7 +19,7 @@ class SignIn extends Component {
 
   render() {
     const { email, password } = this.state;
-    const { login } = this.props;
+    const { loginRequest } = this.props;
 
     return (
       <SiginContainer className="root">
@@ -37,9 +37,7 @@ class SignIn extends Component {
         <Button
           primary
           styles={loginBtn}
-          onClick={() => login({ email, password }).then(() => {
-            this.props.getLists();
-          })}
+          onClick={() => loginRequest({ email, password })}
         >
           Login
         </Button>
@@ -51,9 +49,8 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-  login: PropTypes.func.isRequired,
+  loginRequest: PropTypes.func.isRequired,
 };
-
 
 export default connect(null, actions)(SignIn);
 

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Provider, connect } from 'react-redux';
-import { Match } from 'react-router';
+import { Match, Redirect } from 'react-router';
 import { ControlledBrowserRouter as Router } from 'react-router-addons-controlled';
 import App from '../app/App';
 import asyncComponent from './asyncComponent';
@@ -46,14 +46,16 @@ const Root = ({ store, history, location, action, dispatch }) =>
       <App>
         <Match
           exactly
-          pattern="/lists"
-          component={AsyncLists}
+          pattern="/"
+          render={() => <Redirect to="/lists" />}
         />
+
         <Match
           exactly
-          pattern="/"
-          component={AsyncHome}
+          pattern="/lists*"
+          component={AsyncLists}
         />
+
         <Match
           exactly
           pattern="/signin"

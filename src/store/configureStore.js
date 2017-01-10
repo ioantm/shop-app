@@ -1,8 +1,10 @@
 // @flow
 import { createStore, applyMiddleware, compose } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import { authMiddleware } from '../middlewares';
+import { mainEpic } from '../epics';
 
 const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
@@ -12,8 +14,10 @@ const composeEnhancers =
         // Specify here name, actionsBlacklist, actionsCreators and other options
       }) : compose;
 
+const epicMiddleware = createEpicMiddleware(mainEpic);
+
 const enhancer = composeEnhancers(
-    applyMiddleware(thunk, authMiddleware),
+    applyMiddleware(thunk, epicMiddleware),
   );
 
 

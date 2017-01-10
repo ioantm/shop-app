@@ -7,13 +7,15 @@ export const LayoutVertical = styled('div', ({ stretch }) => Object.assign({
   alignSelf: 'stretch',
 }));
 
-export const LayoutHorizontal = styled('div', ({ stretch, center }) => Object.assign({
+export const LayoutHorizontal = styled('div', ({ stretch, center, flex }) => Object.assign({
   display: 'flex',
   flexDirection: 'row',
 }, Boolean(stretch) && {
   alignSelf: 'stretch',
 }, center && {
   alignItems: 'center',
+}, flex && {
+  flex,
 }));
 
 export const Flex1 = styled('span', {
