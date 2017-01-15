@@ -1,11 +1,13 @@
 import { styled } from 'styletron-react';
 
-export const LayoutVertical = styled('div', ({ stretch }) => Object.assign({
+export const LayoutVertical = styled('div', ({ stretch, flex, ...rest }) => Object.assign({
   display: 'flex',
   flexDirection: 'column',
 }, Boolean(stretch) && {
   alignSelf: 'stretch',
-}));
+}, flex && {
+  flex: 1,
+}, rest));
 
 export const LayoutHorizontal = styled('div', ({ stretch, center, flex }) => Object.assign({
   display: 'flex',

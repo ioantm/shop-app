@@ -20,8 +20,10 @@ export default () => {
     //res.send(Object.assign(req.body, { id: Math.random() * 9999 }));
     const list = new List(Object.assign({}, req.body, { creator: req.user.email }));
     list.save((err) => {
-      if (err){
+      if (err) {
+        console.log('err', err);
         next(err);
+        return;
       }
       res.send(list);
     });
@@ -33,7 +35,25 @@ export default () => {
         next(err);
       }
 
-      res.send('message': 'success');
+      res.send({ message: 'success' });
+    });
+  });
+
+  router.delete('/:listId/:itemId', (req, res, next) => {
+    List.findById(req.params.listId, (err, list) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      list.removeShoppingItem(req.params.itemId);
+      list.save((err, updatedList) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        res.send({ message: 'success' });
+      });
     });
   });
 
@@ -41,14 +61,16 @@ export default () => {
     List.findById(req.body.listId, (err, list) => {
       if (err) {
         next(err);
+        return;
       }
 
       list.shoppingItems.push(req.body.item);
       const addedItem = list.shoppingItems[list.shoppingItems.length - 1];
-      console.log('addedItem', addedItem);
+
       list.save((err, updatedList) => {
         if (err) {
           next(err);
+          return;
         }
         res.send(addedItem);
       });

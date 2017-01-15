@@ -2,9 +2,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
-import { authMiddleware } from '../middlewares';
-import { mainEpic } from '../epics';
+import { combineEpics } from 'redux-observable';
+import mainReducer from './mainReducer';
+import listsEpics from './lists/epics';
+import routerEpics from './router/epics';
+import sessionEpics from './session/epics';
+import shoppingListEpics from './shoppingList/epics';
 
 const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
@@ -14,7 +17,14 @@ const composeEnhancers =
         // Specify here name, actionsBlacklist, actionsCreators and other options
       }) : compose;
 
-const epicMiddleware = createEpicMiddleware(mainEpic);
+const epicMiddleware = createEpicMiddleware(
+  combineEpics(
+    listsEpics,
+    routerEpics,
+    sessionEpics,
+    shoppingListEpics,
+  ),
+);
 
 const enhancer = composeEnhancers(
     applyMiddleware(thunk, epicMiddleware),
@@ -22,7 +32,7 @@ const enhancer = composeEnhancers(
 
 
 const configureStore = preloadedState => createStore(
-    rootReducer,
+    mainReducer,
     preloadedState,
     enhancer,
 );

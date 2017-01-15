@@ -22,7 +22,7 @@ const store = configureStore({
 
 ReactDOM.render(
   <StyletronProvider styletron={styletron}>
-    <Root 
+    <Root
       store={store}
       history={history}
     />

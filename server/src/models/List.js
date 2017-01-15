@@ -11,6 +11,10 @@ const listSchema = new mongoose.Schema({
   shoppingItems: [shoppingItem],
 });
 
+listSchema.methods.removeShoppingItem = function removeShoppingItem(id) {
+  this.shoppingItems = this.shoppingItems.filter(item => item._id != id);
+};
+
 const List = mongoose.model('List', listSchema);
 
 export default List;

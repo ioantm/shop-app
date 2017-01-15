@@ -3,28 +3,28 @@ import React from 'react';
 import { Provider, connect } from 'react-redux';
 import { Match, Redirect } from 'react-router';
 import { ControlledBrowserRouter as Router } from 'react-router-addons-controlled';
-import App from '../app/App';
+import App from '../containers/App';
 import asyncComponent from './asyncComponent';
-import * as actions from '../actions';
+import * as rooterActions from '../store/router/actions';
 
-const AsyncLists = asyncComponent(() =>
-  System.import('../list/Lists').then(module => module.default),
+const AsyncListsScreen = asyncComponent(() =>
+  System.import('../containers/ListsScreen').then(module => module.default),
 );
 
 const AsyncHome = asyncComponent(() =>
-  System.import('../home/Home').then(module => module.default),
+  System.import('../components/Home').then(module => module.default),
 );
 
-const AsyncSignin = asyncComponent(() =>
-  System.import('../session/Signin').then(module => module.default),
+const AsyncSigninScreen = asyncComponent(() =>
+  System.import('../containers/SigninScreen').then(module => module.default),
 );
 
-const AsyncShoppingList = asyncComponent(() =>
-  System.import('../list/ShoppingList').then(module => module.default),
+const AsyncShoppingListScreen = asyncComponent(() =>
+  System.import('../containers/ShoppingListScreen').then(module => module.default),
 );
 
-const AsyncRegister = asyncComponent(() =>
-  System.import('../session/Register').then(module => module.default),
+const AsyncRegisterScreen = asyncComponent(() =>
+  System.import('../containers/RegisterScreen').then(module => module.default),
 );
 
 const Root = ({ store, history, location, action, dispatch }) =>
@@ -36,11 +36,11 @@ const Root = ({ store, history, location, action, dispatch }) =>
       history={history}
       onChange={(changedLocation, changedAction) => {
         console.log('changedAction', changedAction, changedLocation);
-          if (changedAction === 'SYNC') {
-            dispatch(actions.navigate(changedLocation, 'PUSH'))
-          } else {
-            dispatch(actions.navigate(changedLocation, changedAction))
-          }
+        if (changedAction === 'SYNC') {
+          //dispatch(actions.navigate(changedLocation, 'PUSH'))
+        } else {
+          dispatch(rooterActions.navigate(changedLocation, changedAction))
+        }
       }}
     >
       <App>
@@ -52,24 +52,24 @@ const Root = ({ store, history, location, action, dispatch }) =>
 
         <Match
           exactly
-          pattern="/lists*"
-          component={AsyncLists}
+          pattern="/lists"
+          component={AsyncListsScreen}
         />
 
         <Match
           exactly
           pattern="/signin"
-          component={AsyncSignin}
+          component={AsyncSigninScreen}
         />
         <Match
           exactly
           pattern="/lists/:listId"
-          component={AsyncShoppingList}
+          component={AsyncShoppingListScreen}
         />
         <Match
           exactly
           pattern="/register"
-          component={AsyncRegister}
+          component={AsyncRegisterScreen}
         />
       </App>
     </Router>

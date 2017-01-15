@@ -75,6 +75,9 @@ export const listItemTheme = {
   borderTop: '1px solid rgba(0,0,0,0.15)',
   padding: '12px 24px',
   display: 'flex',
+  flex: 'none',
+  flexDirection: 'row',
+  alignItems: 'center',
   listStyleType: 'none',
   fontFamily: theme.fontFamily,
 };
