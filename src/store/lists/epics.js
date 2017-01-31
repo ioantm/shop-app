@@ -12,23 +12,41 @@ import { normalize } from 'normalizr';
 import * as listActions from './actions';
 import * as schema from '../../api/schema';
 import * as api from '../../api';
+import getGraph from '../../api/graphql';
 import { checkError } from '../epicsCommonHandlers';
 
-const getListsEpic = actions$ =>
-  actions$.ofType(listActions.GET_LISTS_REQUEST_START)
+const getListsEpic = actions$ => actions$
+  .ofType(listActions.GET_LISTS_REQUEST_START)
+  .map((action) => {
+    let fields = 'name, creator, assignedUsers, id';
+    let args;
+    if (action.loadShoppingItems) {
+      fields = `${fields}, shoppingItems {id, name, completed}`;
+      args = [
+        `{ lists { ${fields} } }`,
+        { ids: action.listIds }
+      ];
+    } else {
+      args = [`{ lists { ${fields} }}`];
+    }
+    return [...args, { ids: action.listIds }];
+  })
   .mergeMap(
-    () =>
-    fromPromise(api.getLists())
-    .map(checkError)
-    .mergeMap(response => fromPromise(response.json()))
-    .map(response => normalize(
-          response,
-          schema.arrayOfShoppingList,
-        ))
-    .mergeMap(normalized => Observable.of(listActions.getListsRequestSuccess(normalized)))
-    .catch(error => Observable.of(listActions.getListsRequestFailed(error))),
+    args => fromPromise(getGraph(...args))
+      .map(
+        response =>
+          normalize(response.lists, schema.arrayOfShoppingList)
+      )
+      .mergeMap(
+        normalized =>
+          Observable.of(
+            listActions.getListsRequestSuccess(normalized)
+          )
+      )
+      .catch(
+        error =>
+          Observable.of(listActions.getListsRequestFailed(error))
+      )
   );
 
-export default combineEpics(
-  getListsEpic,
-);
+export default combineEpics(getListsEpic);

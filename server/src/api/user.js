@@ -77,7 +77,14 @@ export default (app, sessStore) => {
         if (err) {
           return next(err);
         }
-        res.send(user);
+
+        req.login(user, (err) => {
+            if (err) {
+              return next(err);
+            } else {
+              res.send(user);
+            }
+        });
       });
     });
   });

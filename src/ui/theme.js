@@ -1,12 +1,12 @@
-const theme = {
+export const theme = {
   primaryColor: '#8657D9',
   fontFamily: '"Work Sans",Arial,sans-serif',
   buttonColor: 'black',
   buttonColorPrimary: 'white',
+  inputFocusColor: '#00cceb'
 };
 
 // buttons
-
 export const buttonTheme = {
   display: 'inline-block',
   boxSizing: 'border-box',
@@ -24,16 +24,15 @@ export const buttonTheme = {
   border: `2px solid ${theme.primaryColor}`,
   color: theme.buttonColor,
   background: 'transparent',
-  transition: '0.1s ease-in-out',
+  transition: '0.1s ease-in-out'
 };
 
 export const primaryButtonTheme = {
   color: theme.buttonColorPrimary,
-  background: theme.primaryColor,
+  background: theme.primaryColor
 };
 
 // link
-
 export const linkStyles = {
   color: theme.primaryColor,
   fontSize: '1.1875rem',
@@ -44,7 +43,6 @@ export const linkStyles = {
 };
 
 // input
-
 export const inputContainerTheme = {
   padding: '6px 24px',
   border: '1px solid rgba(0,0,0,0.15)',
@@ -52,7 +50,7 @@ export const inputContainerTheme = {
   display: 'flex',
   cursor: 'text',
   marginBottom: '10px',
-  color: '#333',
+  color: '#333'
 };
 
 export const inputTheme = {
@@ -63,13 +61,12 @@ export const inputTheme = {
   fontSize: '1rem',
   lineHeight: '1.5',
   backgroundColor: 'transparent',
-  outline: 'none',
+  outline: 'none'
 };
 
 export const inputFocusColor = '#00cceb';
 
 // list
-
 export const listItemTheme = {
   borderBottom: '1px solid rgba(0,0,0,0.15)',
   borderTop: '1px solid rgba(0,0,0,0.15)',
@@ -79,7 +76,7 @@ export const listItemTheme = {
   flexDirection: 'row',
   alignItems: 'center',
   listStyleType: 'none',
-  fontFamily: theme.fontFamily,
+  fontFamily: theme.fontFamily
 };
 
 export default theme;

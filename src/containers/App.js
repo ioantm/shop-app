@@ -1,18 +1,19 @@
 // @flow
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import styled from 'styled-components';
 import * as sessionActions from '../store/session/actions';
-import { styled } from 'styletron-react';
-import { getSessionUserId } from '../store/mainReducer';
-import { Button } from '../ui';
-import { LayoutVertical } from '../ui/layout';
+import {getSessionUserId} from '../store/mainReducer';
+import {Button} from '../ui';
+import {Flex1} from '../ui/layout';
+import {LayoutVertical} from '../ui/layout';
 
 type Props = {
   children: {},
-  logout: () => void,
+  logout(): void,
   haveSession: boolean,
-  isLoading: boolean,
+  isLoading: boolean
 };
 
 class App extends Component {
@@ -22,52 +23,49 @@ class App extends Component {
     return (
       <AppContainer>
         <h2>Shopping List App</h2>
-        {
-          this.props.children
-        }
+        {this.props.children}
       </AppContainer>
     );
   }
 
   render() {
     return (
-      <LayoutVertical height="100vh">
+      <Container height="100vh">
         <AppHeader>
           <Flex1 />
-          <Button
-            onClick={this.props.logout}
-          >
+          <Button onClick={this.props.logout}>
             Logout
           </Button>
         </AppHeader>
-        { this.props.isLoading ? 'Loading... ' : this.getContent() }
-      </LayoutVertical>
+        {this.props.isLoading ? 'Loading... ' : this.getContent()}
+      </Container>
     );
   }
 }
 
-const AppContainer = styled('div', {
-  display: 'flex',
-  flex: 1,
-  flexDirection: 'column',
-  alignItems: 'center',
-});
+const Container = styled(LayoutVertical)`
+  height: 100vh;
+`;
 
-const Flex1 = styled('div', {
-  flex: 1,
-});
-const AppHeader = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-  paddingRight: '10px',
-});
+const AppContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const AppHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-right: 10px;
+`;
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(sessionActions.logoutRequest()),
+  logout: () => dispatch(sessionActions.logoutRequest())
 });
 
 const mapStateToProps = state => ({
-  haveSession: getSessionUserId(state) != null,
+  haveSession: getSessionUserId(state) != null
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -10,6 +10,10 @@
   },
   "rules": {
       "max-len": [1, 90, 2, {"ignoreComments": true}],
+      "object-curly-spacing":"off",
+      "comma-dangle":"off",
+      "react/sort-comp": "off",
+      "no-underscore-dangle": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

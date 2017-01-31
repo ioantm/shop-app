@@ -7,8 +7,10 @@ export const GET_LISTS_REQUEST_START = 'GET_LISTS_REQUEST_START';
 export const GET_LISTS_REQUEST_SUCCESS = 'GET_LISTS_REQUEST_SUCCESS';
 export const GET_LISTS_REQUEST_FAILED = 'GET_LISTS_REQUEST_FAILED';
 
-export const getListsRequest = (): Action => ({
+export const getListsRequest = (listIds, loadShoppingItems): Action => ({
   type: GET_LISTS_REQUEST_START,
+  listIds,
+  loadShoppingItems
 });
 
 export const getListsRequestSuccess = (response): Action => ({

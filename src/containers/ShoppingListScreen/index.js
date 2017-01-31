@@ -1,72 +1,98 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as shoppingListActions from '../../store/shoppingList/actions';
+import * as listsActions from '../../store/lists/actions';
 import ShoppingList from '../../components/ShoppingList';
-import { listsMap, shoppingItemsMap } from '../../store/mainReducer';
+import {
+  getShoppingItemsSelector
+} from '../../store/shoppingList/selectors';
+import { listSelector } from '../../store/lists/selectors';
+import * as shoppingListSelectors from '../../store/shoppingList/selectors';
 
-class ShoppingListScreen extends PureComponent {
-  props: {//eslint-disable-line
-    shoppingItems: Array<object>,
-    name: string,
-    getLists: () => any,
-    addItem: () => any,
-    deleteItem: (itemId: string) => any,
-  }
-
+class ShoppingListScreen extends Component {
+  props: {
+    //eslint-disable-line
+    list: Object,
+    getLists(listIds: [string]): any,
+    addItem(): any,
+    deleteItem(itemId: string): any,
+    changeChecked(id: string, checked: boolean): any,
+    params: { listId: string }
+  };
   componentDidMount() {
-    const {
-      getLists,
-      shoppingItems,
-    } = this.props;
-
-    if (!shoppingItems) {
-      getLists();
+    const { getLists, list } = this.props;
+    if (!list) {
+      getLists([ this.props.params.listId ]);
     }
   }
+
+  completionCheckboxChangeHandler = (id, checked) =>
+    this.props.changeChecked(id, checked);
+  deleteClickHandler = id => this.props.deleteItem(id);
+  addItemClickHandler = item => this.props.addItem(item);
 
   render() {
-    if (!this.props.shoppingItems) {
+    if (!this.props.list) {
       return <p>Loading...</p>;
     }
-    const { shoppingItems, name, deleteItem } = this.props;
+    const { list } = this.props;
+    console.log('render ShoppingListScreen', list.shoppingItems);
     return (
       <ShoppingList
-        addItem={this.props.addItem}
-        deleteItem={deleteItem}
-        items={shoppingItems}
-        title={name}
+        addItemClick={this.addItemClickHandler}
+        deleteClick={this.deleteClickHandler}
+        completionCheckboxChange={
+          this.completionCheckboxChangeHandler
+        }
+        items={list.shoppingItems}
+        title={list.name}
       />
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const list = listsMap(state)[ownProps.params && ownProps.params.listId];
-  let shoppingItems;
-  let name;
-
-  if (list) {
-    shoppingItems = list.shoppingItems.filter(id => id)
-                             .map(id => shoppingItemsMap(state)[id]);
-    name = list.name;
-  }
-
+  const listId = ownProps.params && ownProps.params.listId;
+  const list = listSelector(state, listId);
   return {
-    name,
-    shoppingItems,
+    list: list &&
+      Object.assign({}, list, {
+        shoppingItems: getShoppingItemsSelector(state, listId)
+      })
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addItem: item => 
-    dispatch(shoppingListActions.addShoppingItemRequest(item, ownProps.params.listId)),
+  addItem: item =>
+    dispatch(
+      shoppingListActions.addShoppingItemRequest(
+        item,
+        ownProps.params.listId
+      )
+    ),
+
   deleteItem: itemId =>
-    dispatch(shoppingListActions.deleteShoppingItemRequest(itemId, ownProps.params.listId)),
-  getLists: () => dispatch(shoppingListActions.getListsRequest()),
+    dispatch(
+      shoppingListActions.deleteShoppingItemRequest(
+        itemId,
+        ownProps.params.listId
+      )
+    ),
+
+  getLists: listIds =>
+    dispatch(listsActions.getListsRequest(listIds, true)),
+
+  changeChecked: (id, checked) => {
+    dispatch(
+      shoppingListActions.editShoppingItemRequest(
+        id,
+        { completed: checked },
+        ownProps.params.listId
+      )
+    );
+  }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ShoppingListScreen);
-
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ShoppingListScreen
+);

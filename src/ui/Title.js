@@ -1,6 +1,5 @@
-import { styled } from 'styletron-react';
-import theme from './theme';
+import styled from 'styled-components';
 
-export default styled('h2', {
-  fontFamily: theme.fontFamily,
-});
+export default styled.h2`
+  fontFamily: ${props => props.theme.fontFamily};
+`

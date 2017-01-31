@@ -1,44 +1,69 @@
-import React from 'react';
-import { ListItem, Button } from '../../ui';
+import React, { PureComponent, Component } from 'react';
 import { LayoutVertical } from '../../ui/layout';
-import { ListContainer, ListTitle, ItemText } from './ShoppingListStyles';
+import { ListContainer, ListTitle } from './ShoppingListStyles';
 import AddInput from '../AddInput';
-
-const renderItems = (items, deleteItem) =>
-  items.map(({ name, _id }) => (
-    <ListItem
-      alignSelf="end"
-      key={_id}
-    >
-      <ItemText>
-        {name}
-      </ItemText>
-      <Button
-        onClick={() => deleteItem(_id)}
-      >
-        Delete
-      </Button>
-    </ListItem>
-  ));
+import ShoppingListItem from './ShoppingListItem';
 
 type Props = {
   items: Array<object>,
   title: string,
-  addItem: () => void,
-  deleteItem: (id: string) => void,
+  addItemClick(): void,
+  deleteClick(id: string): void,
+  completionCheckboxChange(id: string, checked: boolean): any
 };
 
-export default ({ items, title, addItem, deleteItem }: Props) =>
-  (
-    <LayoutVertical flex stretch>
-      <ListTitle>{title}</ListTitle>
+class List extends PureComponent {
+  props: {
+    items: Array<node>,
+    deleteClick(): any,
+    completionCheckboxChange(id: string, checked: boolean): any
+  };
+
+  render() {
+    const { items, deleteClick, completionCheckboxChange } = this.props;
+
+    return (
       <ListContainer>
-        {renderItems(items, deleteItem)}
-      </ListContainer>
-      <AddInput createHandler={addItem}>
         {
-          ['+', 'Add']
+          items.map(({ id, ...rest }, index) => (
+            <ShoppingListItem
+              isFirst={index === 0}
+              alignSelf="end"
+              key={id}
+              {...rest}
+              completionCheckboxChange={(checked) => completionCheckboxChange(id, checked)}
+              deleteClick={() => deleteClick(id)}
+            />
+          ))
         }
-      </AddInput>
-    </LayoutVertical>
-  );
+      </ListContainer>
+    );
+  }
+}
+
+export default class ShoppingList extends PureComponent {
+  props: Props;
+  render() {
+    const {
+      items,
+      title,
+      addItemClick,
+      deleteClick,
+      completionCheckboxChange
+    } = this.props;
+
+    return (
+      <LayoutVertical flex stretch>
+        <ListTitle>{title}</ListTitle>
+        <List
+          items={items}
+          deleteClick={deleteClick}
+          completionCheckboxChange={completionCheckboxChange}
+        />
+        <AddInput createHandler={addItemClick}>
+          {['+', 'Add']}
+        </AddInput>
+      </LayoutVertical>
+    );
+  }
+}

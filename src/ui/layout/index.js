@@ -1,25 +1,20 @@
-import { styled } from 'styletron-react';
+import styled from 'styled-components';
 
-export const LayoutVertical = styled('div', ({ stretch, flex, ...rest }) => Object.assign({
-  display: 'flex',
-  flexDirection: 'column',
-}, Boolean(stretch) && {
-  alignSelf: 'stretch',
-}, flex && {
-  flex: 1,
-}, rest));
+export const LayoutVertical = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: ${({stretch}) => stretch ? 'stretch' : 'auto'};
+  flex: 1;
+`;
 
-export const LayoutHorizontal = styled('div', ({ stretch, center, flex }) => Object.assign({
-  display: 'flex',
-  flexDirection: 'row',
-}, Boolean(stretch) && {
-  alignSelf: 'stretch',
-}, center && {
-  alignItems: 'center',
-}, flex && {
-  flex,
-}));
+export const LayoutHorizontal = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: ${props => props.flex || 'none'};
+  align-self: ${({stretch}) => stretch ? 'stretch' : 'auto'};
+  align-items: ${({center}) => center ? 'center' : 'stretch'};
+`;
 
-export const Flex1 = styled('span', {
-  flex: '1',
-});
+export const Flex1 = styled.span`
+  flex: 1;
+`;

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { normalize } from 'normalizr';
 import * as schema from '../../api/schema';
 import * as sessionActions from './actions';
+import * as navigationActions from '../router/actions';
 import * as api from '../../api';
 
 const logoutEpic = actions$ =>
@@ -22,18 +23,29 @@ const logoutEpic = actions$ =>
   );
 
 
-const loginEpic = action$ => 
-  action$.ofType('LOGIN_REQUEST_START')
+const loginEpic = actions$ => 
+  actions$.ofType('LOGIN_REQUEST_START')
   .switchMap(
     ({ credentials }) =>
     fromPromise(api.login(credentials))
-    .flatMap(response => fromPromise(response.json()))
+    .mergeMap(response => fromPromise(response.json()))
     .map(response => sessionActions.loginSuccess(normalize(response, schema.user)))
-    .map(sessionActions.navigateToLists)
+    .map(navigationActions.navigateToLists)
     .catch(error => Observable.of(sessionActions.loginRequestFailed(error))),
   );
+
+const registerEpic = actions$ =>
+  actions$.ofType('REGISTER_REQUEST_START')
+    .switchMap(({ userData }) =>
+      fromPromise(api.register(userData))
+        .mergeMap(response => fromPromise(response.json()))
+        .map(sessionActions.registerSuccess)
+        .catch(sessionActions.registerFailed),
+    );
+
 
 export default combineEpics(
   logoutEpic,
   loginEpic,
+  registerEpic,
 );

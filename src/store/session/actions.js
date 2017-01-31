@@ -15,8 +15,9 @@ export const loginRequestFailed = (error): Action => ({
   error,
 });
 
-export const registerRequest = (): Action => ({
+export const registerRequest = (userData): Action => ({
   type: 'REGISTER_REQUEST_START',
+  userData,
 });
 
 export const registerSuccess = (response): Action => ({
@@ -40,13 +41,3 @@ export const logoutSuccess = (): Action => ({
 export const logoutFailed = (): Action => ({
   type: 'LOGOUT_REQUEST_FAILED',
 });
-
-// export const logout = () => (dispatch) => {
-//   dispatch(logoutRequest());
-
-//   return api.logout()
-//     .then(() => {
-//       dispatch(logoutSuccess());
-//       //browserHistory.push('/signin');
-//     });
-// };

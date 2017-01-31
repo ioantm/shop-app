@@ -1,12 +1,10 @@
-import { Action } from './actionTypes';
+import { Action } from "./actionTypes";
 
-const startLoadingActions = [
-  'GET_LISTS_REQUEST_START',
-];
+const startLoadingActions = [ "GET_LISTS_REQUEST_START" ];
 
 const endLoadingActions = [
-  'GET_LISTS_REQUEST_SUCCESS',
-  'GET_LISTS_REQUEST_FAILED',
+  "GET_LISTS_REQUEST_SUCCESS",
+  "GET_LISTS_REQUEST_FAILED"
 ];
 
 function getIsloading(startActions: Array<Action>, endActions: Array<Action>) {

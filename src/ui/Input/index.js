@@ -1,36 +1,33 @@
-import React, { Component, PropTypes } from 'react';
-import { InputContainer, StyledInput } from './InputStyle';
-import theme from '../theme';
+import React, {Component} from 'react';
+import {InputContainer, StyledInput} from './InputStyle';
 
 class Input extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      focused: false,
-    };
+    this.state = {focused: false};
   }
 
   focus() {
-    this.input && this.input.focus();
+    if (this.input) {
+      this.input.focus();
+    }
   }
 
-  focusHandler = () => this.setState({ focused: true })
-  blurHandler = () => this.setState({ focused: false })
-  containerClickHandler = () => this.input.focus()
+  focusHandler = () => this.setState({focused: true});
+  blurHandler = () => this.setState({focused: false});
+  containerClickHandler = () => this.input.focus();
 
   render() {
-    const { styles, ...rest } = this.props;
-
     return (
       <InputContainer
-        {...theme}
-        styles={styles}
         onClick={this.containerClickHandler}
         focused={this.state.focused}
       >
         <StyledInput
-          {...rest}
-          innerRef={(comp) => { this.input = comp; }}
+          {...this.props}
+          innerRef={comp => {
+              this.input = comp;
+            }}
           onFocus={this.focusHandler}
           onBlur={this.blurHandler}
         />
@@ -38,9 +35,5 @@ class Input extends Component {
     );
   }
 }
-
-Input.propTypes = {
-  styles: PropTypes.object,
-};
 
 export default Input;

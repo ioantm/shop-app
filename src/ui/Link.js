@@ -1,24 +1,13 @@
-import React, { PropTypes } from 'react';
-import { injectStyle } from 'styletron-utils';
-import { Link } from 'react-router';
-import { linkStyles } from './theme';
+import styled from 'styled-components';
+import {Link} from 'react-router';
 
-const StyledLink = ({ children, ...rest }, { styletron }) => {
-  const classes = injectStyle(styletron, linkStyles);
-  return (
-    <Link
-      className={classes}
-      {...rest}
-    >
-      {children}
-    </Link>
-  );
-};
-
-StyledLink.contextTypes = { styletron: PropTypes.object };
-
-StyledLink.propTypes = {
-  children: PropTypes.node,
-};
-
-export default StyledLink;
+export default styled(Link)`
+  ${({theme}) => `
+    color: ${theme.primaryColor},
+    font-size: 1.1875rem;
+    line-height: 24px;
+    font-weight: 600;
+    font-family: ${theme.fontFamily};
+    text-decoration: none;
+    `}
+`

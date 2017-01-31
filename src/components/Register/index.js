@@ -11,7 +11,7 @@ export default class Register extends Component {
   emailHandler = this.inputHandler('email')
   passwordHandler = this.inputHandler('password')
   confirmPasswordHandler = this.inputHandler('confirmPassword')
-  registerHandler = () => 
+  registerHandler = () =>
     this.props.register({
       email: this.state.email,
       password: this.state.password,

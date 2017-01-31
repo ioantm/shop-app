@@ -19,6 +19,10 @@ const shoppingItemsById = (state = {}, action) => {
       delete newState[action.itemId];
       return newState;
     }
+    case 'EDIT_SHOPPING_ITEM_REQUEST':
+      return Object.assign({}, state, {
+        [action.itemId]: Object.assign({}, state[action.itemId], action.props)
+      })
     default:
       return state;
   }

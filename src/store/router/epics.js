@@ -6,21 +6,21 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/merge';
 import { combineEpics } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
 import * as ruterActions from './actions';
 
 
-export const navigateToListsSE = (actions$, { getState }) => {
-  if (getState().router.location.pathname.split('/')[1] !== 'lists') {
-    actions$.ofType(
+export const navigateToListsSE = (actions$, { getState }) =>
+  actions$.ofType(
       'LOGIN_REQUEST_SUCCESS',
       'GET_LISTS_REQUEST_SUCCESS',
+      'REGISTER_REQUEST_SUCCESS',
     )
+    .filter(() => getState().router.location.pathname.split('/')[1] !== 'lists')
     .map(ruterActions.navigateToLists);
-  }
 
-  return Observable.of();
-};
+export const navigateToLogin = actions$ =>
+  actions$.ofType('LOGOUT_REQUEST_SUCCESS')
+    .map(ruterActions.navigateToSignin);
 
 const requestFailedSE = actions$ =>
   actions$.ofType(
@@ -33,4 +33,5 @@ const requestFailedSE = actions$ =>
 export default combineEpics(
   navigateToListsSE,
   requestFailedSE,
+  navigateToLogin,
 );
