@@ -15,6 +15,7 @@ const store = configureStore({
   router: {location: history.location, action: history.action}
 });
 
+console.log('hmmmmmm', Root, ThemeProvider);
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Root store={store} history={history} />
