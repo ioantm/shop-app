@@ -20,9 +20,10 @@ class ShoppingListScreen extends Component {
     params: { listId: string }
   };
   componentDidMount() {
-    const { getLists, list } = this.props;
+    console.log('hmm', this.props.match);
+    const { getLists, list, match } = this.props;
     if (!list) {
-      getLists([ this.props.params.listId ]);
+      getLists([ match.params.listId ]);
     }
   }
 

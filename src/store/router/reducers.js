@@ -2,7 +2,7 @@ import { Action } from '../actionTypes';
 
 export type RouterState = {
   location: {},
-  actoin: string
+  action: string
 }
 
 export default (state: RouterState = {}, action: Action): RouterState => {

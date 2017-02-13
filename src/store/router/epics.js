@@ -7,6 +7,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/merge';
 import { combineEpics } from 'redux-observable';
 import * as ruterActions from './actions';
+import { push } from 'react-router-redux';
 
 
 export const navigateToListsSE = (actions$, { getState }) =>
@@ -23,12 +24,11 @@ export const navigateToLogin = actions$ =>
     .map(ruterActions.navigateToSignin);
 
 const requestFailedSE = actions$ =>
-  actions$.ofType(
-    'GET_LISTS_REQUEST_FAILED',
-    'CREATE_LIST_REQUEST_FAILED',
-  )
-  .filter(action => action.error.status === 401)
-  .map(ruterActions.navigateToSignin);
+  actions$.filter(action => action.error && action.error.status === 401)
+  .map(() => {
+    console.log('no session');
+    return push('/signin');
+  });
 
 export default combineEpics(
   navigateToListsSE,

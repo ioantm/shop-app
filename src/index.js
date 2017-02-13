@@ -3,17 +3,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ThemeProvider} from 'styled-components';
-import {createBrowserHistory} from 'history';
-import Root from './root';
+import {browserHistory} from 'react-router';
+import Root from './Root';
 import configureStore from './store/configureStore';
 import {theme} from './ui/theme';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 const styleSheet = document.createElement('style');
 document.head.appendChild(styleSheet);
-const history = createBrowserHistory();
-const store = configureStore({
-  router: {location: history.location, action: history.action}
-});
+const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

@@ -3,6 +3,7 @@
 import { combineReducers } from "redux";
 import sessionReducer, { SessionStateType } from "./session/reducers";
 import shoppingList, { ShoppingListState } from "./shoppingList/reducers";
+import { routerReducer } from 'react-router-redux';
 import lists, { ListsStateType } from "./lists/reducers";
 import { isLoading } from "./loadingReducer";
 import router, { RouterState } from "./router/reducers";
@@ -13,7 +14,7 @@ export type State = {
   lists: ListsStateType,
   shoppingList: ShoppingListState,
   isLoading: boolean,
-  router: RouterState
+  routing: RouterState
 };
 
 export type ReducerType = (state: State, action: Action) => State;
@@ -22,7 +23,7 @@ const rootReducer: ReducerType = combineReducers({
   lists,
   shoppingList,
   isLoading,
-  router
+  routing: routerReducer
 });
 
 export default rootReducer;
