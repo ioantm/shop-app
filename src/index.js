@@ -17,6 +17,7 @@ const store = configureStore({
 });
 const syncedHistory = syncHistoryWithStore(history, store);
 
+console.log('hmmmmmm', Root, ThemeProvider);
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Root store={store} history={syncedHistory} />

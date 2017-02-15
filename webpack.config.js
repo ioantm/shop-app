@@ -8,10 +8,18 @@ module.exports = env => {
   const ifProd = plugin => addPlugin(env.prod, plugin);
   const removeEmpty = array => array.filter(i => !!i);
   const cssModuleLoader = ExtractTextPlugin.extract({
+<<<<<<< HEAD
+=======
+    fallback: 'style-loader',
+>>>>>>> 6878b74176cf8bf14f0b7e9d5c8d0b15b42cb5fc
     use: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
   });
 
   const cssLoader = ExtractTextPlugin.extract({
+<<<<<<< HEAD
+=======
+    fallback: 'style-loader',
+>>>>>>> 6878b74176cf8bf14f0b7e9d5c8d0b15b42cb5fc
     use: 'css-loader'
   });
 
@@ -20,7 +28,11 @@ module.exports = env => {
   //   loader: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!resolve-url!postcss-loader',
   // });
   return {
+<<<<<<< HEAD
     entry: { app: './index.js', vender: [ 'react', 'react-dom', 'styled-components' ] },
+=======
+    entry: { babelPolyfill: 'babel-polyfill', app: './index.js', vender: [ 'react', 'react-dom' ] },
+>>>>>>> 6878b74176cf8bf14f0b7e9d5c8d0b15b42cb5fc
     output: {
       filename: 'bundle.[name].[chunkhash].js',
       path: resolve(__dirname, 'public'),

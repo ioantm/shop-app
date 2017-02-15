@@ -31,7 +31,7 @@ const AsyncRegisterScreen = asyncComponent(
   () =>
     System.import("../containers/RegisterScreen").then(module => module.default)
 );
-
+console.log('hmm', Redirect, AsyncListsScreen, AsyncSigninScreen, AsyncShoppingListScreen, AsyncRegisterScreen);
 const Root = ({ store, history, location, action, dispatch }) => (
   <Provider store={store}>
     <Router
@@ -56,5 +56,7 @@ const mapStateToProps = state => ({
   location: state.router.location,
   action: state.router.action
 });
+
+console.log('Root', Root);
 
 export default connect(mapStateToProps)(Root);
