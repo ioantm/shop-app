@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ListsContainer } from './ListsStyles';
 import { ListItem, Button } from '../../ui';
 import { LayoutHorizontal, Flex1 } from '../../ui/layout';

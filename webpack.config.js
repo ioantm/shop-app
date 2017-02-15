@@ -8,13 +8,11 @@ module.exports = env => {
   const ifProd = plugin => addPlugin(env.prod, plugin);
   const removeEmpty = array => array.filter(i => !!i);
   const cssModuleLoader = ExtractTextPlugin.extract({
-    notExtractLoader: 'style-loader',
-    loader: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
+    use: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
   });
 
   const cssLoader = ExtractTextPlugin.extract({
-    notExtractLoader: 'style-loader',
-    loader: 'css-loader'
+    use: 'css-loader'
   });
 
   // const sassLoader = ExtractTextPlugin.extract({
@@ -22,7 +20,7 @@ module.exports = env => {
   //   loader: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!resolve-url!postcss-loader',
   // });
   return {
-    entry: { app: './index.js', vender: [ 'react', 'react-dom', 'styled-components', 'react-router' ] },
+    entry: { app: './index.js', vender: [ 'react', 'react-dom', 'styled-components' ] },
     output: {
       filename: 'bundle.[name].[chunkhash].js',
       path: resolve(__dirname, 'public'),

@@ -1,10 +1,7 @@
 // @flow
 import React from "react";
 import { Provider, connect } from "react-redux";
-import { Match, Redirect } from "react-router";
-import {
-  ControlledBrowserRouter as Router
-} from "react-router-addons-controlled";
+import { Route, Redirect, BrowserRouter as Router } from "react-router-dom";
 import App from "../containers/App";
 import asyncComponent from "./asyncComponent";
 import * as rooterActions from "../store/router/actions";
@@ -39,27 +36,17 @@ const Root = ({ store, history, location, action, dispatch }) => (
   <Provider store={store}>
     <Router
       location={location}
-      action={action}
-      history={history}
-      onChange={(changedLocation, changedAction) => {
-        console.log("changedAction", changedAction, changedLocation);
-        if (changedAction === "SYNC") {
-          //dispatch(actions.navigate(changedLocation, 'PUSH'))
-        } else {
-          dispatch(rooterActions.navigate(changedLocation, changedAction));
-        }
-      }}
     >
       <App>
-        <Match exactly pattern="/" render={() => <Redirect to="/lists" />} />
-        <Match exactly pattern="/lists" component={AsyncListsScreen} />
-        <Match exactly pattern="/signin" component={AsyncSigninScreen} />
-        <Match
-          exactly
-          pattern="/lists/:listId"
+        <Route exact path="/" render={() => <Redirect to="/lists" />} />
+        <Route exact path="/lists" component={AsyncListsScreen} />
+        <Route exact path="/signin" component={AsyncSigninScreen} />
+        <Route
+          exact
+          path="/lists/:listId"
           component={AsyncShoppingListScreen}
         />
-        <Match exactly pattern="/register" component={AsyncRegisterScreen} />
+        <Route exact path="/register" component={AsyncRegisterScreen} />
       </App>
     </Router>
   </Provider>
