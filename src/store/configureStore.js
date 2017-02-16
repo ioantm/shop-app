@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import mainReducer from "./mainReducer";
 import createSagaMiddleware from 'redux-saga';
-import loginSaga from './session/sagas';
+//import loginSaga from './session/sagas';
 // import listsEpics from "./lists/epics";
 // import routerEpics from "./router/epics";
 // import sessionEpics from "./session/epics";
@@ -23,7 +23,7 @@ const sagaMiddleware = createSagaMiddleware();
 const enhancer = composeEnhancers(applyMiddleware(thunk, sagaMiddleware));
 const configureStore = preloadedState => {
    const store = createStore(mainReducer, preloadedState, enhancer);
-   sagaMiddleware.run(loginSaga);
+  // sagaMiddleware.run(loginSaga);
    return store;
  } 
 
