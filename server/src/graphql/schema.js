@@ -181,7 +181,10 @@ const queryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLID, description: 'Shopping list id' }
       },
-      resolve: (_, args) => List.findById(args.id)
+      resolve: (_, args) => {
+        console.log('get list', args.id);
+        return List.findById(args.id);
+      }
     },
     lists: {
       type: new GraphQLList(listType),

@@ -10,14 +10,14 @@ import * as ruterActions from './actions';
 import { push } from 'react-router-redux';
 
 
-export const navigateToListsSE = (actions$, { getState }) =>
-  actions$.ofType(
-      'LOGIN_REQUEST_SUCCESS',
-      'GET_LISTS_REQUEST_SUCCESS',
-      'REGISTER_REQUEST_SUCCESS',
-    )
-    .filter(() => getState().router.location.pathname.split('/')[1] !== 'lists')
-    .map(ruterActions.navigateToLists);
+// export const navigateToListsSE = (actions$, { getState }) =>
+//   actions$.ofType(
+//       'LOGIN_REQUEST_SUCCESS',
+//       'GET_LISTS_REQUEST_SUCCESS',
+//       'REGISTER_REQUEST_SUCCESS',
+//     )
+//     .filter(() => getState().router.location.pathname.split('/')[1] !== 'lists')
+//     .map(ruterActions.navigateToLists);
 
 export const navigateToLogin = actions$ =>
   actions$.ofType('LOGOUT_REQUEST_SUCCESS')
@@ -31,7 +31,7 @@ const requestFailedSE = actions$ =>
   });
 
 export default combineEpics(
-  navigateToListsSE,
+  
   requestFailedSE,
   navigateToLogin,
 );
