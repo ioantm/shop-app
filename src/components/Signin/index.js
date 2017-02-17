@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Input} from '../../ui';
+import {Input, Link} from '../../ui';
 import {
   SiginContainer,
   LoginButton,

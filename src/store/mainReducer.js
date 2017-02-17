@@ -7,7 +7,6 @@ import lists, { ListsStateType } from "./lists/reducers";
 import { isLoading } from "./loadingReducer";
 import router, { RouterState } from "./router/reducers";
 import { Action } from "./actionTypes";
-import { routerReducer } from 'react-router-redux';
 
 export type State = {
   sessionUserId: SessionStateType,
@@ -23,8 +22,7 @@ const rootReducer: ReducerType = combineReducers({
   lists,
   shoppingList,
   isLoading,
-  router,
-  routing: routerReducer
+  router
 });
 
 export default rootReducer;

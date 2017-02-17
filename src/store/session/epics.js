@@ -30,9 +30,12 @@ const loginEpic = actions$ =>
     fromPromise(api.login(credentials))
     .mergeMap(response => fromPromise(response.json()))
     .map(response => sessionActions.loginSuccess(normalize(response, schema.user)))
-    .map(navigationActions.navigateToLists)
     .catch(error => Observable.of(sessionActions.loginRequestFailed(error))),
   );
+
+const loginSuccessSideEffect = actions$ =>
+  actions$.ofType('LOGIN_REQUEST_SUCCESS')
+    .map(navigationActions.navigateToLists);
 
 const registerEpic = actions$ =>
   actions$.ofType('REGISTER_REQUEST_START')
@@ -48,4 +51,5 @@ export default combineEpics(
   logoutEpic,
   loginEpic,
   registerEpic,
+  loginSuccessSideEffect
 );

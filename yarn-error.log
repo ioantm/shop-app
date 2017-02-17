@@ -1,14 +1,14 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn install
+  /usr/local/bin/node /usr/local/bin/yarn remove react-router-redux
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/as/WebDevelopment/adt-bundle-mac-x86_64-20131030/sdk/tools:/Users/as/.rvm/bin
 
 Yarn version: 
   0.20.3
 
 Node version: 
-  6.9.5
+  7.2.0
 
 Platform: 
   darwin x64
@@ -93,6 +93,7 @@ npm manifest:
       "connect-mongo": "^1.3.2",
       "cors": "^2.8.1",
       "errorhandler": "^1.5.0",
+      "eslint": "^3.15.0",
       "express-flash": "0.0.2",
       "express-graphql": "^0.6.1",
       "express-session": "^1.14.2",
@@ -115,10 +116,12 @@ npm manifest:
       "react-router-dom": "^4.0.0-beta.6",
       "react-router-redux": "^4.0.8",
       "redux": "^3.6.0",
+      "redux-observable": "^0.13.0",
       "redux-saga": "^0.14.3",
       "redux-thunk": "^2.1.0",
       "request": "^2.79.0",
       "reselect": "^2.5.4",
+      "rxjs": "^5.1.1",
       "styled-components": "^1.3.1"
     },
     "scripts": {
@@ -7555,6 +7558,6 @@ Trace:
       at Parser.parse (/usr/local/lib/node_modules/yarn/lib/lockfile/parse.js:329:14)
       at exports.default (/usr/local/lib/node_modules/yarn/lib/lockfile/parse.js:13:17)
       at /usr/local/lib/node_modules/yarn/lib/lockfile/wrapper.js:129:60
-      at next (native)
+      at Generator.next (<anonymous>)
       at step (/usr/local/lib/node_modules/yarn/node_modules/babel-runtime/helpers/asyncToGenerator.js:17:30)
       at /usr/local/lib/node_modules/yarn/node_modules/babel-runtime/helpers/asyncToGenerator.js:28:13
