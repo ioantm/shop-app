@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as shoppingListActions from '../../store/shoppingList/actions';
+import * as shoppingListActions
+  from '../../store/shoppingList/actions';
 import * as listsActions from '../../store/lists/actions';
 import ShoppingList from '../../components/ShoppingList';
 import {
   getShoppingItemsSelector
 } from '../../store/shoppingList/selectors';
 import { listSelector } from '../../store/lists/selectors';
-import * as shoppingListSelectors from '../../store/shoppingList/selectors';
+import * as shoppingListSelectors
+  from '../../store/shoppingList/selectors';
 
 class ShoppingListScreen extends Component {
   props: {
@@ -17,12 +19,13 @@ class ShoppingListScreen extends Component {
     addItem(): any,
     deleteItem(itemId: string): any,
     changeChecked(id: string, checked: boolean): any,
-    params: { listId: string }
+    match: { params: { listId: string } }
   };
   componentDidMount() {
+    // console.log('props.params', props.params, props.match)
     const { getLists, list } = this.props;
     if (!list) {
-      getLists([ this.props.params.listId ]);
+      getLists([this.props.match.params.listId]);
     }
   }
 
@@ -52,13 +55,15 @@ class ShoppingListScreen extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const listId = ownProps.params && ownProps.params.listId;
+  const listId = ownProps.match.params && ownProps.match.params.listId;
   const list = listSelector(state, listId);
   return {
-    list: list &&
-      Object.assign({}, list, {
-        shoppingItems: getShoppingItemsSelector(state, listId)
-      })
+    list: (
+      list &&
+        Object.assign({}, list, {
+          shoppingItems: getShoppingItemsSelector(state, listId)
+        })
+    )
   };
 };
 
@@ -67,7 +72,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(
       shoppingListActions.addShoppingItemRequest(
         item,
-        ownProps.params.listId
+        ownProps.match.params.listId
       )
     ),
 
@@ -75,7 +80,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(
       shoppingListActions.deleteShoppingItemRequest(
         itemId,
-        ownProps.params.listId
+        ownProps.match.params.listId
       )
     ),
 
@@ -87,7 +92,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       shoppingListActions.editShoppingItemRequest(
         id,
         { completed: checked },
-        ownProps.params.listId
+        ownProps.match.params.listId
       )
     );
   }

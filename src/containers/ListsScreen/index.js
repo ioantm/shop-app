@@ -12,7 +12,7 @@ class ListsScreen extends Component {
     createList: () => any,
     getListsRequest: () => any,
     deleteList: () => any,
-    pathname: string,
+    match: object
   }
 
   componentDidMount() {
@@ -20,14 +20,14 @@ class ListsScreen extends Component {
   }
 
   render() {
-    const { lists, createList, pathname, deleteList } = this.props;
-
+    const { lists, createList, deleteList, match } = this.props;
+    console.log('match.params.path', match);
     return (
       <LayoutVertical stretch flex>
         <Lists
+          pathname={match.path}
           lists={lists}
           deleteList={deleteList}
-          pathname={pathname}
         />
         <AddInput createHandler={createList}>
           {

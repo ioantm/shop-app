@@ -38,7 +38,7 @@ const Root = ({ store, history, location, action, dispatch }) => (
           path="/"
           render={() => <Redirect to="/lists" />}
         />
-        <Route path="/lists" component={AsyncListsScreen} />
+        <Route exact path="/lists" component={AsyncListsScreen} />
         <Route path="/signin" component={AsyncSigninScreen} />
         <Route
           path="/lists/:listId"
