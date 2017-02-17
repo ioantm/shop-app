@@ -3,9 +3,9 @@ import React from 'react';
 import { Provider, connect } from 'react-redux';
 import {
   Redirect,
-  Router
+  Router,
+  Route
 } from 'react-router-dom';
-import Route from './Route';
 import App from '../containers/App';
 import asyncComponent from './asyncComponent';
 import * as rooterActions from '../store/router/actions';
