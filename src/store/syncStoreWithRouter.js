@@ -15,7 +15,10 @@ export default (store: Object, history: Object) => {
   });
 
   history.listen((location) => {
-    if (location.pathname !== store.getState().router.location.pathname) {
+    const state = store.getState();
+    const { router: { location: stateLocation }} = state;
+
+    if (!stateLocation || location.pathname !== stateLocation.pathname) {
       store.dispatch(
         navigate({ pathname: history.location.pathname }, history.action)
       );
