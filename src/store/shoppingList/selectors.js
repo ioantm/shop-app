@@ -10,7 +10,7 @@ export const getShoppingItemsSelector = createSelector(
     }
 
     return list.shoppingItems &&
-      list.shoppingItems.filter(Boolean).map(id => items[id]);
+      list.shoppingItems.filter(Boolean).map(id => items[id]) || [];
   }
 );
 

@@ -77,7 +77,7 @@ const listInputType = new GraphQLInputObjectType({
       description: 'Shopping list name'
     },
     creator: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
       description: 'List creator email'
     },
     assignedUsers: {
@@ -124,7 +124,48 @@ const mutationType = new GraphQLObjectType({
     createList: {
       type: listType,
       args: { list: { type: new GraphQLNonNull(listInputType) } },
-      resolve: (_, args) => new List(args.list).save()
+      resolve: (_, args, context) => 
+        new List(Object.assign({}, args.list, { creator: context.user.email })).save()
+    },
+    addShoppingItem: {
+      type: shoppingItemType,
+      args: {
+        listId: {
+          type: new GraphQLNonNull(GraphQLID),
+          description: 'List id'
+        },
+        item: {
+          type: new GraphQLNonNull(shoppingItemInputType),
+          description: 'Shopping item'
+        }
+      },
+      resolve: (_, args) => 
+        List.findById(args.listId)
+          .then(list => {
+            const item = list.addShoppingItem(args.item);
+            return list.save()
+              .then(() => item);
+          })
+    },
+    removeShoppingItem: {
+      type: GraphQLString,
+      args: {
+        listId: {
+          type: new GraphQLNonNull(GraphQLID),
+          description: 'List id'
+        },
+        itemId: {
+          type: new GraphQLNonNull(GraphQLID),
+          description: 'Shopping item id'
+        }
+      },
+      resolve: (_, args) => 
+        List.findById(args.listId)
+          .then(list => {
+            list.removeShoppingItem(args.itemId);
+            return list.save()
+              .then(() => 'Success');
+          })
     },
     updateShoppingItem: {
       type: shoppingItemType,

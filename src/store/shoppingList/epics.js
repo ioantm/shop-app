@@ -8,25 +8,30 @@ import { combineEpics } from 'redux-observable';
 import { normalize } from 'normalizr';
 import * as schema from '../../api/schema';
 import * as shoppingListActions from './actions';
-import * as api from '../../api';
-import { checkError } from '../epicsCommonHandlers';
 import getGraph from '../../api/graphql';
 import * as shoppingListSelectors from './selectors';
 
 const addShoppingListEpic = actions$ =>
-  actions$.ofType('ADD_SHOPPING_ITEM_REQUEST').mergeMap(
+  actions$.ofType('ADD_SHOPPING_ITEM_REQUEST')
+  .mergeMap(
     ({ item, listId }) =>
-      fromPromise(api.addShoppingItem(item, listId))
-        .map(checkError)
-        .mergeMap(response => fromPromise(response.json()))
-        .map(
-          response =>
-            shoppingListActions.addShoppingItemSuccess(
-              normalize(response, schema.shoppingItem),
-              listId
-            )
+      fromPromise(
+        getGraph(
+          `mutation addShoppingItem($item: ShoppingItemInput!, $listId: ID!) {
+            addShoppingItem(item: $item, listId: $listId){
+              id, name, completed
+            }
+          }`,
+          { item, listId }
         )
-        .catch(shoppingListActions.addShoppingItemFailure)
+      )
+      .map(response =>
+        shoppingListActions.addShoppingItemSuccess(
+          normalize(response.addShoppingItem, schema.shoppingItem),
+          listId
+        )
+      )
+      .catch(shoppingListActions.addShoppingItemFailure)
   );
 
 const deleteShoppingItemEpic = actions$ =>
@@ -34,16 +39,16 @@ const deleteShoppingItemEpic = actions$ =>
     .ofType('DELETE_SHOPPING_ITEM_REQUEST')
     .mergeMap(
       ({ listId, itemId }) =>
-        fromPromise(api.deleteShoppingItem(listId, itemId))
-          .map(checkError)
-          .map(
-            () =>
-              shoppingListActions.deleteShoppingItemSuccess(
-                itemId,
-                listId
-              )
+        fromPromise(
+          getGraph(
+            `mutation removeShoppingItem($listId: ID!, $itemId: ID!) {
+              removeShoppingItem(listId: $listId, itemId: $itemId)
+            }`,
+            { listId, itemId }
           )
-          .catch(shoppingListActions.deleteShoppingItemFailure)
+        )
+        .map(() => shoppingListActions.deleteShoppingItemSuccess(itemId, listId))
+        .catch(shoppingListActions.deleteShoppingItemFailure)
     );
 
 const loadShoppingItems = actions$ => actions$
@@ -97,7 +102,7 @@ const editShoppingItem = (actions$, store) =>
           { item: Object.assign({}, shoppingListSelectors.getShoppingItem(store.getState(), itemId), props), listId }
         )
       )
-      .map(result => 
+      .map(result =>
         shoppingListActions.editShoppingItemSuccess(
           normalize(result.updateShoppingItem, schema.shoppingItem)
         )

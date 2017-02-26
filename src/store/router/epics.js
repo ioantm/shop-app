@@ -23,11 +23,8 @@ export const navigateToLogin = actions$ =>
     .map(ruterActions.navigateToSignin);
 
 const requestFailedSE = actions$ =>
-  actions$.ofType(
-    'GET_LISTS_REQUEST_FAILED',
-    'CREATE_LIST_REQUEST_FAILED',
-  )
-  .filter(action => action.error.status === 401)
+  actions$
+  .filter(action => action.error && action.error.status === 401)
   .map(ruterActions.navigateToSignin);
 
 export default combineEpics(

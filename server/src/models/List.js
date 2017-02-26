@@ -5,6 +5,8 @@ const shoppingItem = new mongoose.Schema({
   completed: Boolean
 });
 
+const ShoppingItemModel = mongoose.model('ShoppingItem', shoppingItem);
+
 const listSchema = new mongoose.Schema({
   name: String,
   creator: String,
@@ -19,6 +21,11 @@ listSchema.methods.removeShoppingItem = function removeShoppingItem(
     item => item._id != id
   );
 };
+
+listSchema.methods.addShoppingItem = function addShoppingItem(item) {
+  this.shoppingItems.push(item);
+  return this.shoppingItems[this.shoppingItems.length - 1];
+}
 
 listSchema.methods.updateShoppingItem = function updateShoppingItem(
   id,

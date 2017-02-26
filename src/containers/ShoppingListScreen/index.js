@@ -57,6 +57,7 @@ class ShoppingListScreen extends Component {
 const mapStateToProps = (state, ownProps) => {
   const listId = ownProps.match.params && ownProps.match.params.listId;
   const list = listSelector(state, listId);
+  console.log('hmm', list, listId, getShoppingItemsSelector(state, listId));
   return {
     list: (
       list &&
