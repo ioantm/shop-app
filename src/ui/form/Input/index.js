@@ -1,8 +1,13 @@
+// @flow
 import React from 'react';
 import classNames from 'classnames';
-import styles from '../bulma.sass';
+import styles from '../form.sass';
 
-function Input({ className, ...rest }) {
+type PropsTypes = {
+  className: string
+};
+
+function Input({ className, ...rest }: PropsTypes) {
   return (
     <div className={styles.control}>
       <input

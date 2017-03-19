@@ -8,6 +8,7 @@ export const SessionContainer = styled('div', {
   alignSelf: 'center',
   maxWidth: '400px',
   minWidth: '300px',
+  boxSizing: 'border-box',
   padding: '20px',
   position: 'absolute',
   top: '20%'

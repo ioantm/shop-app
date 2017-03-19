@@ -1,13 +1,8 @@
 import { styled } from 'styletron-react';
-import { BodyText, Input, Link, Button } from '../../ui';
-
-const inputItemStyles = {
-  marginBottom: '10px'
-};
+import { BodyText, Link, Button } from '../../ui';
 
 export const LoginButton = styled(Button, {
-  color: 'white',
-  ...inputItemStyles
+  marginTop: '20px'
 });
 
 export const RegisterLink = styled(Link, {
@@ -21,8 +16,6 @@ export const RegisterText = styled(BodyText, {
   justifyContent: 'center',
   alignItems: 'center',
 });
-
-export const SigninInput = styled(Input, inputItemStyles);
 
 
 
