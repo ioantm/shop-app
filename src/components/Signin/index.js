@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { SessionContainer } from "../styles";
-import { RegisterText, RegisterLink, LoginButton } from "./SigninStyles";
-import { Title, FormField, Input } from "../../ui";
+import React, { Component } from 'react';
+import { SessionContainer } from '../styles';
+import { RegisterText, RegisterLink, LoginButton, SigninTitle } from './SigninStyles';
+import { FormField, Input } from '../../ui';
 
 export default class SignIn extends Component {
   props: {
@@ -17,16 +17,15 @@ export default class SignIn extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  loginClickHandler = () =>
-    this.props.login({
-      email: this.state.email,
-      password: this.state.password
-    });
+  loginClickHandler = () => this.props.login({
+    email: this.state.email,
+    password: this.state.password
+  });
 
   render() {
     return (
       <SessionContainer>
-        <Title center>Sign in</Title>
+        <SigninTitle center>Sign in to Shopping List</SigninTitle>
         <FormField>
           <Input
             placeholder="Enter email"
@@ -42,14 +41,13 @@ export default class SignIn extends Component {
             onChange={this.changeHandler}
           />
         </FormField>
-        <FormField>
-          <LoginButton primary onClick={this.loginClickHandler}>
-            Login
-          </LoginButton>
-        </FormField>
+
+        <LoginButton primary onClick={this.loginClickHandler}>
+          Login
+        </LoginButton>
+
         <RegisterText>
-          <span>Not a member? </span>
-          {" "}
+          Not a member?
           <RegisterLink to="/register">Register</RegisterLink>
         </RegisterText>
       </SessionContainer>

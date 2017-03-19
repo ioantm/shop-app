@@ -8,11 +8,21 @@ export const CustomLink = styled(Link, {
   flex: 1
 });
 
+
 export const LinkToList = ({ children, ...rest }) => (
   <CustomLink {...rest}>
     <BodyText>
       { children }
     </BodyText>
   </CustomLink>
-)
+);
+
+export const ListItem = styled('div', {
+  background: 'white',
+  marginBottom: '10px',
+  borderRadius: '4px',
+  height: '60px',
+  display: 'flex',
+  padding: '10px'
+});
 

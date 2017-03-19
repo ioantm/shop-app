@@ -1,9 +1,12 @@
 import { styled } from 'styletron-react';
+import React from 'react';
+import classNames from 'classnames';
+import titleStyles from './title.sass';
 
 export const paperCommonBase = {
-  'fontFamily': "'Roboto', 'Noto', sans-serif",
+  fontFamily: "'Roboto', 'Noto', sans-serif",
   '-webkit-font-smoothing': 'antialiased'
-}
+};
 
 export const paperfontCommonNowrap = {
   whiteSpace: 'nowrap',
@@ -27,14 +30,20 @@ export const Display1 = styled('h2', {
   lineHeight: '48px'
 });
 
-export const Title = styled('h2', ({ center }) => ({
-  textAlign: center ? 'center' : 'left',
-  ...paperCommonBase,
-  ...paperfontCommonNowrap,
-  fontSize: '20px',
-  fontWeight: 500,
-  lineHeight: '28px'
-}));
+type TitleProps = {
+  children: ReactElement,
+  lvl?: number
+};
+
+export const Title = ({ children, lvl }: TitleProps) => (
+  <h2
+    className={classNames(titleStyles.title, {
+      [titleStyles[`is-${lvl}`]]: lvl > 0
+    })}
+  >
+    {children}
+  </h2>
+);
 
 export const BodyText = styled('p', {
   ...paperCommonBase,
@@ -43,5 +52,3 @@ export const BodyText = styled('p', {
   lineHeight: '24px',
   margin: '0px'
 });
-
-

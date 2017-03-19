@@ -11,11 +11,12 @@ type ButtonProps = {
 
 console.log('styles', styles);
 
-function Button({ children, primary, className, ...rest }: ButtonProps) {
+function Button({ children, primary, className, link, ...rest }: ButtonProps) {
   return (
     <a
       className={classNames(className, styles.button, {
-        [styles['is-primary']]: primary
+        [styles['is-primary']]: primary,
+        [styles['is-link']]: link
       })}
       {...rest}
     >

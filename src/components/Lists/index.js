@@ -1,12 +1,6 @@
 import React from 'react';
-import { LinkToList } from './ListsStyles';
-import {
-  LayoutHorizontal,
-  Flex1,
-  LayoutVertical,
-  ListItem,
-  Button
-} from '../../ui';
+import { LinkToList, ListItem } from './ListsStyles';
+import { LayoutHorizontal, Flex1, LayoutVertical, Button, Title } from '../../ui';
 
 type ListItemViewProps = {
   children: Array<any>,
@@ -23,27 +17,19 @@ type ListsProps = {
 const ListItemView = (
   { pathname, children, list, ...rest }: ListItemViewProps
 ) => (
-  <LinkToList to={`${pathname}/${list.id}`}>
-    <ListItem {...rest}>
-      {children}
-    </ListItem>
-  </LinkToList>
+  <ListItem {...rest}>
+    {children}
+  </ListItem>
 );
 
 export default ({ deleteList, lists, pathname }: ListsProps) => (
   <LayoutVertical alignSelf="stretch">
     {lists.map((list, index) => (
-      <ListItemView
-        pathname={pathname}
-        list={list}
-        isFirst={index === 0}
-        isLast={index === list.length - 1}
-        key={list.id}
-      >
-        <LayoutHorizontal flex={1}>
-          {list.name}
-          <Flex1 />
-          <Button icon="remove" label="Add this" primary />
+      <ListItem>
+        <LayoutHorizontal flex={1} alignItems="center">
+          <Title lvl="4">{list.name}</Title>
+          
+          {/*<Button icon="remove" label="Add this" primary />*/}
 
           {/*<Button
             onClick={e => {
@@ -54,7 +40,7 @@ export default ({ deleteList, lists, pathname }: ListsProps) => (
             Delete
           </Button>*/}
         </LayoutHorizontal>
-      </ListItemView>
+      </ListItem>
     ))}
   </LayoutVertical>
 );

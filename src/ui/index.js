@@ -6,3 +6,4 @@ export { default as ListItem } from './ListItem';
 export * from './typography/';
 export { default as Link } from './Link';
 export * from './layout';
+export * from './panel';
