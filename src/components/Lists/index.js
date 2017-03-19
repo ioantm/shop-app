@@ -1,6 +1,6 @@
 import React from 'react';
 import { LinkToList, ListItem } from './ListsStyles';
-import { LayoutHorizontal, Flex1, LayoutVertical, Button, Title } from '../../ui';
+import { LayoutHorizontal, Flex1, LayoutVertical, Button, Title, Icon, Icons } from '../../ui';
 
 type ListItemViewProps = {
   children: Array<any>,
@@ -28,7 +28,7 @@ export default ({ deleteList, lists, pathname }: ListsProps) => (
       <ListItem>
         <LayoutHorizontal flex={1} alignItems="center">
           <Title lvl="4">{list.name}</Title>
-          
+          <Icon ></Icon>
           {/*<Button icon="remove" label="Add this" primary />*/}
 
           {/*<Button
