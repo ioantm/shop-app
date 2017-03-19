@@ -142,9 +142,11 @@ const mutationType = new GraphQLObjectType({
       resolve: (_, args) => 
         List.findById(args.listId)
           .then(list => {
-            const item = list.addShoppingItem(args.item);
+            list.addShoppingItem(args.item);
             return list.save()
-              .then(() => item);
+              .then(() => 
+                list.shoppingItems[list.shoppingItems.length - 1]
+              )
           })
     },
     removeShoppingItem: {

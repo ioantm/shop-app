@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Input, Button } from '../../ui';
-import { RegisterContainer, RegisterTitle } from './RegisterStyles';
+import { SessionContainer } from '../styles';
+import { Title, Button, Input, Link } from '../../ui';
+
 
 export default class Register extends Component {
   props: {
     register: () => any,
   }
 
-  inputHandler = name => e => this.setState({ [name]: e.target.value })
+  inputHandler = name => value => this.setState({ [name]: value })
   emailHandler = this.inputHandler('email')
   passwordHandler = this.inputHandler('password')
   confirmPasswordHandler = this.inputHandler('confirmPassword')
@@ -20,8 +21,8 @@ export default class Register extends Component {
 
   render() {
     return (
-      <RegisterContainer>
-        <RegisterTitle>Register</RegisterTitle>
+      <SessionContainer>
+        <Title center>Register</Title>
         <Input
           onChange={this.emailHandler}
           placeholder="Enter email"
@@ -37,13 +38,15 @@ export default class Register extends Component {
           type="password"
         />
         <Button
-          onClick={this.registerHandler}
-          styles={{ alignSelf: 'center', marginTop: '20px' }}
+          raised
           primary
+          onClick={this.registerHandler}
+          style={{ marginBottom: '20px' }}
         >
           Register
         </Button>
-      </RegisterContainer>
+        <Link href="/signin">Signin</Link>
+      </SessionContainer>
     );
   }
 }

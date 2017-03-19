@@ -1,18 +1,16 @@
 // @flow
 
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import styled from 'styled-components';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { styled } from 'styletron-react';
+
 import * as sessionActions from '../store/session/actions';
-import {getSessionUserId} from '../store/mainReducer';
-import {Button} from '../ui';
-import {Flex1} from '../ui/layout';
-import {LayoutVertical} from '../ui/layout';
+import { getSessionUserId } from '../store/mainReducer';
+import { LayoutVertical } from '../ui';
 
 type Props = {
   children: {},
   logout(): void,
-  haveSession: boolean,
   isLoading: boolean
 };
 
@@ -22,8 +20,9 @@ class App extends Component {
   getContent() {
     return (
       <AppContainer>
-        <h2>Shopping List App</h2>
-        {this.props.children}
+        <Wrapper>
+          {this.props.children}
+        </Wrapper>
       </AppContainer>
     );
   }
@@ -31,34 +30,39 @@ class App extends Component {
   render() {
     return (
       <Container height="100vh">
-        <AppHeader>
-          <Flex1 />
-          <Button onClick={this.props.logout}>
-            Logout
-          </Button>
-        </AppHeader>
-        {this.props.isLoading ? 'Loading... ' : this.getContent()}
+        {
+          this.props.isLoading ? 'Loading... ' : this.getContent()
+        }
       </Container>
     );
   }
 }
 
-const Container = styled(LayoutVertical)`
-  height: 100vh;
-`;
+const Container = styled(LayoutVertical, {
+  height: '100vh',
+  backgroundColor: '#4BA7E6'
+});
 
-const AppContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-`;
+const AppContainer = styled('div', {
+  display: 'flex',
+  flex: '1',
+  flexDirection: 'column',
+  alignItems: 'center'
+});
 
-const AppHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-right: 10px;
-`;
+const Wrapper = styled('div', {
+  maxWidth: '800px',
+  flex: '1',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%'
+});
+
+// const AppHeader = styled('div', {
+//   display: 'flex',
+//   flexDirection: 'row',
+//   paddingRight: '10px'
+// });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(sessionActions.logoutRequest())

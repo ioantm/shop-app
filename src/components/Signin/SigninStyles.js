@@ -1,22 +1,28 @@
-import styled from 'styled-components';
-import {Button} from '../../ui';
+import { styled } from 'styletron-react';
+import { BodyText, Input, Link, Button } from '../../ui';
 
-export const SiginContainer = styled.div`
-  width: 30%;
-  display: flex;
-  flexDirection: column;
-  alignIntems: center;
-  alignSelf: center;
-`;
+const inputItemStyles = {
+  marginBottom: '10px'
+};
 
-export const LoginButton = styled(Button)`
-  alignSelf: center;
-  color: white;
-  marginTop: 20px;
-}`;
+export const LoginButton = styled(Button, {
+  color: 'white',
+  ...inputItemStyles
+});
 
-export const inputStyles = {marginBottom: '10px'};
+export const RegisterLink = styled(Link, {
+  marginLeft: '20px'
+});
 
-export const RegisterText = styled.p`
-  textAlign: center;
-`;
+export const RegisterText = styled(BodyText, {
+  textAlign: 'center',
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const SigninInput = styled(Input, inputItemStyles);
+
+
+

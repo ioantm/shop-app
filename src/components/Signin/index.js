@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {Input, Link} from '../../ui';
+import { SessionContainer } from '../styles';
 import {
-  SiginContainer,
   LoginButton,
-  inputStyles,
-  RegisterText
+  RegisterText,
+  RegisterLink,
+  SigninInput
 } from './SigninStyles';
+import { Title } from '../../ui';
 
 export default class SignIn extends Component {
   props: {
@@ -17,37 +18,38 @@ export default class SignIn extends Component {
     this.state = {};
   }
 
-  changeHandler = name => e => {
-    this.setState({[name]: e.target.value});
+  changeHandler = e => {
+    this.setState({[e.target.name]: e.target.value});
   };
 
-  render() {
-    const {email, password} = this.state;
-    const {login} = this.props;
+  loginClickHandler = () =>
+    this.props.login({email: this.state.email, password: this.state.password});
 
+  render() {
     return (
-      <SiginContainer className="root">
-        <Input
-          placeholder="Enter email"
-          styles={inputStyles}
-          onChange={this.changeHandler('email')}
-        />
-        <Input
-          styles={inputStyles}
-          placeholder="Enter password"
-          type="password"
-          onChange={this.changeHandler('password')}
-        />
-        <LoginButton
-          primary
-          onClick={() => login({email, password})}
-        >
-          Login
-        </LoginButton>
-        <RegisterText>
-          Not a member? <Link to={'/register'}>Register</Link>
-        </RegisterText>
-      </SiginContainer>
+        <SessionContainer>
+          <Title center>Sign in</Title>
+          <SigninInput
+            placeholder="Enter email"
+            name="email"
+            onChange={this.changeHandler}
+          />
+          <SigninInput
+            placeholder="Enter password"
+            name="password"
+            type="password"
+            onChange={this.changeHandler}
+          />
+          <LoginButton
+            primary
+            onClick={this.loginClickHandler}
+          >
+            Login
+          </LoginButton>
+          <RegisterText>
+            <span>Not a member? </span> <RegisterLink to="/register">Register</RegisterLink>
+          </RegisterText>
+        </SessionContainer>
     );
   }
 }

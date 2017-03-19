@@ -4,6 +4,7 @@ import { listsSelector } from '../../store/mainReducer';
 import AddInput from '../../components/AddInput';
 import Lists from '../../components/Lists';
 import { LayoutVertical } from '../../ui/layout';
+import { Title } from '../../ui';
 import * as listsActions from '../../store/lists/actions';
 
 class ListsScreen extends Component {
@@ -21,9 +22,9 @@ class ListsScreen extends Component {
 
   render() {
     const { lists, createList, deleteList, match } = this.props;
-    console.log('match.params.path', match);
     return (
       <LayoutVertical stretch flex>
+        <Title>Lists</Title>
         <Lists
           pathname={match.path}
           lists={lists}

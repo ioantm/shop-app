@@ -1,10 +1,7 @@
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/filter";
-import "rxjs/add/operator/mergeMap";
-import "rxjs/add/operator/catch";
-import "rxjs/add/observable/of";
-import "rxjs/add/observable/merge";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
 import { combineEpics } from "redux-observable";
 import { Observable } from "rxjs/Observable";
 import { fromPromise } from "rxjs/observable/fromPromise";

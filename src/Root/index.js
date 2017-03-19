@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import App from '../containers/App';
 import asyncComponent from './asyncComponent';
-import * as rooterActions from '../store/router/actions';
+import * as ui from '../ui';// eslint-disable-line 
 
 const AsyncListsScreen = asyncComponent(() =>
   System.import('../containers/ListsScreen')

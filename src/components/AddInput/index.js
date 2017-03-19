@@ -1,15 +1,15 @@
 // @flow
 import React, {Component} from 'react';
-import styled from 'styled-components';
+import { styled } from 'styletron-react';
 import {Button, Input} from '../../ui';
 import {Flex1} from '../../ui/layout';
 
-const StyledContainer = styled.div`
-  display: flex;
-  flexDirection: row;
-  padding: 12px 0;
-  alignItems: center;
-`;
+const StyledContainer = styled('div',{
+  // display: flex;
+  // flexDirection: row;
+  // padding: 12px 0;
+  // alignItems: center;
+});
 
 const inputStyles = {marginBottom: '0', marginRight: '10px', flex: 1};
 
@@ -43,7 +43,7 @@ class AddInput extends Component {
         </Button>
       </StyledContainer> : <StyledContainer>
         <Input
-          styles={inputStyles}
+          style={inputStyles}
           onChange={this.inputChangeHandler}
           ref={component => component && component.focus()}
         />

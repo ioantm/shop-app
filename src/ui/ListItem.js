@@ -1,13 +1,13 @@
-import styled from 'styled-components';
+import { styled } from 'styletron-react';
 
-export default styled.div`
-  border-bottom: 1px solid rgba(0,0,0,0.15);
-  border-top: ${props => props.isFirst ? '1px solid rgba(0,0,0,0.15)' : 'none'};
-  padding: 12px 24px;
-  display: flex;
-  flex: none;
-  flex-direction: row;
-  align-items: center;
-  list-style-type: none;
-  font-family: ${props => props.theme.fontFamily};
-`
+export default styled('div', {
+  padding: '12px 24px',
+  display: 'flex',
+  flex: 'none',
+  flexDirection: 'row',
+  alignItems: 'center',
+  listStyleType: 'none',
+  backgroundColor: 'white',
+  marginBottom: '10px',
+  borderRadius: '4px'
+});

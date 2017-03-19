@@ -23,8 +23,7 @@ listSchema.methods.removeShoppingItem = function removeShoppingItem(
 };
 
 listSchema.methods.addShoppingItem = function addShoppingItem(item) {
-  this.shoppingItems.push(item);
-  return this.shoppingItems[this.shoppingItems.length - 1];
+  this.shoppingItems = [...this.shoppingItems, item];
 }
 
 listSchema.methods.updateShoppingItem = function updateShoppingItem(
@@ -32,8 +31,7 @@ listSchema.methods.updateShoppingItem = function updateShoppingItem(
   updatedItem
 ) {
   const item = this.shoppingItems.find(item => item.id === id);
-  Object.assign(item, updatedItem);
-  return item;
+  return Object.assign(item, updatedItem);
 };
 
 const List = mongoose.model('List', listSchema);

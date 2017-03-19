@@ -1,6 +1,6 @@
 export const theme = {
   primaryColor: '#8657D9',
-  fontFamily: '"Work Sans",Arial,sans-serif',
+  fontFamily: 'Roboto, "Work Sans",Arial,sans-serif',
   buttonColor: 'black',
   buttonColorPrimary: 'white',
   inputFocusColor: '#00cceb'

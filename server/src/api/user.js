@@ -5,51 +5,56 @@ import passport from 'passport';
 import util from 'util';
 import User from '../models/User';
 
-
-
 export default (app, sessStore) => {
-    const router = Router();
-    
-    router.get('/login', (req, res, next) => {
-        console.log('get');
-    });
+  const router = Router();
 
-    router.post('/login', (req, res, next) => {
-      req.assert('email', 'Email is not valid').isEmail();
-      req.assert('password', 'Password cannot be blak').notEmpty();
-      req.sanitize('email').normalizeEmail({ remove_dots: false });
+  router.get('/login', (req, res, next) => {
+    console.log('get');
+  });
 
-      const errors = req.validationErrors();    
-      if (errors) {
-        res.send({
-          errors,
-        }, 400);
-        return;
+  router.post('/login', (req, res, next) => {
+    req.assert('email', 'Email is not valid').isEmail();
+    req.assert('password', 'Password cannot be blak').notEmpty();
+    req.sanitize('email').normalizeEmail({ remove_dots: false });
+
+    const errors = req.validationErrors();
+    if (errors) {
+      res.send(
+        {
+          errors
+        },
+        400
+      );
+      return;
+    }
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return next(err);
       }
-      passport.authenticate('local', (err, user, info) => {
+
+      if (!user) {
+        return res.send({ errors: [info] }, 400);
+      }
+
+      req.login(user, err => {
+        console.log('login success');
         if (err) {
           return next(err);
+        } else {
+          res.json(user);
         }
-
-        if (!user) {  
-          return res.send({ errors: [info] }, 400);
-        }
-       
-        req.login(user, (err) => {
-          console.log('login success');
-            if (err) {
-              return next(err);
-            } else {
-              res.json(user);
-            }
-        });
-      })(req, res, next);
-    });
+      });
+    })(req, res, next);
+  });
 
   router.post('/signup', (req, res, next) => {
     req.assert('email', 'Email is not valid').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
-    req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+    req
+      .assert('password', 'Password must be at least 4 characters long')
+      .len(4);
+    req
+      .assert('confirmPassword', 'Passwords do not match')
+      .equals(req.body.password);
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
     const errors = req.validationErrors();
@@ -61,7 +66,7 @@ export default (app, sessStore) => {
 
     const user = new User({
       email: req.body.email,
-      password: req.body.password,
+      password: req.body.password
     });
 
     User.findOne({ email: req.body.email }, (err, existingUser) => {
@@ -70,20 +75,25 @@ export default (app, sessStore) => {
       }
 
       if (existingUser) {
-        return res.send({ errors: [{ msg: 'Account with that email address already exists.' }] }, 400);
+        return res.send(
+          {
+            errors: [{ msg: 'Account with that email address already exists.' }]
+          },
+          400
+        );
       }
 
-      user.save((err) => {
+      user.save(err => {
         if (err) {
           return next(err);
         }
 
-        req.login(user, (err) => {
-            if (err) {
-              return next(err);
-            } else {
-              res.send(user);
-            }
+        req.login(user, err => {
+          if (err) {
+            return next(err);
+          } else {
+            res.send(user);
+          }
         });
       });
     });
@@ -93,15 +103,16 @@ export default (app, sessStore) => {
     const sid = req.sessionID;
     console.log('session id ', sid);
     req.logOut();
-    
+
     console.log('req.session', sid);
-    req.session.destroy((err) => {
+    req.session.destroy(err => {
       if (err) {
         next(err);
       }
-      sessStore.destroy(sid, (err) => console.log('sessStore.destory', req.sessionID));
+      sessStore.destroy(sid, err =>
+        console.log('sessStore.destory', req.sessionID));
       res.send({ message: 'success' });
-    })
+    });
   });
 
   return router;

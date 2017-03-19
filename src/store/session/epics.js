@@ -1,10 +1,8 @@
-import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/switchMap';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
@@ -27,9 +25,8 @@ const loginEpic = actions$ =>
   actions$.ofType('LOGIN_REQUEST_START')
   .switchMap(
     ({ credentials }) =>
-    fromPromise(api.login(credentials))
-    .mergeMap(response => fromPromise(response.json()))
-    .map(response => sessionActions.loginSuccess(normalize(response, schema.user)))
+    api.login(credentials)
+    .map(({ response }) => sessionActions.loginSuccess(normalize(response, schema.user)))
     .catch(error => Observable.of(sessionActions.loginRequestFailed(error))),
   );
 
