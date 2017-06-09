@@ -7,5 +7,6 @@ export * from './typography/';
 export { default as Link } from './Link';
 export * from './layout';
 export * from './panel';
-export * from './icon';
+export * from './icon/icons';
 export { default as Icon } from './icon';
+export * from './nav';

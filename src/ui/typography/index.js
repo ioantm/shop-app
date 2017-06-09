@@ -32,12 +32,13 @@ export const Display1 = styled('h2', {
 
 type TitleProps = {
   children: ReactElement,
-  lvl?: number
+  lvl?: number,
+  className: string
 };
 
-export const Title = ({ children, lvl }: TitleProps) => (
+export const Title = ({ children, className, lvl }: TitleProps) => (
   <h2
-    className={classNames(titleStyles.title, {
+    className={classNames(className, titleStyles.title, {
       [titleStyles[`is-${lvl}`]]: lvl > 0
     })}
   >

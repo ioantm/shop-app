@@ -8,8 +8,6 @@ import {
   getShoppingItemsSelector
 } from '../../store/shoppingList/selectors';
 import { listSelector } from '../../store/lists/selectors';
-import * as shoppingListSelectors
-  from '../../store/shoppingList/selectors';
 
 class ShoppingListScreen extends Component {
   props: {

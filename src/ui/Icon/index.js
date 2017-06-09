@@ -37,4 +37,3 @@ Icon.defaultProps = {
 };
 
 export default Icon;
-export {default as Icons} from './icons';

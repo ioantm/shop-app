@@ -5,15 +5,19 @@
     "flowtype"
   ],
   "globals": {
-    "window": true,
-    "document": true
+    "window":   true,
+    "document": true,
+    "expect":   true,
+    "it":       true,
+    "test":     true
   },
   "rules": {
-      "max-len": [1, 90, 2, {"ignoreComments": true}],
-      "object-curly-spacing":"off",
-      "comma-dangle":"off",
-      "react/sort-comp": "off",
-      "no-underscore-dangle": "off",
+      "max-len":                      [1, 90, 2, {"ignoreComments": true}],
+      "object-curly-spacing":         "off",
+      "comma-dangle":                 "off",
+      "react/sort-comp":              "off",
+      "no-underscore-dangle":         "off",
+      "react/prop-types":             "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

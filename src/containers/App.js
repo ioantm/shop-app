@@ -6,7 +6,7 @@ import { styled } from 'styletron-react';
 
 import * as sessionActions from '../store/session/actions';
 import { getSessionUserId } from '../store/mainReducer';
-import { LayoutVertical } from '../ui';
+import { LayoutVertical, Nav, NavRight, NavItem, Icon, Button, Icons } from '../ui';
 
 type Props = {
   children: {},
@@ -21,6 +21,15 @@ class App extends Component {
     return (
       <AppContainer>
         <Wrapper>
+          <Nav>
+            <NavRight>
+              <NavItem>
+                <Button>
+                  <Icon size="24" color="#7a7a7a" icon={Icons.MENU} />
+                </Button>
+              </NavItem>
+            </NavRight>
+          </Nav>
           {this.props.children}
         </Wrapper>
       </AppContainer>
@@ -30,9 +39,7 @@ class App extends Component {
   render() {
     return (
       <Container height="100vh">
-        {
-          this.props.isLoading ? 'Loading... ' : this.getContent()
-        }
+        {this.props.isLoading ? 'Loading... ' : this.getContent()}
       </Container>
     );
   }
