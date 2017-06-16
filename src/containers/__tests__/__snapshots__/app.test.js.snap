@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render  App 1`] = `
+<div
+  className="a b c d e f g h i j k l"
+  height="100vh"
+>
+  <div
+    className="a b c d e m n o f g h i j p q r s"
+  >
+    <div
+      className="t m n o a b c d e f g h i j u"
+    >
+      <nav
+        className={undefined}
+      >
+        <nav
+          className=""
+        >
+          <nav
+            className=""
+          >
+            <a
+              className=""
+            >
+              <svg
+                height="24px"
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "verticalAlign": "middle",
+                  }
+                }
+                viewBox="0 0 1024 1024"
+                width="24px"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  style={
+                    Object {
+                      "fill": "#7a7a7a",
+                    }
+                  }
+                />
+              </svg>
+            </a>
+          </nav>
+        </nav>
+      </nav>
+    </div>
+  </div>
+</div>
+`;

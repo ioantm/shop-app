@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render register 1`] = `
+<div
+  className="a b c d e f g h i j k l m n o p q r s t u v"
+>
+  <h2
+    className=""
+  >
+    Register
+  </h2>
+  <div
+    className={undefined}
+  >
+    <div
+      className={undefined}
+    >
+      <input
+        className=""
+        onChange={[Function]}
+        placeholder="Enter email"
+        type="email"
+      />
+    </div>
+  </div>
+  <div
+    className={undefined}
+  >
+    <div
+      className={undefined}
+    >
+      <input
+        className=""
+        onChange={[Function]}
+        placeholder="Enter password"
+        type="password"
+      />
+    </div>
+  </div>
+  <div
+    className={undefined}
+  >
+    <div
+      className={undefined}
+    >
+      <input
+        className=""
+        onChange={[Function]}
+        placeholder="Retype password"
+        type="password"
+      />
+    </div>
+  </div>
+  <a
+    className=""
+    onClick={[Function]}
+    style={
+      Object {
+        "marginBottom": "20px",
+      }
+    }
+  >
+    Register
+  </a>
+  <a
+    className=""
+    href="/signin"
+    onClick={[Function]}
+  >
+    Signin
+  </a>
+</div>
+`;
