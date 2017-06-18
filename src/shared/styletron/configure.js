@@ -13,11 +13,11 @@ function styletronConfig() {
   return styletronConfig.styletron = new Styletron([styleSheet]);
 }
 
-type PropsType = {
-  children: Children
+type Props = {
+  children: any
 };
 
-const WithStyletron = ({ children }: PropsType) => (
+const WithStyletron = ({ children }: Props) => (
   <StyletronProvider styletron={styletronConfig()}>
     {children}
   </StyletronProvider>

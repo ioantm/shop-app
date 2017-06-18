@@ -2,117 +2,167 @@
 import React, { Component } from 'react';
 import { SessionContainer } from '../styles';
 import { Title, Button, Input, Link, FormField } from '../../ui';
+import * as validationErrors from '../ValidationErrors';
+import FormWithError from '../FormComponents/FormError';
+
+type RegisterFields = {
+  email: string,
+  password: string,
+  confirmPassword: string
+};
+
+type TouchedState = {
+  email: boolean,
+  password: boolean,
+  confirmPassword: boolean
+};
 
 type State = {
-    email: string,
-    password: string,
-    confirmPassword: string
+  email: string,
+  password: string,
+  confirmPassword: string,
+  touchedFields: TouchedState
 };
 
 type Props = {
-  register: ({ email: string, password: string, confirmPassword: string }) => void,
-}
-
-type ValidationPrdicate = (text: ?string) => boolean;
-type ValidationItem = [ValidationPrdicate, string];
-
-const validateEmail: ValidationPrdicate = (email) => {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return !email || !re.test(email);
+  register: ({
+    email: string,
+    password: string,
+    confirmPassword: string
+  }) => void
 };
-const validateIsEmpty: ValidationPrdicate = text => !text || text.length === 0;
-const validateLength: (number => ValidationPrdicate) = minLength => text => !text || text.length < minLength;
 
-type ValidateInputProps<T> = T & {
-  validations: Array<[ValidationItem]>
-}
-
-type Validations = {
-  validations: Array<[ValidationItem]>
-}
-
-const ValidatedInput = (props: ValidateInputProps<*>) => (
-  <div>
-    {props.children}
-  </div>
-);
-
-const WithValidation = <T: *>(InputComponent: ReactClass<T>): ReactClass<T & Validations> =>
-  () => (
-    <InputComponent />
-  );
-
-type InjectedProps = {
-  trackingID: string;
-}
-
-
-function withTrackingID<T: *>(BaseComponent: React.Component<T>): React.Component<T & InjectedProps> {
-  return (
-    class extends React.Component {
-      static displayName = `withTrackingID(${BaseComponent.displayName || BaseComponent.name})`;
-      render() {
-        return (
-          <div />
-        );
-      }
+export const validate = ({
+  email,
+  password,
+  confirmPassword,
+  touchedFields
+}: RegisterFields & { touchedFields: TouchedState }): {
+  email: ?string,
+  password: ?string,
+  confirmPassword: ?string
+} => {
+  const validateRequired = (field: string) =>
+    field ? '' : validationErrors.REQUIRED;
+  const validateEmail = (emailStr: string) => {
+    if (
+      !emailStr.match(
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      )
+    ) {
+      return validationErrors.INVALID_EMAIL;
     }
-  );
-}
+    return null;
+  };
 
-type TestProps = {
-  test: string
+  const minChars = len => str =>
+    str.length < len ? validationErrors.MIN_6_CHARACTERS : '';
+  const min6 = minChars(6);
+  const isTouched = field => touchedFields[field];
+  const passwordMatch = () =>
+    password === confirmPassword ? '' : validationErrors.PASSWORD_NOT_MATCH;
+
+  return {
+    email:
+      (isTouched('email') &&
+        (validateRequired(email) || validateEmail(email))) ||
+        '',
+    password:
+      (isTouched('password') &&
+        (validateRequired(password) || min6(password))) ||
+        '',
+    confirmPassword:
+      (isTouched('confirmPassword') &&
+        (validateRequired(confirmPassword) ||
+          min6(password) ||
+          passwordMatch())) ||
+        ''
+  };
 };
 
-class Test extends React.Component<void, TestProps, void> {
-  render() {
-    console.log('hmm', this.props.test);
-    return (<div>test</div>);
-  }
-}
-
-const InputWithValidation = withTrackingID(Test);
+const WithErrorInput = FormWithError(Input);
 
 export default class Register extends Component<void, Props, State> {
   state = {
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    touchedFields: {
+      email: false,
+      password: false,
+      confirmPassword: false
+    }
   };
 
   inputHandler = (name: string) => (event: SyntheticInputEvent) =>
     this.setState({ [name]: event.target.value });
+  handleOnBlur = (name: string) =>
+    this.setState({
+      touchedFields: Object.assign({}, this.state.touchedFields, {
+        [name]: true
+      })
+    });
   emailHandler = this.inputHandler('email');
   passwordHandler = this.inputHandler('password');
   confirmPasswordHandler = this.inputHandler('confirmPassword');
 
-  registerHandler = () =>
-    this.props.register({
-      email: this.state.email,
-      password: this.state.password,
-      confirmPassword: this.state.confirmPassword,
-    })
+  registerHandler = () => {
+    this.setState(
+      {
+        touchedFields: {
+          email: true,
+          password: true,
+          confirmPassword: true
+        }
+      },
+      () => {
+        const errors = validate(this.state);
+        const areErrors = errObj =>
+          Object.keys(errObj).map(key => errors[key]).some(Boolean);
+
+        if (!areErrors(errors)) {
+          this.props.register({
+            email: this.state.email,
+            password: this.state.password,
+            confirmPassword: this.state.confirmPassword
+          });
+        }
+      }
+    );
+  };
 
   render() {
+    const errors = validate(this.state);
+
     return (
       <SessionContainer>
         <Title center>Register</Title>
         <FormField>
-          <InputWithValidation
+          <WithErrorInput
+            key="email"
+            error={errors.email}
+            value={this.state.email}
             onChange={this.emailHandler}
-            placeholder="Enter email"
+            placeholder="Email"
+            type="text"
           />
         </FormField>
         <FormField>
-          <Input
+          <WithErrorInput
+            key="password"
+            error={errors.password}
             onChange={this.passwordHandler}
+            value={this.state.password}
             placeholder="Enter password"
             type="password"
           />
         </FormField>
         <FormField>
-          <Input
+          <WithErrorInput
+            key="confirmPassword"
+            error={errors.confirmPassword}
             onChange={this.confirmPasswordHandler}
+            value={this.state.confirmPassword}
             placeholder="Retype password"
             type="password"
           />
