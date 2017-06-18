@@ -118,7 +118,9 @@ export default class Register extends Component<void, Props, State> {
       () => {
         const errors = validate(this.state);
         const areErrors = errObj =>
-          Object.keys(errObj).map(key => errors[key]).some(Boolean);
+          Object.keys(errObj)
+            .map(key => errors[key])
+            .some(Boolean);
 
         if (!areErrors(errors)) {
           this.props.register({

@@ -1,0 +1,54 @@
+exports[`test render signin 1`] = `
+<div
+  className="a b c d e f g h i j k l m n o p q r s t u v">
+  <h2
+    className="w">
+    Sign in to Shopping List
+  </h2>
+  <div
+    className={undefined}>
+    <div>
+      <div
+        className={undefined}>
+        <input
+          className=""
+          name="email"
+          onChange={[Function]}
+          placeholder="Enter email"
+          type="text" />
+      </div>
+      
+    </div>
+  </div>
+  <div
+    className={undefined}>
+    <div>
+      <div
+        className={undefined}>
+        <input
+          className=""
+          name="password"
+          onChange={[Function]}
+          placeholder="Enter password"
+          type="password" />
+      </div>
+      
+    </div>
+  </div>
+  <a
+    className="x"
+    onClick={[Function]}>
+    Login
+  </a>
+  <p
+    className="y z a0 a1 a2 a3 a4 b c d e f a5 a6 a7 j a8 a9 aa ab ac ad ae af ag">
+    Not a member?
+    <a
+      className="ah"
+      href="/register"
+      onClick={[Function]}>
+      Register
+    </a>
+  </p>
+</div>
+`;
