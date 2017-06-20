@@ -1,24 +1,23 @@
-import { normalize } from 'normalizr';
-import * as api from '../../api';
-import * as schema from '../../api/schema';
-import { Action } from '../actionTypes';
+// @flow
+import type { Action } from '../actionTypes';
+import type { NormalizedResponse, RequestError } from '../../types';
 
 export const GET_LISTS_REQUEST_START = 'GET_LISTS_REQUEST_START';
 export const GET_LISTS_REQUEST_SUCCESS = 'GET_LISTS_REQUEST_SUCCESS';
 export const GET_LISTS_REQUEST_FAILED = 'GET_LISTS_REQUEST_FAILED';
 
-export const getListsRequest = (listIds, loadShoppingItems): Action => ({
+export const getListsRequest = (listIds: Array<string>, loadShoppingItems: boolean): Action => ({
   type: GET_LISTS_REQUEST_START,
   listIds,
   loadShoppingItems
 });
 
-export const getListsRequestSuccess = (response): Action => ({
+export const getListsRequestSuccess = (response: NormalizedResponse): Action => ({
   type: GET_LISTS_REQUEST_SUCCESS,
-  response,
+  response
 });
 
-export const getListsRequestFailed = (error): Action => ({
+export const getListsRequestFailed = (error: RequestError): Action => ({
   type: GET_LISTS_REQUEST_FAILED,
   error,
 });

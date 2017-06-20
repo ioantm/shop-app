@@ -1,3 +1,4 @@
+// @flow
 import { Action } from '../actionTypes';
 
 export const addShoppingItemRequest = (item, listId) => ({
