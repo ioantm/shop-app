@@ -1,0 +1,61 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });
+
+
+
+var GET_LISTS_REQUEST_START = exports.GET_LISTS_REQUEST_START = 'GET_LISTS_REQUEST_START';
+var GET_LISTS_REQUEST_SUCCESS = exports.GET_LISTS_REQUEST_SUCCESS = 'GET_LISTS_REQUEST_SUCCESS';
+var GET_LISTS_REQUEST_FAILED = exports.GET_LISTS_REQUEST_FAILED = 'GET_LISTS_REQUEST_FAILED';
+
+var getListsRequest = exports.getListsRequest = function getListsRequest(listIds, loadShoppingItems) {return {
+    type: GET_LISTS_REQUEST_START,
+    listIds: listIds,
+    loadShoppingItems: loadShoppingItems };};
+
+
+var getListsRequestSuccess = exports.getListsRequestSuccess = function getListsRequestSuccess(response) {return {
+    type: GET_LISTS_REQUEST_SUCCESS,
+    response: response };};
+
+
+var getListsRequestFailed = exports.getListsRequestFailed = function getListsRequestFailed(error) {return {
+    type: GET_LISTS_REQUEST_FAILED,
+    error: error };};
+
+
+var CREATE_LIST_REQUEST_START = exports.CREATE_LIST_REQUEST_START = 'CREATE_LIST_REQUEST_START';
+var CREATE_LIST_REQUEST_SUCCESS = exports.CREATE_LIST_REQUEST_SUCCESS = 'CREATE_LIST_REQUEST_SUCCESS';
+var CREATE_LIST_REQUEST_FAILED = exports.CREATE_LIST_REQUEST_FAILED = 'CREATE_LIST_REQUEST_FAILED';
+
+var createListRequest = exports.createListRequest = function createListRequest(list) {return {
+    type: CREATE_LIST_REQUEST_START,
+    list: list };};
+
+
+var createListSuccess = exports.createListSuccess = function createListSuccess(response) {return {
+    type: CREATE_LIST_REQUEST_SUCCESS,
+    response: response };};
+
+
+var createListFailed = exports.createListFailed = function createListFailed(error) {return {
+    type: CREATE_LIST_REQUEST_FAILED,
+    error: error };};
+
+
+
+var DELETE_LIST_REQUEST_START = exports.DELETE_LIST_REQUEST_START = 'DELETE_LIST_REQUEST_START';
+var DELETE_LIST_REQUEST_SUCCESS = exports.DELETE_LIST_REQUEST_SUCCESS = 'DELETE_LIST_REQUEST_SUCCESS';
+var DELETE_LIST_REQUEST_FAILED = exports.DELETE_LIST_REQUEST_FAILED = 'DELETE_LIST_REQUEST_FAILED';
+
+var deleteListRequest = exports.deleteListRequest = function deleteListRequest(listId) {return {
+    type: DELETE_LIST_REQUEST_START,
+    listId: listId };};
+
+
+var deleteListSuccess = exports.deleteListSuccess = function deleteListSuccess(listId) {return {
+    type: DELETE_LIST_REQUEST_SUCCESS,
+    listId: listId };};
+
+
+var deleteListFailed = exports.deleteListFailed = function deleteListFailed(error) {return {
+    type: DELETE_LIST_REQUEST_FAILED,
+    error: error };};

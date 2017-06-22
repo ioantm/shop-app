@@ -1,0 +1,14 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });
+var NAVIGATE = exports.NAVIGATE = 'NAVIGATE';
+
+var navigate = exports.navigate = function navigate(location, action) {return {
+    type: NAVIGATE,
+    location: location,
+    action: action };};
+
+
+var navigateToSignin = exports.navigateToSignin = function navigateToSignin() {return (
+    navigate({ pathname: '/signin' }, 'PUSH'));};
+
+var navigateToLists = exports.navigateToLists = function navigateToLists() {return (
+    navigate({ pathname: '/lists' }, 'PUSH'));};

@@ -1,0 +1,4 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var REQUIRED = exports.REQUIRED = 'This field is required';
+var INVALID_EMAIL = exports.INVALID_EMAIL = 'This must be a valid email address';
+var MIN_6_CHARACTERS = exports.MIN_6_CHARACTERS = 'Password must have at least 6 characters';
+var PASSWORD_NOT_MATCH = exports.PASSWORD_NOT_MATCH = 'Password and confirm password not match';

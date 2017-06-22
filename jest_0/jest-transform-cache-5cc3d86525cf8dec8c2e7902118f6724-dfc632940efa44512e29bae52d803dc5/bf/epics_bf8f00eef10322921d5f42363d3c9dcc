@@ -1,0 +1,118 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });
+
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/mergeMap');
+require('rxjs/add/operator/catch');
+require('rxjs/add/observable/of');
+var _fromPromise = require('rxjs/observable/fromPromise');
+var _reduxObservable = require('redux-observable');
+var _normalizr = require('normalizr');
+var _schema = require('../../api/schema');var schema = _interopRequireWildcard(_schema);
+var _actions = require('./actions');var shoppingListActions = _interopRequireWildcard(_actions);
+var _graphql = require('../../api/graphql');var _graphql2 = _interopRequireDefault(_graphql);
+var _selectors = require('./selectors');var shoppingListSelectors = _interopRequireWildcard(_selectors);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
+
+var addShoppingListEpic = function addShoppingListEpic(actions$) {return (
+    actions$.ofType('ADD_SHOPPING_ITEM_REQUEST').
+    mergeMap(
+    function (_ref) {var item = _ref.item,listId = _ref.listId;return (
+        (0, _fromPromise.fromPromise)(
+        (0, _graphql2.default)('mutation addShoppingItem($item: ShoppingItemInput!, $listId: ID!) {\n            addShoppingItem(item: $item, listId: $listId){\n              id, name, completed\n            }\n          }',
+
+
+
+
+
+        { item: item, listId: listId })).
+
+
+        map(function (response) {return (
+            shoppingListActions.addShoppingItemSuccess(
+            (0, _normalizr.normalize)(response.addShoppingItem, schema.shoppingItem),
+            listId));}).
+
+
+        catch(shoppingListActions.addShoppingItemFailure));}));};
+
+
+var deleteShoppingItemEpic = function deleteShoppingItemEpic(actions$) {return (
+    actions$.
+    ofType('DELETE_SHOPPING_ITEM_REQUEST').
+    mergeMap(
+    function (_ref2) {var listId = _ref2.listId,itemId = _ref2.itemId;return (
+        (0, _fromPromise.fromPromise)(
+        (0, _graphql2.default)('mutation removeShoppingItem($listId: ID!, $itemId: ID!) {\n              removeShoppingItem(listId: $listId, itemId: $itemId)\n            }',
+
+
+
+        { listId: listId, itemId: itemId })).
+
+
+        map(function () {return shoppingListActions.deleteShoppingItemSuccess(itemId, listId);}).
+        catch(shoppingListActions.deleteShoppingItemFailure));}));};
+
+
+var loadShoppingItems = function loadShoppingItems(actions$) {return actions$.
+  filter(
+  function (action) {return (
+      action.type === 'LOAD_SHOPPING_ITEMS_REQUEST' ||
+      action.type === 'NAVIGATE' &&
+      action.location.pathname.match(/\/lists\/.+/));}).
+
+  map(
+  function (action) {return (
+      action.type === 'LOAD_SHOPPING_ITEMS_REQUEST' &&
+      action.listId ||
+      action.type === 'NAVIGATE' &&
+      action.location.pathname.split(/\/lists\//)[1]);}).
+
+  mergeMap(
+  function (listId) {return (0, _fromPromise.fromPromise)(
+    (0, _graphql2.default)('query getListById($id: ID) {\n          list(id: $id) {\n            shoppingItems {\n              id,\n              name,\n              completed\n            }\n          }\n        }',
+
+
+
+
+
+
+
+
+
+    { id: listId })).
+
+    map(function (response) {return (
+        shoppingListActions.loadShoppingItemsSuccess(
+        (0, _normalizr.normalize)(response.list.shoppingItems, schema.arrayOfShoppingItems),
+        listId));}).
+
+    catch(shoppingListActions.loadShoppingItemsFailure);});};
+
+
+var editShoppingItem = function editShoppingItem(actions$, store) {return (
+    actions$.ofType('EDIT_SHOPPING_ITEM_REQUEST').
+    mergeMap(function (_ref3) {var itemId = _ref3.itemId,listId = _ref3.listId,props = _ref3.props;return (
+        (0, _fromPromise.fromPromise)(
+        (0, _graphql2.default)('mutation UpdateListItem($item: ShoppingItemInput!, $listId: ID!) {\n              updateShoppingItem(item: $item, listId: $listId) {\n                name\n                completed\n                id\n              }\n          }',
+
+
+
+
+
+
+
+        { item: Object.assign({}, shoppingListSelectors.getShoppingItem(store.getState(), itemId), props), listId: listId })).
+
+
+        map(function (result) {return (
+            shoppingListActions.editShoppingItemSuccess(
+            (0, _normalizr.normalize)(result.updateShoppingItem, schema.shoppingItem)));}).
+
+
+        catch(function (error) {return shoppingListActions.editShoppingItemFailure(error, listId, itemId);}));}));};exports.default =
+
+
+(0, _reduxObservable.combineEpics)(
+addShoppingListEpic,
+deleteShoppingItemEpic,
+loadShoppingItems,
+editShoppingItem);

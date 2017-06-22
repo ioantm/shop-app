@@ -1,0 +1,17 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.getShoppingItem = exports.getShoppingItemsSelector = undefined;var _reselect = require('reselect');
+var _mainReducer = require('../../store/mainReducer');
+var _selectors = require('../lists/selectors');
+
+var getShoppingItemsSelector = exports.getShoppingItemsSelector = (0, _reselect.createSelector)(
+[_selectors.listSelector, _mainReducer.shoppingItemsMap],
+function (list, items) {
+  if (!list) {
+    return [];
+  }
+
+  return list.shoppingItems &&
+  list.shoppingItems.filter(Boolean).map(function (id) {return items[id];}) || [];
+});
+
+
+var getShoppingItem = exports.getShoppingItem = function getShoppingItem(state, id) {return (0, _mainReducer.shoppingItemsMap)(state)[id];};

@@ -1,0 +1,26 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _styletronClient = require('styletron-client');var _styletronClient2 = _interopRequireDefault(_styletronClient);
+var _styletronReact = require('styletron-react');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+function styletronConfig() {
+  if (styletronConfig.styletron) {
+    return styletronConfig.styletron;
+  }
+
+  var styleSheet = document.createElement('style');
+  document.head.appendChild(styleSheet);
+  return styletronConfig.styletron = new _styletronClient2.default([styleSheet]);
+}
+
+
+
+
+
+var WithStyletron = function WithStyletron(_ref) {var children = _ref.children;return (
+    _react2.default.createElement(_styletronReact.StyletronProvider, { styletron: styletronConfig() },
+      children));};exports.default =
+
+
+
+WithStyletron;

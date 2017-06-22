@@ -1,0 +1,6 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.listSelector = undefined;
+var _reselect = require('reselect');
+var _mainReducer = require('../../store/mainReducer');
+
+var listSelector = exports.listSelector = function listSelector(state, listId) {return (
+    (0, _mainReducer.listsMap)(state)[listId]);};

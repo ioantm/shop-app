@@ -1,23 +1,17 @@
 // @flow
 import { combineReducers } from 'redux';
 import { Action } from '../actionTypes';
-
-export type ShoppingList = {
-  +name: string,
-  +creator: string,
-  +assignedUsers: Array<string>,
-  +shoppingItems: Array<string>
-}
+import type { ShoppingList } from '../../types';
 
 type ListById = {
   +[string]: ShoppingList
 }
 
 export type ListsStateType = {
-  +listsById: ListById
+  listsById: ListById
 };
 
-const list = (state, action: Action) => {
+const list = (state: ShoppingList, action: Action): ShoppingList => {
   switch (action.type) {
     case 'ADD_SHOPPING_ITEM_SUCCESS':
       return Object.assign({}, state, {
@@ -41,7 +35,7 @@ const listsById = (state: ListById = {}, action: Action) => {
     case 'LOGOUT_REQUEST_SUCCESS':
       return {};
     case 'DELETE_LIST_REQUEST_SUCCESS': {
-      const newState = {...state};
+      const newState = { ...state };
       delete newState[action.listId];
       return newState
     }
@@ -59,8 +53,11 @@ const listsById = (state: ListById = {}, action: Action) => {
           [action.listId]: list(state[action.listId], action)
         });
       }
+
       return state;
   }
 };
 
-export default combineReducers({ listsById });
+const reducer: (state: ListsStateType, action: Action) =>
+  ListsStateType = combineReducers({ listsById });
+export default reducer;

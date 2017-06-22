@@ -1,0 +1,15 @@
+'use strict';var _reactTestRenderer = require('react-test-renderer');var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _App = require('../App');var _App2 = _interopRequireDefault(_App);
+var _configureStore = require('../../store/configureStore');var _configureStore2 = _interopRequireDefault(_configureStore);
+var _configure = require('../../shared/styletron/configure');var _configure2 = _interopRequireDefault(_configure);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+it('render  App', function () {
+  var appTree = _reactTestRenderer2.default.create(
+  _react2.default.createElement(_configure2.default, null,
+    _react2.default.createElement(_App2.default, { store: (0, _configureStore2.default)() })));
+
+
+  expect(appTree).toMatchSnapshot();
+});

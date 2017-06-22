@@ -1,0 +1,10 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _styletronReact = require('styletron-react');
+var _reactRouterDom = require('react-router-dom');exports.default =
+
+(0, _styletronReact.styled)(_reactRouterDom.Link, {
+    // font-size: 1.1875rem;
+    // line-height: 24px;
+    // font-weight: 600;
+    // font-family: ${theme.fontFamily};
+    // text-decoration: none;
+});

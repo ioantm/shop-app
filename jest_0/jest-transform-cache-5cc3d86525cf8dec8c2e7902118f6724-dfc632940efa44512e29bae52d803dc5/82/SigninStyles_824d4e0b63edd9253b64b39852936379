@@ -1,0 +1,22 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.SigninTitle = exports.RegisterText = exports.RegisterLink = exports.LoginButton = undefined;var _styletronReact = require('styletron-react');
+var _ui = require('../../ui');
+
+var LoginButton = exports.LoginButton = (0, _styletronReact.styled)(_ui.Button, {
+  marginTop: '20px' });
+
+
+var RegisterLink = exports.RegisterLink = (0, _styletronReact.styled)(_ui.Link, {
+  marginLeft: '20px' });
+
+
+var RegisterText = exports.RegisterText = (0, _styletronReact.styled)(_ui.BodyText, {
+  textAlign: 'center',
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: '20px 0 0 0' });
+
+
+var SigninTitle = exports.SigninTitle = (0, _styletronReact.styled)(_ui.Title, {
+  marginBottom: '30px' });

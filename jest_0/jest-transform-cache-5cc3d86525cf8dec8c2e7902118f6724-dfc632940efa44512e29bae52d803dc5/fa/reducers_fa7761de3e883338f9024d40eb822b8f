@@ -1,0 +1,49 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.getShoppingItem = undefined;
+var _redux = require('redux');
+var _actionTypes = require('../actionTypes');function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+
+
+
+
+
+
+
+
+
+var shoppingItemsById = function shoppingItemsById() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};var action = arguments[1];
+  if (
+  action.response &&
+  action.response.entities &&
+  action.response.entities.shoppingItems)
+  {
+    return Object.assign({}, state, action.response.entities.shoppingItems);
+  }
+
+  switch (action.type) {
+    case 'DELETE_SHOPPING_ITEM_SUCCESS':{
+        var newState = Object.assign({}, state);
+        delete newState[action.itemId];
+        return newState;
+      }
+    case 'EDIT_SHOPPING_ITEM_REQUEST':
+      return Object.assign({}, state, _defineProperty({},
+      action.itemId, Object.assign({}, state[action.itemId], action.props)));
+
+    default:
+      return state;}
+
+};
+
+
+
+
+
+var reducer = (0, _redux.combineReducers)({
+  shoppingItemsById: shoppingItemsById });exports.default =
+
+
+reducer;
+
+var getShoppingItem = exports.getShoppingItem = function getShoppingItem(state) {return function (id) {return (
+      state.shoppingItemsById[id]);};};

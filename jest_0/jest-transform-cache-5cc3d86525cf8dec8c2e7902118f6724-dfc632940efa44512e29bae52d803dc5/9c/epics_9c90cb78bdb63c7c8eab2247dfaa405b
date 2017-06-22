@@ -1,0 +1,26 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.navigateToLogin = undefined;require('rxjs/add/operator/map');
+require('rxjs/add/operator/mergeMap');
+require('rxjs/add/operator/catch');
+require('rxjs/add/operator/filter');
+require('rxjs/add/observable/of');
+var _reduxObservable = require('redux-observable');
+var _actions = require('./actions');var ruterActions = _interopRequireWildcard(_actions);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
+
+// export const navigateToListsSE = (actions$, { getState }) =>
+//   actions$.ofType(
+//       'LOGIN_REQUEST_SUCCESS',
+//       'GET_LISTS_REQUEST_SUCCESS',
+//       'REGISTER_REQUEST_SUCCESS',
+//     )
+//     .filter(() => getState().router.location.pathname.split('/')[1] !== 'lists')
+//     .map(ruterActions.navigateToLists);
+
+var navigateToLogin = exports.navigateToLogin = function navigateToLogin(actions$) {return (
+    actions$.ofType('LOGOUT_REQUEST_SUCCESS').map(ruterActions.navigateToSignin));};
+
+var requestFailedSE = function requestFailedSE(actions$) {return (
+    actions$.
+    filter(function (action) {return action.error && action.error.status === 401;}).
+    map(ruterActions.navigateToSignin));};exports.default =
+
+(0, _reduxObservable.combineEpics)(requestFailedSE, navigateToLogin);

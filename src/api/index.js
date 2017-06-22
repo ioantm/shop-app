@@ -1,5 +1,3 @@
-// @flow
-
 import { ajax } from 'rxjs/observable/dom/ajax'; // path is different than the previous one!
 // type RequestProps = {
 //   method: 'POST' | 'GET' | 'PUT' | 'DELETE',
@@ -60,13 +58,13 @@ export const addShoppingItem = (item, listId) =>
     headers: new Headers({ 'Content-Type': 'application/json' })
   });
 
-export const deleteList = (listId: string) => fetch(`/api/lists/${listId}`, {
+export const deleteList = listId => fetch(`/api/lists/${listId}`, {
   method: 'DELETE',
   credentials: 'include',
   headers: new Headers({ 'Content-Type': 'application/json' })
 });
 
-export const deleteShoppingItem = (listId: string, itemId: string) =>
+export const deleteShoppingItem = (listId, itemId) =>
   fetch(`/api/lists/${listId}/${itemId}`, {
     method: 'DELETE',
     credentials: 'include',

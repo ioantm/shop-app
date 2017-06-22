@@ -1,0 +1,42 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.logoutFailed = exports.logoutSuccess = exports.logoutRequest = exports.registerFailed = exports.registerSuccess = exports.registerRequest = exports.loginRequestFailed = exports.loginSuccess = exports.loginRequest = undefined;var _actionTypes = require('../actionTypes');
+
+var loginRequest = exports.loginRequest = function loginRequest(credentials) {return {
+    type: 'LOGIN_REQUEST_START',
+    credentials: credentials };};
+
+
+var loginSuccess = exports.loginSuccess = function loginSuccess(response) {return {
+    type: 'LOGIN_REQUEST_SUCCESS',
+    response: response };};
+
+
+var loginRequestFailed = exports.loginRequestFailed = function loginRequestFailed(error) {return {
+    type: 'LOGIN_REQUEST_FAILED',
+    error: error };};
+
+
+var registerRequest = exports.registerRequest = function registerRequest(userData) {return {
+    type: 'REGISTER_REQUEST_START',
+    userData: userData };};
+
+
+var registerSuccess = exports.registerSuccess = function registerSuccess(response) {return {
+    type: 'REGISTER_REQUEST_SUCCESS',
+    response: response };};
+
+
+var registerFailed = exports.registerFailed = function registerFailed(error) {return {
+    type: 'REGISTER_REQUEST_FAILED',
+    error: error };};
+
+
+var logoutRequest = exports.logoutRequest = function logoutRequest() {return {
+    type: 'LOGOUT_REQUEST_START' };};
+
+
+var logoutSuccess = exports.logoutSuccess = function logoutSuccess() {return {
+    type: 'LOGOUT_REQUEST_SUCCESS' };};
+
+
+var logoutFailed = exports.logoutFailed = function logoutFailed() {return {
+    type: 'LOGOUT_REQUEST_FAILED' };};

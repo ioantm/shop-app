@@ -5,23 +5,21 @@ import List from '../models/List';
 
 export default () => {
   const router = Router();
-  
-  router.post('/', (req, res, next) => {
+
+  router.post('/', (req, res) => {
     res.send([])
   });
 
-  router.get('/', (req, res, next) => {
-    List.find({ creator: req.user.email },'', (err, lists) => {
+  router.get('/', (req, res) => {
+    List.find({ creator: req.user.email }, '', (err, lists) => {
       res.send(lists);
     });
   });
 
   router.post('/createList', (req, res, next) => {
-    //res.send(Object.assign(req.body, { id: Math.random() * 9999 }));
     const list = new List(Object.assign({}, req.body, { creator: req.user.email }));
     list.save((err) => {
       if (err) {
-        console.log('err', err);
         next(err);
         return;
       }
@@ -47,9 +45,9 @@ export default () => {
       }
 
       list.removeShoppingItem(req.params.itemId);
-      list.save((err, updatedList) => {
-        if (err) {
-          next(err);
+      list.save((listSaveErr) => {
+        if (listSaveErr) {
+          next(listSaveErr);
           return;
         }
         res.send({ message: 'success' });
@@ -67,9 +65,9 @@ export default () => {
       list.shoppingItems.push(req.body.item);
       const addedItem = list.shoppingItems[list.shoppingItems.length - 1];
 
-      list.save((err, updatedList) => {
-        if (err) {
-          next(err);
+      list.save((listSaveErr) => {
+        if (listSaveErr) {
+          next(listSaveErr);
           return;
         }
         res.send(addedItem);
@@ -77,7 +75,7 @@ export default () => {
     });
   });
 
-  router.post('/getListItems', (req, res, next) => {
+  router.post('/getListItems', () => {
 
   });
 

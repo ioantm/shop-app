@@ -1,0 +1,37 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.getCurrentPathname = exports.shoppingItemsMap = exports.listsMap = exports.isLoadingSelector = exports.listsSelector = exports.getSessionUserId = undefined;
+
+var _redux = require("redux");
+var _reducers = require("./session/reducers");var _reducers2 = _interopRequireDefault(_reducers);
+var _reducers3 = require("./shoppingList/reducers");var _reducers4 = _interopRequireDefault(_reducers3);
+var _reducers5 = require("./lists/reducers");var _reducers6 = _interopRequireDefault(_reducers5);
+var _loadingReducer = require("./loadingReducer");
+var _reducers7 = require("./router/reducers");var _reducers8 = _interopRequireDefault(_reducers7);
+var _actionTypes = require("./actionTypes");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+
+
+
+
+
+
+
+
+var rootReducer = (0, _redux.combineReducers)({
+  sessionUserId: _reducers2.default,
+  lists: _reducers6.default,
+  shoppingList: _reducers4.default,
+  isLoading: _loadingReducer.isLoading,
+  router: _reducers8.default });exports.default =
+
+
+rootReducer;
+var getSessionUserId = exports.getSessionUserId = function getSessionUserId(state) {return state.sessionUserId;};
+var listsSelector = exports.listsSelector = function listsSelector(state) {return (
+    Object.keys(state.lists.listsById).map(function (lid) {return state.lists.listsById[lid];}));};
+var isLoadingSelector = exports.isLoadingSelector = function isLoadingSelector(state) {return state.isLoading;};
+var listsMap = exports.listsMap = function listsMap(state) {return state.lists.listsById;};
+var shoppingItemsMap = exports.shoppingItemsMap = function shoppingItemsMap(state) {return (
+    state.shoppingList.shoppingItemsById);};
+var getCurrentPathname = exports.getCurrentPathname = function getCurrentPathname(state) {return (
+    state.router.location.pathname);};

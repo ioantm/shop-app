@@ -1,0 +1,182 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.validate = undefined;var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _styles = require('../styles');
+var _ui = require('../../ui');
+var _ValidationErrors = require('../ValidationErrors');var validationErrors = _interopRequireWildcard(_ValidationErrors);
+var _FormError = require('../FormComponents/FormError');var _FormError2 = _interopRequireDefault(_FormError);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var validate = exports.validate = function validate(_ref)
+
+
+
+
+
+
+
+
+{var email = _ref.email,password = _ref.password,confirmPassword = _ref.confirmPassword,touchedFields = _ref.touchedFields;
+  var validateRequired = function validateRequired(field) {return (
+      field ? '' : validationErrors.REQUIRED);};
+  var validateEmail = function validateEmail(emailStr) {
+    if (
+    !emailStr.match(
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/))
+
+    {
+      return validationErrors.INVALID_EMAIL;
+    }
+    return null;
+  };
+
+  var minChars = function minChars(len) {return function (str) {return (
+        str.length < len ? validationErrors.MIN_6_CHARACTERS : '');};};
+  var min6 = minChars(6);
+  var isTouched = function isTouched(field) {return touchedFields[field];};
+  var passwordMatch = function passwordMatch() {return (
+      password === confirmPassword ? '' : validationErrors.PASSWORD_NOT_MATCH);};
+
+  return {
+    email:
+    isTouched('email') && (
+    validateRequired(email) || validateEmail(email)) ||
+    '',
+    password:
+    isTouched('password') && (
+    validateRequired(password) || min6(password)) ||
+    '',
+    confirmPassword:
+    isTouched('confirmPassword') && (
+    validateRequired(confirmPassword) ||
+    min6(password) ||
+    passwordMatch()) ||
+    '' };
+
+};
+
+var WithErrorInput = (0, _FormError2.default)(_ui.Input);var
+
+Register = function (_Component) {_inherits(Register, _Component);function Register() {var _ref2;var _temp, _this, _ret;_classCallCheck(this, Register);for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = Register.__proto__ || Object.getPrototypeOf(Register)).call.apply(_ref2, [this].concat(args))), _this), _this.
+    state = {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      touchedFields: {
+        email: false,
+        password: false,
+        confirmPassword: false } }, _this.
+
+
+
+    inputHandler = function (name) {return function (event) {return (
+          _this.setState(_defineProperty({}, name, event.target.value)));};}, _this.
+    handleOnBlur = function (name) {return (
+        _this.setState({
+          touchedFields: Object.assign({}, _this.state.touchedFields, _defineProperty({},
+          name, true)) }));}, _this.
+
+
+    emailHandler = _this.inputHandler('email'), _this.
+    passwordHandler = _this.inputHandler('password'), _this.
+    confirmPasswordHandler = _this.inputHandler('confirmPassword'), _this.
+
+    registerHandler = function () {
+      _this.setState(
+      {
+        touchedFields: {
+          email: true,
+          password: true,
+          confirmPassword: true } },
+
+
+      function () {
+        var errors = validate(_this.state);
+        var areErrors = function areErrors(errObj) {return (
+            Object.keys(errObj).
+            map(function (key) {return errors[key];}).
+            some(Boolean));};
+
+        if (!areErrors(errors)) {
+          _this.props.register({
+            email: _this.state.email,
+            password: _this.state.password,
+            confirmPassword: _this.state.confirmPassword });
+
+        }
+      });
+
+    }, _temp), _possibleConstructorReturn(_this, _ret);}_createClass(Register, [{ key: 'render', value: function render()
+
+    {
+      var errors = validate(this.state);
+
+      return (
+        _react2.default.createElement(_styles.SessionContainer, null,
+          _react2.default.createElement(_ui.Title, { center: true }, 'Register'),
+          _react2.default.createElement(_ui.FormField, null,
+            _react2.default.createElement(WithErrorInput, {
+              key: 'email',
+              error: errors.email,
+              value: this.state.email,
+              onChange: this.emailHandler,
+              placeholder: 'Email',
+              type: 'text' })),
+
+
+          _react2.default.createElement(_ui.FormField, null,
+            _react2.default.createElement(WithErrorInput, {
+              key: 'password',
+              error: errors.password,
+              onChange: this.passwordHandler,
+              value: this.state.password,
+              placeholder: 'Enter password',
+              type: 'password' })),
+
+
+          _react2.default.createElement(_ui.FormField, null,
+            _react2.default.createElement(WithErrorInput, {
+              key: 'confirmPassword',
+              error: errors.confirmPassword,
+              onChange: this.confirmPasswordHandler,
+              value: this.state.confirmPassword,
+              placeholder: 'Retype password',
+              type: 'password' })),
+
+
+          _react2.default.createElement(_ui.Button, {
+              primary: true,
+              onClick: this.registerHandler,
+              style: { marginBottom: '20px' } }, 'Register'),
+
+
+
+          _react2.default.createElement(_ui.Link, { to: '/signin' }, 'Signin')));
+
+
+    } }]);return Register;}(_react.Component);exports.default = Register;

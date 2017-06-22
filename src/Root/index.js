@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Provider, connect } from 'react-redux';
 import {
@@ -14,9 +13,6 @@ const AsyncListsScreen = asyncComponent(() =>
   System.import('../containers/ListsScreen')
     .then(module => module.default));
 
-const AsyncHome = asyncComponent(() =>
-  System.import('../components/Home').then(module => module.default));
-
 const AsyncSigninScreen = asyncComponent(() =>
   System.import('../containers/SigninScreen')
     .then(module => module.default));
@@ -29,7 +25,7 @@ const AsyncRegisterScreen = asyncComponent(() =>
   System.import('../containers/RegisterScreen')
     .then(module => module.default));
 
-const Root = ({ store, history, location, action, dispatch }) => (
+const Root = ({ store, history }) => (
   <Provider store={store}>
     <Router history={history}>
       <App>

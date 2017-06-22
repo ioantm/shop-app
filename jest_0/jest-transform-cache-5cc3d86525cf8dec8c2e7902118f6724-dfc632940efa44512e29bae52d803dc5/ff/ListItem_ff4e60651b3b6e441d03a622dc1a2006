@@ -1,0 +1,12 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _styletronReact = require('styletron-react');exports.default =
+
+(0, _styletronReact.styled)('div', {
+  padding: '12px 24px',
+  display: 'flex',
+  flex: 'none',
+  flexDirection: 'row',
+  alignItems: 'center',
+  listStyleType: 'none',
+  backgroundColor: 'white',
+  marginBottom: '10px',
+  borderRadius: '4px' });

@@ -1,0 +1,17 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _actionTypes = require('../actionTypes');exports.default =
+
+
+
+
+
+
+function () {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};var action = arguments[1];
+  if (action.type === 'NAVIGATE') {
+    return {
+      location: action.location,
+      action: action.action };
+
+  }
+
+  return state;
+};

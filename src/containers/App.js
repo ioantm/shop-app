@@ -10,7 +10,6 @@ import { LayoutVertical, Nav, NavRight, NavItem, Icon, Button, Icons } from '../
 
 type Props = {
   children: {},
-  logout(): void,
   isLoading: boolean
 };
 

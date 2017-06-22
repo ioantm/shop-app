@@ -1,0 +1,23 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _glamorous = require('glamorous');var _glamorous2 = _interopRequireDefault(_glamorous);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectWithoutProperties(obj, keys) {var target = {};for (var i in obj) {if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];}return target;}
+
+
+
+
+
+var ErrorText = _glamorous2.default.p({
+  color: 'rgb(199, 39, 35)' });
+
+
+var FormWithError = function FormWithError(FormInput) {return function (_ref) {var
+    error = _ref.error,
+    rest = _objectWithoutProperties(_ref, ['error']);return (
+
+      _react2.default.createElement('div', null,
+        _react2.default.createElement(FormInput, rest),
+        error && _react2.default.createElement(ErrorText, null, error)));};};exports.default =
+
+
+
+FormWithError;

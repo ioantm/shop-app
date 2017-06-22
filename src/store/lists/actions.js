@@ -1,6 +1,6 @@
 // @flow
 import type { Action } from '../actionTypes';
-import type { NormalizedResponse, RequestError } from '../../types';
+import type { NormalizedResponse, RequestError, ShoppingList } from '../../types';
 
 export const GET_LISTS_REQUEST_START = 'GET_LISTS_REQUEST_START';
 export const GET_LISTS_REQUEST_SUCCESS = 'GET_LISTS_REQUEST_SUCCESS';
@@ -12,7 +12,7 @@ export const getListsRequest = (listIds: Array<string>, loadShoppingItems: boole
   loadShoppingItems
 });
 
-export const getListsRequestSuccess = (response: NormalizedResponse): Action => ({
+export const getListsRequestSuccess = (response: NormalizedResponse<ShoppingList>): Action => ({
   type: GET_LISTS_REQUEST_SUCCESS,
   response
 });
@@ -56,7 +56,7 @@ export const deleteListSuccess = (listId: string): Action => ({
   listId,
 });
 
-export const deleteListFailed = (error: {}): Action => ({
+export const deleteListFailed = (error: RequestError): Action => ({
   type: DELETE_LIST_REQUEST_FAILED,
   error,
 });

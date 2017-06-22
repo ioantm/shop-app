@@ -1,0 +1,51 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });require('rxjs/add/operator/map');
+require('rxjs/add/operator/mergeMap');
+require('rxjs/add/operator/catch');
+require('rxjs/add/observable/of');
+require('rxjs/add/operator/switchMap');
+var _fromPromise = require('rxjs/observable/fromPromise');
+var _reduxObservable = require('redux-observable');
+var _Observable = require('rxjs/Observable');
+var _normalizr = require('normalizr');
+var _schema = require('../../api/schema');var schema = _interopRequireWildcard(_schema);
+var _actions = require('./actions');var sessionActions = _interopRequireWildcard(_actions);
+var _actions2 = require('../router/actions');var navigationActions = _interopRequireWildcard(_actions2);
+var _api = require('../../api');var api = _interopRequireWildcard(_api);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
+
+var logoutEpic = function logoutEpic(actions$) {return (
+    actions$.ofType('LOGOUT_REQUEST_START').
+    mergeMap(function () {return (
+        (0, _fromPromise.fromPromise)(api.logout()).
+        map(sessionActions.logoutSuccess).
+        catch(sessionActions.logoutFailed));}));};
+
+
+
+var loginEpic = function loginEpic(actions$) {return (
+    actions$.ofType('LOGIN_REQUEST_START').
+    switchMap(
+    function (_ref) {var credentials = _ref.credentials;return (
+        api.login(credentials).
+        map(function (_ref2) {var response = _ref2.response;return sessionActions.loginSuccess((0, _normalizr.normalize)(response, schema.user));}).
+        catch(function (error) {return _Observable.Observable.of(sessionActions.loginRequestFailed(error));}));}));};
+
+
+var loginSuccessSideEffect = function loginSuccessSideEffect(actions$) {return (
+    actions$.ofType('LOGIN_REQUEST_SUCCESS').
+    map(navigationActions.navigateToLists));};
+
+var registerEpic = function registerEpic(actions$) {return (
+    actions$.ofType('REGISTER_REQUEST_START').
+    switchMap(function (_ref3) {var userData = _ref3.userData;return (
+        (0, _fromPromise.fromPromise)(api.register(userData)).
+        mergeMap(function (response) {return (0, _fromPromise.fromPromise)(response.json());}).
+        map(sessionActions.registerSuccess).
+        catch(sessionActions.registerFailed));}));};exports.default =
+
+
+
+(0, _reduxObservable.combineEpics)(
+logoutEpic,
+loginEpic,
+registerEpic,
+loginSuccessSideEffect);

@@ -1,0 +1,113 @@
+'use strict';var _reactTestRenderer = require('react-test-renderer');var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _history = require('history');
+var _reactRouterDom = require('react-router-dom');
+var _ = require('../');var _2 = _interopRequireDefault(_);
+var _configure = require('../../../shared/styletron/configure');var _configure2 = _interopRequireDefault(_configure);
+var _validationErrors = require('../../validationErrors');var validationErrors = _interopRequireWildcard(_validationErrors);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+it('render register', function () {
+  var registerTree = _reactTestRenderer2.default.create(
+  _react2.default.createElement(_reactRouterDom.MemoryRouter, null,
+    _react2.default.createElement(_configure2.default, null,
+      _react2.default.createElement(_2.default, { history: (0, _history.createBrowserHistory)() })))).
+
+
+  toJSON();
+  expect(registerTree).toMatchSnapshot();
+});
+
+
+test('register validate all fields are required', function () {
+  var fields = {
+    email: '',
+    password: '',
+    confirmPassword: '',
+    touchedFields: {
+      email: true,
+      password: true,
+      confirmPassword: true } };
+
+
+  var requiredString = 'This field is required';
+
+  expect((0, _.validate)(fields)).toEqual({
+    email: requiredString,
+    password: requiredString,
+    confirmPassword: requiredString });
+
+});
+
+test('register validate email', function () {
+  var fields = {
+    email: 'ioan',
+    password: 'password',
+    confirmPassword: 'password',
+    touchedFields: {
+      email: true,
+      password: true,
+      confirmPassword: true } };
+
+
+
+
+  expect((0, _.validate)(fields)).toMatchObject({
+    email: validationErrors.INVALID_EMAIL });
+
+});
+
+test('register validate password length', function () {
+  var fields = {
+    email: 'ioan',
+    password: 'pass',
+    confirmPassword: 'pass',
+    touchedFields: {
+      email: true,
+      password: true,
+      confirmPassword: true } };
+
+
+
+
+  expect((0, _.validate)(fields)).toMatchObject({
+    password: validationErrors.MIN_6_CHARACTERS });
+
+});
+
+test('if a field is not touched should not be validated', function () {
+  var fields = {
+    email: '',
+    password: '',
+    confirmPassword: '',
+    touchedFields: {
+      email: false,
+      password: false,
+      confirmPassword: false } };
+
+
+
+  expect((0, _.validate)(fields)).toMatchObject({
+    email: '',
+    password: '',
+    confirmPassword: '' });
+
+});
+
+test('password should match confirm password', function () {
+  var fields = {
+    email: '',
+    password: 'password',
+    confirmPassword: 'password1',
+    touchedFields: {
+      email: false,
+      password: true,
+      confirmPassword: true } };
+
+
+
+  expect((0, _.validate)(fields)).toMatchObject({
+    email: '',
+    password: '',
+    confirmPassword: validationErrors.PASSWORD_NOT_MATCH });
+
+});

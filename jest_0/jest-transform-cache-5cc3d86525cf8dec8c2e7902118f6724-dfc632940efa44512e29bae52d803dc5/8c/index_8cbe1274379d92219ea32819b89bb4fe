@@ -1,0 +1,71 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.deleteShoppingItem = exports.deleteList = exports.addShoppingItem = exports.createList = exports.logout = exports.getLists = exports.register = exports.login = exports.root = undefined;var _ajax = require('rxjs/observable/dom/ajax'); // path is different than the previous one!
+// type RequestProps = {
+//   method: 'POST' | 'GET' | 'PUT' | 'DELETE',
+//   credentials: string,
+//   body: object,
+//   headers: object
+// }
+
+// let makeRequest = (url: string, reqProps: RequestProps) =>
+//   fetch(url, reqProps)
+//     .then(response => response.json())
+//     .then((json) => {
+//       if (json.errors && json.errors.length) {
+//         throw json;
+//       }
+//       return json;
+//     })
+
+var root = exports.root = 'http://localhost:8080';
+
+var login = exports.login = function login(credentials) {return (0, _ajax.ajax)({
+    url: '/api/user/login',
+    method: 'POST',
+    credentials: 'include',
+    responseType: 'json',
+    body: credentials,
+    headers: new Headers({ 'Content-Type': 'application/json' }) });};
+
+
+var register = exports.register = function register(userData) {return fetch('/api/user/signup', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify(userData),
+    headers: new Headers({ 'Content-Type': 'application/json' }) });};
+
+
+var getLists = exports.getLists = function getLists() {return fetch(root + '/api/lists', {
+    method: 'GET',
+    credentials: 'include',
+    headers: new Headers({ 'Content-Type': 'application/json' }) });};
+
+
+var logout = exports.logout = function logout() {return (
+    fetch('/api/user/logout', { credentials: 'same-origin', method: 'GET' }));};
+
+var createList = exports.createList = function createList(list) {return fetch('/api/lists/createList', {
+    method: 'POST',
+    body: JSON.stringify(list),
+    credentials: 'include',
+    headers: new Headers({ 'Content-Type': 'application/json' }) });};
+
+
+var addShoppingItem = exports.addShoppingItem = function addShoppingItem(item, listId) {return (
+    fetch('/api/lists/addShoppingItem', {
+      method: 'POST',
+      body: JSON.stringify({ item: item, listId: listId }),
+      credentials: 'include',
+      headers: new Headers({ 'Content-Type': 'application/json' }) }));};
+
+
+var deleteList = exports.deleteList = function deleteList(listId) {return fetch('/api/lists/' + listId, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: new Headers({ 'Content-Type': 'application/json' }) });};
+
+
+var deleteShoppingItem = exports.deleteShoppingItem = function deleteShoppingItem(listId, itemId) {return (
+    fetch('/api/lists/' + listId + '/' + itemId, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: new Headers({ 'Content-Type': 'application/json' }) }));};

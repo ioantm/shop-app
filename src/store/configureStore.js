@@ -13,7 +13,7 @@ const composeEnhancers = process.env.NODE_ENV !== 'production' &&
 
 const epicMiddleware = createEpicMiddleware(mainEpic);
 
-export default preloadedState => {
+export default (preloadedState) => {
   const enhancer = composeEnhancers(applyMiddleware(thunk, epicMiddleware));
 
   return createStore(mainReducer, preloadedState, enhancer);

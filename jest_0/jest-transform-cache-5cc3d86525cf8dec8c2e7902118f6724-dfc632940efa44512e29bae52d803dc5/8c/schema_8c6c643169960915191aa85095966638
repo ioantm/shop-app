@@ -1,0 +1,10 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.arrayOfShoppingItems = exports.arrayOfShoppingList = exports.shoppingList = exports.arrayOfUsers = exports.user = exports.shoppingItem = undefined;var _normalizr = require('normalizr');
+
+var shoppingItem = exports.shoppingItem = new _normalizr.Schema('shoppingItems', { idAttribute: 'id' });
+
+var user = exports.user = new _normalizr.Schema('users', { idAttribute: '_id' });
+var arrayOfUsers = exports.arrayOfUsers = (0, _normalizr.arrayOf)(user);
+var shoppingList = exports.shoppingList = new _normalizr.Schema('lists', { idAttribute: 'id' });
+var arrayOfShoppingList = exports.arrayOfShoppingList = (0, _normalizr.arrayOf)(shoppingList);
+var arrayOfShoppingItems = exports.arrayOfShoppingItems = (0, _normalizr.arrayOf)(shoppingItem);
+shoppingList.define({ shoppingItems: (0, _normalizr.arrayOf)(shoppingItem) });

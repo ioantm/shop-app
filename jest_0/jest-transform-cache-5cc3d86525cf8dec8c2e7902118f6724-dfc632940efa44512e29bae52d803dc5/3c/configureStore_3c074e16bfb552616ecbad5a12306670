@@ -1,0 +1,20 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {return typeof obj;} : function (obj) {return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;};
+var _redux = require('redux');
+var _reduxThunk = require('redux-thunk');var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+var _reduxObservable = require('redux-observable');
+var _mainReducer = require('./mainReducer');var _mainReducer2 = _interopRequireDefault(_mainReducer);
+var _mainEpic = require('./mainEpic');var _mainEpic2 = _interopRequireDefault(_mainEpic);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var composeEnhancers = process.env.NODE_ENV !== 'production' &&
+(typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' &&
+window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : _redux.compose;
+
+
+var epicMiddleware = (0, _reduxObservable.createEpicMiddleware)(_mainEpic2.default);exports.default =
+
+function (preloadedState) {
+  var enhancer = composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default, epicMiddleware));
+
+  return (0, _redux.createStore)(_mainReducer2.default, preloadedState, enhancer);
+};

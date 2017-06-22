@@ -1,0 +1,76 @@
+'use strict';var _reducers = require('../reducers');var _reducers2 = _interopRequireDefault(_reducers);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+test('should return initial state', function () {
+  expect((0, _reducers2.default)(undefined, {})).toEqual({
+    listsById: {} });
+
+});
+
+var generateList = function generateList(shoppingItems) {return {
+    name: 'My first list',
+    id: 'id 1',
+    creator: 'creator id',
+    assignedUsers: ['uid 1', 'uid 2'],
+    shoppingItems: shoppingItems };};
+
+
+test('should handle ADD_SHOPPING_ITEM_SUCCESS', function () {
+  var prevState = {
+    listsById: {
+      'list id 1': generateList(['item id 1', 'item id 2']) } };
+
+
+  var action = {
+    type: 'ADD_SHOPPING_ITEM_SUCCESS',
+    listId: 'list id 1',
+    response: {
+      result: 'item id 3' } };
+
+
+
+  expect((0, _reducers2.default)(prevState, action)).toEqual({
+    listsById: {
+      'list id 1': generateList(['item id 1', 'item id 2', 'item id 3']) } });
+
+
+});
+
+test('should handle LOAD_SHOPPING_ITEMS_SUCCESS', function () {
+  var prevState = {
+    listsById: {
+      'list id 1': generateList(['item id 1', 'item id 2']) } };
+
+
+  var action = {
+    type: 'LOAD_SHOPPING_ITEMS_SUCCESS',
+    listId: 'list id 1',
+    response: {
+      result: ['item id 1', 'item id 2'] } };
+
+
+
+  expect((0, _reducers2.default)(prevState, action)).toEqual({
+    listsById: {
+      'list id 1': generateList(['item id 1', 'item id 2']) } });
+
+
+});
+
+test('should handle DELETE_SHOPPING_ITEM_SUCCESS', function () {
+  var prevState = {
+    listsById: {
+      'list id 1': generateList(['item id 1', 'item id 2']) } };
+
+
+  var action = {
+    type: 'DELETE_SHOPPING_ITEM_SUCCESS',
+    listId: 'list id 1',
+    itemId: 'item id 2' };
+
+
+  expect((0, _reducers2.default)(prevState, action)).toEqual({
+    listsById: {
+      'list id 1': generateList(['item id 1']) } });
+
+
+});

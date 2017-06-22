@@ -1,0 +1,54 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.BodyText = exports.Title = exports.Display1 = exports.Display2 = exports.paperfontCommonNowrap = exports.paperCommonBase = undefined;var _extends = Object.assign || function (target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i];for (var key in source) {if (Object.prototype.hasOwnProperty.call(source, key)) {target[key] = source[key];}}}return target;};var _styletronReact = require('styletron-react');
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _classnames = require('classnames');var _classnames2 = _interopRequireDefault(_classnames);
+var _title = require('./title.sass');var _title2 = _interopRequireDefault(_title);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+var paperCommonBase = exports.paperCommonBase = {
+  fontFamily: "'Roboto', 'Noto', sans-serif",
+  '-webkit-font-smoothing': 'antialiased' };
+
+
+var paperfontCommonNowrap = exports.paperfontCommonNowrap = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis' };
+
+
+var Display2 = exports.Display2 = (0, _styletronReact.styled)('h2', _extends({},
+paperCommonBase, {
+  fontSize: '45px',
+  fontWeight: '400',
+  letterSpacing: '-.018em',
+  lineHeight: '48px' }));
+
+
+var Display1 = exports.Display1 = (0, _styletronReact.styled)('h2', _extends({},
+paperCommonBase, {
+  fontSize: '34px',
+  fontWeight: '400',
+  letterSpacing: '-.018em',
+  lineHeight: '48px' }));
+
+
+
+
+
+
+
+
+var Title = exports.Title = function Title(_ref) {var children = _ref.children,className = _ref.className,lvl = _ref.lvl;return (
+    _react2.default.createElement('h2', {
+        className: (0, _classnames2.default)(className, _title2.default.title, _defineProperty({},
+        _title2.default['is-' + lvl], lvl > 0)) },
+
+
+      children));};
+
+
+
+var BodyText = exports.BodyText = (0, _styletronReact.styled)('p', _extends({},
+paperCommonBase, {
+  fontSize: '14px',
+  fontWeight: 500,
+  lineHeight: '24px',
+  margin: '0px' }));

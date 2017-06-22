@@ -1,4 +1,4 @@
-import type { NormalizedResponse, RequestError } from '../types';
+import type { NormalizedResponse, RequestError, ShoppingList } from '../types';
 // @flow
 export type Action =
   | { type: 'GET_LISTS_REQUEST_START' }
@@ -22,7 +22,7 @@ export type Action =
   | { type: 'LOGOUT_REQUEST_SUCCESS' }
   | { type: 'LOGOUT_REQUEST_FAILED' }
   | { type: 'ADD_SHOPPING_ITEM_REQUEST', item: Object, listId: string }
-  | { type: 'ADD_SHOPPING_ITEM_SUCCESS', reponse: Object, listId: string }
+  | { type: 'ADD_SHOPPING_ITEM_SUCCESS', reponse: NormalizedResponse<ShoppingList>, listId: string }
   | { type: 'ADD_SHOPPING_ITEM_FAILURE', error: RequestError }
   | { type: 'EDIT_SHOPPING_ITEM_REQUEST', item: Object, listId: string }
   | { type: 'EDIT_SHOPPING_ITEM_SUCCESS', updatedItemResponse: Object, listId: string }

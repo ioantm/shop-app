@@ -1,0 +1,73 @@
+'use strict';var _reducers = require('../reducers');var _reducers2 = _interopRequireDefault(_reducers);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+test('shoppingList reducer should return initial state', function () {
+  expect((0, _reducers2.default)(undefined, {})).toEqual({
+    shoppingItemsById: {} });
+
+});
+
+test('should handle DELETE_SHOPPING_ITEM_SUCCESS', function () {
+  var prevState = {
+    shoppingItemsById: {
+      'id 1': {
+        name: 'test',
+        completed: false },
+
+      'id 2': {
+        name: 'test 2',
+        completed: true } } };
+
+
+
+
+  var action = {
+    type: 'DELETE_SHOPPING_ITEM_SUCCESS',
+    itemId: 'id 1' };
+
+
+  expect((0, _reducers2.default)(prevState, action)).toEqual({
+    shoppingItemsById: {
+      'id 2': {
+        name: 'test 2',
+        completed: true } } });
+
+
+
+});
+
+test('should handle EDIT_SHOPPING_ITEM_REQUEST', function () {
+  var prevState = {
+    shoppingItemsById: {
+      'id 1': {
+        name: 'test',
+        completed: false },
+
+      'id 2': {
+        name: 'test 2',
+        completed: true } } };
+
+
+
+
+  var action = {
+    type: 'EDIT_SHOPPING_ITEM_REQUEST',
+    itemId: 'id 1',
+    props: {
+      completed: true,
+      name: 'test' } };
+
+
+
+  expect((0, _reducers2.default)(prevState, action)).toEqual({
+    shoppingItemsById: {
+      'id 1': {
+        name: 'test',
+        completed: true },
+
+      'id 2': {
+        name: 'test 2',
+        completed: true } } });
+
+
+
+});

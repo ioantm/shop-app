@@ -1,0 +1,59 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });require('rxjs/add/operator/map');
+require('rxjs/add/operator/mergeMap');
+require('rxjs/add/operator/catch');
+require('rxjs/add/observable/of');
+var _reduxObservable = require('redux-observable');
+var _Observable = require('rxjs/Observable');
+var _fromPromise = require('rxjs/observable/fromPromise');
+var _normalizr = require('normalizr');
+var _actions = require('./actions');var listActions = _interopRequireWildcard(_actions);
+var _schema = require('../../api/schema');var schema = _interopRequireWildcard(_schema);
+var _graphql = require('../../api/graphql');var _graphql2 = _interopRequireDefault(_graphql);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _toConsumableArray(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;} else {return Array.from(arr);}}
+
+var listFields = 'name, creator, assignedUsers, id';
+
+var getListsEpic = function getListsEpic(actions$) {return actions$.
+  ofType(listActions.GET_LISTS_REQUEST_START).
+  map(function (action) {
+    var fields = listFields;
+    var args = void 0;
+    if (action.loadShoppingItems) {
+      fields = fields + ', shoppingItems {id, name, completed}';
+      args = ['{ lists { ' + fields + ' } }', { ids: action.listIds }];
+    } else {
+      args = ['{ lists { ' + fields + ' }}'];
+    }
+    return [].concat(_toConsumableArray(args), [{ ids: action.listIds }]);
+  }).
+  mergeMap(
+  function (args) {return (0, _fromPromise.fromPromise)(_graphql2.default.apply(undefined, _toConsumableArray(args))).
+    map(function (response) {return (0, _normalizr.normalize)(response.lists, schema.arrayOfShoppingList);}).
+    mergeMap(
+    function (normalized) {return (
+        _Observable.Observable.of(listActions.getListsRequestSuccess(normalized)));}).
+
+    catch(function (error) {return _Observable.Observable.of(listActions.getListsRequestFailed(error));});});};
+
+
+var addListEpic = function addListEpic(actions$) {return actions$.
+  ofType(listActions.CREATE_LIST_REQUEST_START).
+  mergeMap(
+  function (_ref) {var list = _ref.list;return (0, _fromPromise.fromPromise)(
+    (0, _graphql2.default)('mutation CreateListItem($list: ListInput!) {\n        createList(list: $list) {\n          ' +
+
+
+    listFields + '\n        }\n      }',
+
+
+    { list: list }));}).
+
+
+
+  map(
+  function (result) {return (
+      listActions.createListSuccess(
+      (0, _normalizr.normalize)(result.createList, schema.shoppingList)));});};exports.default =
+
+
+
+(0, _reduxObservable.combineEpics)(getListsEpic, addListEpic);

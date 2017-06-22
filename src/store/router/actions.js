@@ -1,3 +1,4 @@
+// @flow
 export const NAVIGATE = 'NAVIGATE';
 
 export const navigate = (location: {}, action: string) => ({

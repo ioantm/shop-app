@@ -1,0 +1,19 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+
+
+
+
+session;var _actionTypes = require('../actionTypes');function session()
+
+
+{var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;var action = arguments[1];
+  switch (action.type) {
+    case 'LOGIN_REQUEST_SUCCESS':
+      return action.response.result;
+    case 'LOGOUT_REQUEST_SUCCESS':
+    case 'LOGIN_REQUEST_FAILED':
+      return null;
+    default:
+      return state;}
+
+}

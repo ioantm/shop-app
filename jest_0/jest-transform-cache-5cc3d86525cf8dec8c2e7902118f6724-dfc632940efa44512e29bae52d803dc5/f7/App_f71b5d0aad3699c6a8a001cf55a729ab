@@ -1,0 +1,81 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();
+
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactRedux = require('react-redux');
+var _styletronReact = require('styletron-react');
+
+var _actions = require('../store/session/actions');var sessionActions = _interopRequireWildcard(_actions);
+var _mainReducer = require('../store/mainReducer');
+var _ui = require('../ui');function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+
+
+
+
+
+App = function (_Component) {_inherits(App, _Component);function App() {_classCallCheck(this, App);return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));}_createClass(App, [{ key: 'getContent', value: function getContent()
+
+
+    {
+      return (
+        _react2.default.createElement(AppContainer, null,
+          _react2.default.createElement(Wrapper, null,
+            _react2.default.createElement(_ui.Nav, null,
+              _react2.default.createElement(_ui.NavRight, null,
+                _react2.default.createElement(_ui.NavItem, null,
+                  _react2.default.createElement(_ui.Button, null,
+                    _react2.default.createElement(_ui.Icon, { size: '24', color: '#7a7a7a', icon: _ui.Icons.MENU }))))),
+
+
+
+
+            this.props.children)));
+
+
+
+    } }, { key: 'render', value: function render()
+
+    {
+      return (
+        _react2.default.createElement(Container, { height: '100vh' },
+          this.props.isLoading ? 'Loading... ' : this.getContent()));
+
+
+    } }]);return App;}(_react.Component);
+
+
+var Container = (0, _styletronReact.styled)(_ui.LayoutVertical, {
+  height: '100vh',
+  backgroundColor: '#4BA7E6' });
+
+
+var AppContainer = (0, _styletronReact.styled)('div', {
+  display: 'flex',
+  flex: '1',
+  flexDirection: 'column',
+  alignItems: 'center' });
+
+
+var Wrapper = (0, _styletronReact.styled)('div', {
+  maxWidth: '800px',
+  flex: '1',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%' });
+
+
+// const AppHeader = styled('div', {
+//   display: 'flex',
+//   flexDirection: 'row',
+//   paddingRight: '10px'
+// });
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {return {
+    logout: function logout() {return dispatch(sessionActions.logoutRequest());} };};
+
+
+var mapStateToProps = function mapStateToProps(state) {return {
+    haveSession: (0, _mainReducer.getSessionUserId)(state) != null };};exports.default =
+
+
+(0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);

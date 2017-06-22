@@ -1,0 +1,51 @@
+'use strict';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactTestRenderer = require('react-test-renderer');var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);
+var _reactRouterDom = require('react-router-dom');
+var _configure = require('../../../shared/styletron/configure');var _configure2 = _interopRequireDefault(_configure);
+var _ = require('../');var _2 = _interopRequireDefault(_);
+var _ValidationErrors = require('../../ValidationErrors');var validationErrors = _interopRequireWildcard(_ValidationErrors);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+test('render signin', function () {
+  var signinTree = _reactTestRenderer2.default.create(
+  _react2.default.createElement(_reactRouterDom.MemoryRouter, null,
+    _react2.default.createElement(_configure2.default, null,
+      _react2.default.createElement(_2.default, null))));
+
+
+
+
+  expect(signinTree).toMatchSnapshot();
+});
+
+test('validate check for required fields', function () {
+  var errors = (0, _.validate)({
+    email: '',
+    password: '',
+    touchedFields: {
+      email: true,
+      password: true } });
+
+
+
+  expect(errors).toEqual({
+    email: validationErrors.REQUIRED,
+    password: validationErrors.REQUIRED });
+
+});
+
+
+test('validate return error for incorrect email', function () {
+  var errors = (0, _.validate)({
+    email: 'ioan',
+    password: '',
+    touchedFields: {
+      email: true,
+      password: true } });
+
+
+
+  expect(errors).toEqual({
+    email: validationErrors.INVALID_EMAIL,
+    password: validationErrors.REQUIRED });
+
+});

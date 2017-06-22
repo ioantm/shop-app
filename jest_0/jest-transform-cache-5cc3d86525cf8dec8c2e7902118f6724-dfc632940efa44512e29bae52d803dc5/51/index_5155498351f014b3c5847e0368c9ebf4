@@ -1,0 +1,25 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.PanelBlock = exports.PanelHeading = exports.Panel = undefined;var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _panel = require('./panel.sass');var _panel2 = _interopRequireDefault(_panel);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+
+
+
+
+console.log('panelStyles', _panel2.default);
+
+var Panel = exports.Panel = function Panel(_ref) {var children = _ref.children;return (
+    _react2.default.createElement('div', { className: _panel2.default.panel },
+      children));};
+
+
+
+var PanelHeading = exports.PanelHeading = function PanelHeading(_ref2) {var children = _ref2.children;return (
+    _react2.default.createElement('p', { className: _panel2.default['panel-heading'] },
+      children));};
+
+
+
+var PanelBlock = exports.PanelBlock = function PanelBlock(_ref3) {var children = _ref3.children;return (
+    _react2.default.createElement('div', { className: _panel2.default['panel-block'] },
+      children));};

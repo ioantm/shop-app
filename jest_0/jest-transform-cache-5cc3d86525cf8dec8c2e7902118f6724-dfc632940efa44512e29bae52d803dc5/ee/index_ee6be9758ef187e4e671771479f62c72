@@ -1,0 +1,36 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.Flex1 = exports.LayoutHorizontal = exports.LayoutVertical = undefined;var _styletronReact = require('styletron-react');
+
+var layoutDefaults = {
+  alignSelf: 'auto',
+  justifyContent: 'flex-start',
+  flex: '0 1 auto',
+  alignItems: 'stretch' };
+
+
+var LayoutVertical = exports.LayoutVertical = (0, _styletronReact.styled)('div', function () {var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] :
+
+
+
+  layoutDefaults,alignSelf = _ref.alignSelf,flex = _ref.flex,justifyContent = _ref.justifyContent;return {
+    display: 'flex',
+    flexDirection: 'column',
+    alignSelf: alignSelf,
+    flex: flex,
+    justifyContent: justifyContent };});
+
+
+var LayoutHorizontal = exports.LayoutHorizontal = (0, _styletronReact.styled)('div', function () {var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] :
+
+
+
+
+  layoutDefaults,alignSelf = _ref2.alignSelf,flex = _ref2.flex,justifyContent = _ref2.justifyContent,alignItems = _ref2.alignItems;return {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: flex,
+    justifyContent: justifyContent,
+    alignItems: alignItems,
+    alignSelf: alignSelf };});
+
+
+var Flex1 = exports.Flex1 = (0, _styletronReact.styled)('span', { flex: 1 });

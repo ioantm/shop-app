@@ -1,21 +1,17 @@
 // @flow
 import { combineReducers } from 'redux';
 import { Action } from '../actionTypes';
-
-export type ShoppingItem = {
-  +name: string,
-  +completed: string
-}
+import type { ShoppingItem } from '../../types';
 
 type ShoppingItemsById = {
   +[key: string]: ShoppingItem
 }
 
 export type ShoppingListState = {
-  +shoppingItemsById: ShoppingItemsById
+  shoppingItemsById: ShoppingItemsById
 }
 
-const shoppingItemsById = (state: ShoppingItemsById = {}, action) => {
+const shoppingItemsById = (state: ShoppingItemsById = {}, action: Action) => {
   if (
     action.response &&
     action.response.entities &&
@@ -49,5 +45,5 @@ const reducer: ShoppingListReducer = combineReducers({
 
 export default reducer;
 
-export const getShoppingItem = (state: { byId: {} }) => (id: string) =>
-  state.byId[id];
+export const getShoppingItem = (state: ShoppingListState) => (id: string) =>
+  state.shoppingItemsById[id];

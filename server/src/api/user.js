@@ -1,15 +1,13 @@
-// @flow
 
 import { Router } from 'express';
 import passport from 'passport';
-import util from 'util';
 import User from '../models/User';
 
 export default (app, sessStore) => {
   const router = Router();
 
-  router.get('/login', (req, res, next) => {
-    console.log('get');
+  router.get('/login', () => {
+
   });
 
   router.post('/login', (req, res, next) => {
@@ -36,13 +34,11 @@ export default (app, sessStore) => {
         return res.send({ errors: [info] }, 400);
       }
 
-      req.login(user, err => {
-        console.log('login success');
-        if (err) {
-          return next(err);
-        } else {
-          res.json(user);
+      return req.login(user, (loginErr) => {
+        if (loginErr) {
+          return next(loginErr);
         }
+        return res.json(user);
       });
     })(req, res, next);
   });
@@ -83,17 +79,17 @@ export default (app, sessStore) => {
         );
       }
 
-      user.save(err => {
-        if (err) {
-          return next(err);
+      return user.save((saveUserErr) => {
+        if (saveUserErr) {
+          return next(saveUserErr);
         }
 
-        req.login(user, err => {
-          if (err) {
-            return next(err);
-          } else {
-            res.send(user);
+        return req.login(user, (loginErr) => {
+          if (loginErr) {
+            return next(loginErr);
           }
+
+          return res.send(user);
         });
       });
     });
@@ -101,16 +97,12 @@ export default (app, sessStore) => {
 
   router.get('/logout', (req, res, next) => {
     const sid = req.sessionID;
-    console.log('session id ', sid);
     req.logOut();
-
-    console.log('req.session', sid);
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
         next(err);
       }
-      sessStore.destroy(sid, err =>
-        console.log('sessStore.destory', req.sessionID));
+      sessStore.destroy(sid);
       res.send({ message: 'success' });
     });
   });
